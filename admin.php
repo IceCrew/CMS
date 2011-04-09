@@ -4,7 +4,7 @@ include "lib/adm_session.php";
 include "lib/mysql.php";
 include "lib/header.php";
 include "lib/menu.php";
-echo "<center>$menu_admin</center><hr>";
+echo "$menu_admin<hr>";
 if(isset($_GET['create'])) { ?>
 <title>Beitrag erstellen - <? echo $sitename ?></title>
 <form action="" method="post">

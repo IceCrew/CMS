@@ -1,4 +1,3 @@
-<center>
 <?php
 include "lib/config.php";
 include "lib/header.php";
@@ -103,4 +102,3 @@ echo "User wurde erstellt!";
 } 
 echo "<hr>".$footer;
 ?>
-</center>
