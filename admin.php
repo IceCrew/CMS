@@ -5,7 +5,10 @@ include "lib/mysql.php";
 include "lib/header.php";
 include "lib/menu.php";
 echo "$menu_admin<hr>";
-if(isset($_GET['create'])) { ?>
+$getposts = $_GET['posts'];
+$getnews = $_GET['news'];
+$getusers = $_GET['users'];
+if($getposts == 'create') { ?>
 <title>Beitrag erstellen - <? echo $sitename ?></title>
 <form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50"><br>
@@ -28,7 +31,7 @@ mysql_query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$t
 header ("Location: admin.php?success");
 }
 }
-if(isset($_GET['delete'])) {
+if($geposts == 'delete') {
 ?> <title>Beitrag löschen - <? echo $sitename ?></title> <?
 $sqls = mysql_query("select id,name,username from posts");
 while($sql = mysql_fetch_array($sqls)) {
@@ -53,7 +56,7 @@ if(isset($_GET['error'])) {
 ?> <title>Fehler - <? echo $sitename ?></title> <?
 echo "Dir ist ein Fehler unterlaufen!<br><input type=\"button\" value=\"Zurück\" onclick=\"history.back(-1)\">";
 }
-if(isset($_GET['userdelete'])) {
+if($getusers == 'delete') {
 ?> <title>Benutzer löschen - <? echo $sitename ?></title> <?
 $sqls = mysql_query("select id,username from accounts WHERE safe = '0'");
 while($sql = mysql_fetch_array($sqls)) {
@@ -62,7 +65,7 @@ while($sql = mysql_fetch_array($sqls)) {
 <input type="submit" value="<? echo $sql['username']." löschen"; ?>" name="<? echo $sql['id']; ?>">
 </form>
 <?
-if(isset($_POST[$sql['username']])) {
+if(isset($_POST[$sql['id']])) {
 mysql_query("DELETE FROM accounts WHERE username = '".$sql['id']."' and safe = '0'");
 
 header ("Location: admin.php?success");
@@ -70,7 +73,7 @@ header ("Location: admin.php?success");
 }
 
 }
-if(isset($_GET['users'])) {
+if($getusers == 'list') {
 ?> <title>Benutzerliste - <? echo $sitename ?></title> <?
 echo "<b><u>Administratoren:</u></b><br>";
 $sqlsadmin = mysql_query("select username from accounts where admin = '1'");
@@ -84,7 +87,7 @@ echo $sql['username']."<br>";
 }
 
 }
-if(isset($_GET['usermanagement'])) {
+if($getusers == 'manage') {
 ?> <title>Benutzerverwaltung - <? echo $sitename ?></title> <?
 $sqls = mysql_query("select username from accounts WHERE admin = '0'");
 while($sql = mysql_fetch_array($sqls)) {
@@ -101,7 +104,7 @@ header ("Location: admin.php?success");
 }
 
 }
-if(isset($_GET['createnews'])) { ?>
+if($getnews == 'create') { ?>
 <title>News erstellen - <? echo $sitename ?></title>
 <form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50"><br>
@@ -124,7 +127,7 @@ mysql_query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$te
 header ("Location: admin.php?success");
 }
 }
-if(isset($_GET['deletenews'])) {
+if($getnews == 'delete') {
 ?> <title>News löschen - <? echo $sitename ?></title> <?
 $sqls33 = mysql_query("select id,name,username from news");
 while($sql33 = mysql_fetch_array($sqls33)) {
@@ -146,7 +149,7 @@ if(empty($_GET)) {
 echo "Bitte wähle einer der oben genannten Optionen";
 
 }
-if(isset($_GET['postsedit'])) {
+if($getposts == 'edit') {
 ?> <title>Beitrag editieren - <? echo $sitename ?></title> <?
 $sqls = mysql_query("select id,name from posts");
 while($sql = mysql_fetch_array($sqls)) {
