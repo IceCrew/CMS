@@ -8,6 +8,7 @@ while($file = mysql_fetch_array($files)) {
 echo "<a href='?dl=".$file['id']."'>".$file['name']."</a><br>";
 }
 }
+if(isset($_GET['dl')) {
 $download = $_GET['dl'];
 $basedir = "./downloads";
 $downloads = mysql_fetch_array(mysql_query("select id,filename from downloads"));
@@ -21,4 +22,5 @@ header("Content-Type: application/octet-stream");
 $save_as_name = basename($filelist[$download]);
 header("Content-Disposition: attachment; filename=\"$save_as_name\"");
 readfile($filename);
+}
 ?>
