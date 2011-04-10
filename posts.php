@@ -18,7 +18,7 @@ if(empty($_GET)) {
 ?><title>Alle Beiträge - <? echo $sitename ?></title><?
 $sqls = mysql_query("select id, name from posts");
 while($sql = mysql_fetch_array($sqls)) {
-echo "<a href=\"links.php?show=".$sql['id']."\">".$sql['name']."</a><br>";
+echo "<a href=\"?show=".$sql['id']."\">".$sql['name']."</a><br>";
 }
 }
 echo "<hr>".$footer;
