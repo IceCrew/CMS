@@ -31,7 +31,7 @@ mysql_query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$t
 header ("Location: admin.php?success");
 }
 }
-if($geposts == 'delete') {
+if($getposts == 'delete') {
 ?> <title>Beitrag löschen - <? echo $sitename ?></title> <?
 $sqls = mysql_query("select id,name,username from posts");
 while($sql = mysql_fetch_array($sqls)) {
