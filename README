@@ -3,7 +3,9 @@ WARNING: THIS CMS DOES NOT WORK ON KILU.DE!
 How-To:
 
 1. Upload the files to your Webserver
-2. Run the install.php / upgrade.php
+2. Call the install/ dir
 3. Fill out the required information
 4. Have fun
 5. @problems please contact
+
+Current Version: 1.4
