@@ -66,7 +66,7 @@ while($sql = mysql_fetch_array($sqls)) {
 </form>
 <?
 if(isset($_POST[$sql['id']])) {
-mysql_query("DELETE FROM accounts WHERE username = '".$sql['id']."' and safe = '0'");
+mysql_query("DELETE FROM accounts WHERE id = '".$sql['id']."' and safe = '0'");
 
 header ("Location: admin.php?success");
 }
