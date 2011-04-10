@@ -78,6 +78,12 @@ mysql_query("CREATE TABLE `news` (
   `text` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die (mysql_error());
+mysql_query("CREATE TABLE `downloads` (
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `name` text COLLATE latin1_german1_ci NOT NULL,
+  `filename` text COLLATE latin1_german1_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die(mysql_error());
 header("Location: index.php?step=4");
 }
 if($_GET['step'] == 4) {

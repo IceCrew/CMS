@@ -47,12 +47,10 @@ if (is_writable($configfile)) {
 }
 if($_GET['step'] == 3) {
 include '../lib/mysql.php';
-mysql_query("CREATE TABLE `pm` (
+mysql_query("CREATE TABLE `downloads` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `title` text COLLATE latin1_german1_ci NOT NULL,
-  `from` text COLLATE latin1_german1_ci NOT NULL,
-  `to` text COLLATE latin1_german1_ci NOT NULL,
-  `text` text COLLATE latin1_german1_ci NOT NULL,
+  `name` text COLLATE latin1_german1_ci NOT NULL,
+  `filename` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die(mysql_error());
 $sqlsnews = mysql_query("SELECT text FROM news");

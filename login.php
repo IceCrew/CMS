@@ -57,7 +57,7 @@ elseif($rows == 0) {
   $_SESSION["all_user_id"] = $data["id"];
   $_SESSION["all_user_username"] = $data["username"];
   
-  header ("Location: user.php");
+  header ("Location: index.php");
 }
 } 
 else  

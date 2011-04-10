@@ -3,9 +3,6 @@
 session_start();
 include 'config.php';
 include 'mysql.php';
-if(isset($_SESSION['all_user_id'])) {
-echo " | <a href=\"user.php\">Userpanel</a>";
-}
 $sql = ("Select admin from accounts WHERE username = '".$_SESSION['adm_user_username']."' and admin = '1'");
 $result = mysql_query($sql);
 $rows = mysql_num_rows($result);
