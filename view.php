@@ -2,8 +2,8 @@
 include "lib/config.php";
 include "lib/mysql.php";
 include "lib/header.php";
-if(isset($_GET['show'])) {
-$id = $_GET['show'];
+if(isset($_GET['postID'])) {
+$id = $_GET['postID'];
 $datas = mysql_query("select name,text,username from posts where id='".$id."'");
 while($data = mysql_fetch_array($datas)) {
 ?><title><? echo $data['name']." - ".$sitename ?></title><?
@@ -18,7 +18,7 @@ if(empty($_GET)) {
 ?><title>Alle Beiträge - <? echo $sitename ?></title><?
 $sqls = mysql_query("select id, name from posts");
 while($sql = mysql_fetch_array($sqls)) {
-echo "<a href=\"?show=".$sql['id']."\">".$sql['name']."</a><br>";
+echo "<a href=\"?postID=".$sql['id']."\">".$sql['name']."</a><br>";
 }
 }
 echo "<hr>".$footer;
