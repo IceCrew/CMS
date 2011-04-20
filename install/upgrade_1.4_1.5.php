@@ -57,5 +57,6 @@ header ("Location: ../index.php");
 echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
 }
 }
+}
 ?>
 </center>
