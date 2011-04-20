@@ -1,4 +1,4 @@
-<a href="index.php">News</a> | <a href="view.php">Alle Beiträge</a>
+<a href="index.php">Index</a> | <a href="index.php?news">Alle News</a> | <a href="index.php?posts">Alle Posts</a>
 <?
 session_start();
 include 'config.php';

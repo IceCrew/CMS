@@ -1,7 +1,7 @@
 <title>wCMS Installation</title>
 <center>
 <?
-$cmsversion = "1.4";
+$cmsversion = "1.5";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
