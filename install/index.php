@@ -114,7 +114,6 @@ echo "Installation erfolgreich";
 </form>
 <?
 if(isset($_POST['complete'])) {
-unlink("../lib/install");
 header ("Location: ../index.php");
 echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
 }
