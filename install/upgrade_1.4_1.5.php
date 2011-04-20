@@ -45,6 +45,7 @@ if (is_writable($configfile)) {
     print "Die Datei $configfile ist nicht schreibbar";
 }
 }
+}
 if(isset($_GET['success'])) {
 echo "Upgrade erfolgreich";
 ?>
@@ -55,7 +56,6 @@ echo "Upgrade erfolgreich";
 if(isset($_POST['complete'])) {
 header ("Location: ../index.php");
 echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
-}
 }
 }
 ?>
