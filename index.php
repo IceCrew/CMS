@@ -66,7 +66,7 @@ echo "<hr>";
 $gethelp = $_GET['help'];
 if(isset($gethelp)) {
 include "lib/help.php";
-echo '<a href="?help=html">HTML-Hilfe</a>';
+echo '<a href="?help=html#html">HTML-Hilfe</a>';
 if($gethelp == 'html') {
 echo $help_html;
 }
