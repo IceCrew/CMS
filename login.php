@@ -20,7 +20,6 @@ Passwort: <input type="password" name="pwd" size="20"><br>
 </form>  
 </body>  
 </html>
-<hr>
 <?php
 }
 if(isset($_GET['mode'])) {   
