@@ -19,8 +19,8 @@ Passwort: <input type="password" name="pwd" size="20"><br>
 <input type="submit" value="Login" name="postlogin">  
 </form>  
 </body>  
-</html
-
+</html>
+<hr>
 <?php
 }
 if(isset($_GET['mode'])) {   
