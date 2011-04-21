@@ -154,14 +154,15 @@ if($getposts == 'edit') {
 $sqls = mysql_query("select id,name from posts");
 while($sql = mysql_fetch_array($sqls)) {
 ?>
-<form action="" method="post">
+<form action="?posts=edit" method="post">
 <input type="submit" value="<? echo $sql['name']." editieren"; ?>" name="<? echo $sql['id']; ?>">
 </form>
 <?
 }
 if(isset($_POST[$sql['id']])) {
 $id = $_POST[$sql['id']];
-$sql = mysql_query("select name,text from posts where id ='".$id."'");
+$sqls = mysql_query("select name,text from posts where id = '".$id."'");
+while($sql = mysql_fetch_array($sqls)) {
 $pretext = str_replace("<br>", "\r\n", $sql['text']);
 ?>
 <form action="" method="post">
@@ -177,6 +178,7 @@ mysql_query("update posts set text='".$text."' where id = '".$id."'");
 mysql_query("update posts set name='".$_POST['name']."' where id = '".$id."'");
 
 header ("Location: admin.php?success");
+}
 }
 }
 echo "<hr>$footer";
