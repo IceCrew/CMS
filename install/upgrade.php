@@ -1,6 +1,6 @@
 <title>Upgrade</title>
 <?php
-$cmsversion = "1.6";
+$cmsversion = "1.7";
 if(!file_exists("../lib/config.php")) {
 echo "Ist noch nicht installiert! <a href=\"index.php\">Klicke hier um es zu installieren</a>";
 die;
@@ -25,6 +25,9 @@ header("Location: upgrade_1.4_1.5.php");
 }
 elseif($version == 1.5) {
 header("Location: upgrade_1.5_1.6.php");
+}
+elseif($version == 1.6) {
+header("Location: upgrade_1.6_1.7.php");
 }
 }
 ?>

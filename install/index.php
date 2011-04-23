@@ -1,7 +1,7 @@
-<title>wCMS Installation</title>
+<title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "1.6";
+$cmsversion = "1.7";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -31,7 +31,7 @@ Datenbank-Passwort: <input type="password" name="dbpasswd" maxlength="50"><br>
 }
 if($_GET['step'] == 2) {
 $configfile = "../lib/config.php";
-$write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.w-cms.tk/' target='_blank\'>wCMS \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
+$write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.c-fire.tk/' target='_blank\'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
 if (is_writable($configfile)) {
 
     if (!$handle = fopen($configfile, "w+")) {
