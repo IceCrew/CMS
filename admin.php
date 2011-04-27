@@ -90,20 +90,32 @@ echo $sql['username']."<br>";
 }
 if($getusers == 'manage') {
 ?> <title>Benutzerverwaltung - <? echo $sitename ?></title> <?
-$sqls = mysql_query("select username from accounts WHERE admin = '0'");
+$sqls = mysql_query("select id,username from accounts WHERE admin = '1' AND safe = '0'");
 while($sql = mysql_fetch_array($sqls)) {
 ?>
 <form action="" method="post">
-<input type="submit" value="<? echo $sql['username']." zum Admin befördern"; ?>" name="<? echo $sql['username']; ?>">
+<input type="submit" value="<? echo $sql['username']." zum Benutzer degradieren"; ?>" name="unset<? echo $sql['id']; ?>">
 </form>
 <?
-if(isset($_POST[$sql['username']])) {
-mysql_query("UPDATE accounts SET admin = '1' WHERE username = '".$sql['username']."'");
+if(isset($_POST["unset".$sql['id']])) {
+mysql_query("UPDATE accounts SET admin = '0' WHERE id = '".$sql['id']."'");
 
 header ("Location: admin.php?success");
 }
 }
+$sqls = mysql_query("select id,username from accounts WHERE admin = '0'");
+while($sql = mysql_fetch_array($sqls)) {
+?>
+<form action="" method="post">
+<input type="submit" value="<? echo $sql['username']." zum Admin befördern"; ?>" name="set<? echo $sql['id']; ?>">
+</form>
+<?
+if(isset($_POST["set".$sql['id']])) {
+mysql_query("UPDATE accounts SET admin = '1' WHERE id = '".$sql['id']."'");
 
+header ("Location: admin.php?success");
+}
+}
 }
 if($getnews == 'create') { ?>
 <title>News erstellen - <? echo $sitename ?></title>
@@ -156,12 +168,12 @@ $sqls = mysql_query("select id,name from posts");
 while($sql = mysql_fetch_array($sqls)) {
 ?>
 <form action="?posts=edit" method="post">
-<input type="submit" value="<? echo $sql['name']." editieren"; ?>" name="<? echo $sql['id']; ?>">
+<input type="submit" value="<? echo $sql['name']." editieren"; ?>" name="edit<? echo $sql['id']; ?>">
 </form>
 <?
 }
-if(isset($_POST[$sql['id']])) {
-$id = $_POST[$sql['id']];
+if(isset($_POST["edit".$sql['id']])) {
+$id = $_POST["edit".$sql['id']];
 $sqls = mysql_query("select name,text from posts where id = '".$id."'");
 while($sql = mysql_fetch_array($sqls)) {
 $pretext = str_replace("<br>", "\r\n", $sql['text']);
