@@ -2,9 +2,11 @@
 include "lib/config.php";
 include "lib/header.php";
 include "lib/mysql.php";
+echo "<title>Downloads - $sitename</title>";
 if(empty($_GET)) {
-while($dl = mysql_fetch_array(mysql_query("select * from downloads"))) {
-echo "<a href='downloads/".$dl['filename']."'>".$dl['name']."</a><br>";
+$dls = mysql_query("select * from downloads");
+while($dl = mysql_fetch_array($dls)) {
+echo "<a href='?dl=".$dl['id']."'>".$dl['name']."</a><br>";
 }
 }
 if(isset($_GET['dl'])) {
