@@ -1,3 +1,3 @@
 <?php
-$menu_admin = "<a href=\"admin.php?news=create\">News erstellen</a> | <a href=\"admin.php?posts=create\">Beitrag erstellen</a> | <a href=\"admin.php?news=delete\">News löschen</a> | <a href=\"admin.php?posts=delete\">Beitrag löschen</a> | <a href=\"admin.php?users=delete\">Benutzer löschen</a> | <a href=\"admin.php?users=list\">Benutzerliste</a> | <a href=\"admin.php?users=manage\">Benutzerverwaltung</a>";
+$menu_admin = "<a href=\"admin.php?news=create\">News erstellen</a> | <a href=\"admin.php?posts=create\">Beitrag erstellen</a> | <a href=\"admin.php?news=delete\">News löschen</a> | <a href=\"admin.php?posts=delete\">Beitrag löschen</a> | <a href=\"admin.php?users=delete\">Benutzer löschen</a> | <a href=\"admin.php?users=list\">Benutzerliste</a> | <a href=\"admin.php?users=manage\">Benutzerverwaltung</a> | <a href=\"admin.php?settings=cms\">Einstellungen</a>";
 ?>

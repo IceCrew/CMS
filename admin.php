@@ -8,6 +8,7 @@ echo "$menu_admin<hr>";
 $getposts = $_GET['posts'];
 $getnews = $_GET['news'];
 $getusers = $_GET['users'];
+$getsettings = $_GET['settings'];
 if($getposts == 'create') { ?>
 <title>Beitrag erstellen - <? echo $sitename ?></title>
 <form action="" method="post">
@@ -178,6 +179,42 @@ mysql_query("update posts set text='".$text."' where id = '".$id."'");
 mysql_query("update posts set name='".$_POST['name']."' where id = '".$id."'");
 
 header ("Location: admin.php?success");
+}
+}
+}
+if($getsettings == "cms") {
+?>
+<title>Einstellungen - <? echo $sitename ?></title>
+<form action="" method="post">
+Seitenname: <input type="text" name="sitename" value="<? echo $sitename ?>" maxlength="25"><br>
+Datenbank-Host: <input type="text" name="dbhost" value="<? echo $dbhost ?>" maxlength="50"><br>
+Datenbank-Name: <input type="text" name="dbname" value="<? echo $dbname ?>" maxlength="25"><br>
+Datenbank-Benutzer: <input type="text" name="dbuser" value="<? echo $dbuser ?>" maxlength="25"><br>
+Datenbank-Passwort: <input type="password" name="dbpasswd" value="<? echo $dbpasswd ?>" maxlength="50"><br>
+<input type="submit" name="configure" value="Weiter">
+</form>
+<?
+if(isset($_POST['configure'])) {
+$configfile = "lib/config.php";
+$write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$version."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.c-fire.tk/' target='_blank'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
+if (is_writable($configfile)) {
+
+    if (!$handle = fopen($configfile, "w+")) {
+         print "Kann die Datei $configfile nicht öffnen";
+         exit;
+    }
+    if (!fwrite($handle, $write)) {
+        print "Kann in die Datei $configfile nicht schreiben";
+        exit;
+    }
+
+    print "Konfiguration erfolgreich!";
+
+    fclose($handle);
+	header("Location: admin.php?success");
+
+} else {
+    print "Die Datei $configfile ist nicht schreibbar";
 }
 }
 }
