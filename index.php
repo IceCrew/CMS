@@ -24,7 +24,7 @@ echo 'Titel: <a href="index.php?newsID='.$sql["id"].'">'.$sql['name'].'</a><br><
 }
 if(isset($_GET['postID'])) {
 $id = $_GET['postID'];
-$mysql->query("select name,text,username from posts where id='".$id."'");
+$mysql->query("select name,text,username from posts where id='".$id."'", array());
 while($data = mysql_fetch_array($mysql->result)) {
 ?><title><? echo $data['name']." - ".$sitename ?></title><?
 echo "Post: ".$data['name'];

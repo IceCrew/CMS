@@ -24,12 +24,12 @@ $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $text = str_replace("href=\"", "href=\"./redirect.php?url=", $pretext);
 if(empty($name)) {
-header ("Location: admin.php?error");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?error">';
 }
 else {
 $mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION['adm_user_username']."')", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 if($getposts == 'delete') {
@@ -44,14 +44,14 @@ while($sql = mysql_fetch_array($mysql->result)) {
 if(isset($_POST[$sql['id']])) {
 $mysql->query("DELETE FROM posts WHERE id = '".$sql['id']."'", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 
 }
 if(isset($_GET['success'])) {
 ?> <title>Erfolgreich - <? echo $sitename ?></title> <?
-echo "Aktion erfolgreich ausgeführt!<br><input type=\"button\" value=\"Zurück\" onclick=\"history.back(-1)\">";
+echo 'Aktion erfolgreich ausgeführt!<br><a href="admin.php">Weiter</a><meta http-equiv="refresh" content="3; url=admin.php">';
 }
 if(isset($_GET['error'])) {
 ?> <title>Fehler - <? echo $sitename ?></title> <?
@@ -69,7 +69,7 @@ while($sql = mysql_fetch_array($mysql->result)) {
 if(isset($_POST[$sql['id']])) {
 $mysql->query("DELETE FROM accounts WHERE id = '".$sql['id']."' and safe = '0'", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 
@@ -100,7 +100,7 @@ while($sql = mysql_fetch_array($mysql->result)) {
 if(isset($_POST["unset".$sql['id']])) {
 $mysql->query("UPDATE accounts SET admin = '0' WHERE id = '".$sql['id']."'", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 $mysql->query("select id,username from accounts WHERE admin = '0'", array());
@@ -113,7 +113,7 @@ while($sql = mysql_fetch_array($mysql->result)) {
 if(isset($_POST["set".$sql['id']])) {
 $mysql->query("UPDATE accounts SET admin = '1' WHERE id = '".$sql['id']."'", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 }
@@ -137,7 +137,7 @@ header ("Location: admin.php?titleerror");
 else {
 $mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION['adm_user_username']."')", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 if($getnews == 'delete') {
@@ -152,7 +152,7 @@ while($sql33 = mysql_fetch_array($mysql->result)) {
 if(isset($_POST[$sql33['id']])) {
 $mysql->query("DELETE FROM news WHERE id = '".$sql33['id']."'", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 
@@ -190,7 +190,7 @@ $text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $mysql->query("update posts set text='".$text."' where id = '".$id."'", array());
 $mysql->query("update posts set name='".$_POST['name']."' where id = '".$id."'", array());
 
-header ("Location: admin.php?success");
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 }

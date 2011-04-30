@@ -41,18 +41,18 @@ $data = mysql_fetch_array ($mysql->result);
 $mysql->query("Select admin from accounts WHERE username = '".$_POST['name']."' and admin = '1'", array());
 $rows = mysql_num_rows($mysql->result);
 if($rows == 1) { 
-  $_SESSION["adm_user_id"] = $data["id"];  
-  $_SESSION["adm_user_username"] = $data["username"];
-  $_SESSION["all_user_id"] = $data["id"];
-  $_SESSION["all_user_username"] = $data["username"];
+  $_SESSION[$sitename."_adm_user_id"] = $data["id"];  
+  $_SESSION[$sitename."_adm_user_username"] = $data["username"];
+  $_SESSION[$sitename."_all_user_id"] = $data["id"];
+  $_SESSION[$sitename."_all_user_username"] = $data["username"];
 
   header ("Location: admin.php");  
 }
 elseif($rows == 0) {
-  $_SESSION["user_id"] = $data["id"];  
-  $_SESSION["user_username"] = $data["username"];
-  $_SESSION["all_user_id"] = $data["id"];
-  $_SESSION["all_user_username"] = $data["username"];
+  $_SESSION[$sitename."user_id"] = $data["id"];  
+  $_SESSION[$sitename."user_username"] = $data["username"];
+  $_SESSION[$sitename."all_user_id"] = $data["id"];
+  $_SESSION[$sitename."all_user_username"] = $data["username"];
   
   header ("Location: index.php");
 }
