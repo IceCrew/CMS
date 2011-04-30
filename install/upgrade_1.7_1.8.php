@@ -12,19 +12,8 @@ if(empty($_GET)) {
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
-?>
-<form action="upgrade_<? echo $pversion."_".$cmsversion; ?>.php?step=2" method="post">
-Seitenname: <input type="text" name="sitename" value="<? echo $sitename ?>" maxlength="25"><br>
-Datenbank-Host: <input type="text" name="dbhost" value="<? echo $dbhost ?>" maxlength="50"><br>
-Datenbank-Name: <input type="text" name="dbname" value="<? echo $dbname ?>" maxlength="25"><br>
-Datenbank-Benutzer: <input type="text" name="dbuser" value="<? echo $dbuser ?>" maxlength="25"><br>
-Datenbank-Passwort: <input type="password" name="dbpasswd" value="<? echo $dbpasswd ?>" maxlength="50"><br>
-<input type="submit" name="configure" value="Weiter">
-<?
-}
-if($_GET['step'] == 2) {
 $configfile = "../lib/config.php";
-$write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.c-fire.tk/' target='_blank'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
+$write = "<?php\n\$sitename = \"".$sitename."\";\n\$dbhost = \"".$dbhost."\";\n\$dbuser = \"".$dbuser."\";\n\$dbpasswd = \"".$dbpasswd."\";\n\$dbname = \"".$dbname."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.c-fire.tk/' target='_blank'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
 if (is_writable($configfile)) {
 
     if (!$handle = fopen($configfile, "w+")) {
@@ -49,15 +38,7 @@ if (is_writable($configfile)) {
 }
 if(isset($_GET['success'])) {
 echo "Upgrade erfolgreich";
-?>
-<form action="upgrade_<? echo $pversion."_".$cmsversion; ?>.php?success" method="post">
-<input type="submit" name="complete" value="Upgrade abschlieﬂen">
-</form>
-<?
-if(isset($_POST['complete'])) {
-echo '<meta http-equiv="refresh" content="0; url=../index.php">';
-echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
-}
+echo "<a href='../index.php'>Abschlieﬂen</a>";
 }
 ?>
 </center>
