@@ -27,7 +27,7 @@ if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0; url=admin.php?error">';
 }
 else {
-$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION['adm_user_username']."')", array());
+$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'adm_user_username']."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
@@ -135,7 +135,7 @@ if(empty($name)) {
 header ("Location: admin.php?titleerror");
 }
 else {
-$mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION['adm_user_username']."')", array());
+$mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'adm_user_username']."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
