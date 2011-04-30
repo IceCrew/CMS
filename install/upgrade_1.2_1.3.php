@@ -48,16 +48,16 @@ if (is_writable($configfile)) {
 }
 }
 if($step == 3) {
-include '../lib/mysql.php';
-$sqlsnews = mysql_query("SELECT text FROM news");
-while($sqlnews = mysql_fetch_array($sqlsnews)) {
+include_once "../lib/class.mysql.php";
+$mysql->query("SELECT text FROM news", array());
+while($sqlnews = mysql_fetch_array($mysql->result)) {
 $newstext = str_replace("\n", "<br>", $sqlnews['text']);
-mysql_query("UPDATE `news` SET `text`='".$newstext."' WHERE `text`='".$sqlnews['text']."'");
+$mysql->query("UPDATE `news` SET `text`='".$newstext."' WHERE `text`='".$sqlnews['text']."'", array());
 }
-$sqlsposts = mysql_query("SELECT text FROM posts");
-while($sqlposts = mysql_fetch_array($sqlsposts)) {
+$mysql->query("SELECT text FROM posts", array());
+while($sqlposts = mysql_fetch_array($mysql->result)) {
 $poststext = str_replace("\n", "<br>", $sqlposts['text']);
-mysql_query("UPDATE `posts` SET `text`='".$poststext."' WHERE `text`='".$sqlposts['text']."'");
+$mysql->query("UPDATE `posts` SET `text`='".$poststext."' WHERE `text`='".$sqlposts['text']."'", array());
 }
 header("Location: upgrade_1.2_1.3.php?success");
 echo "<a href=\"upgrade_1.2_1.3.php?success\">Weiter</a>";

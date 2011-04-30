@@ -48,14 +48,14 @@ if (is_writable($configfile)) {
 }
 }
 if($step == 3) {
-include '../lib/mysql.php';
-mysql_query("CREATE TABLE `news` (
+include_once '../lib/class.mysql.php';
+$mysql->query("CREATE TABLE `news` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `text` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die (mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die (mysql_error());
 header("Location: upgrade_1.1_1.2.php?success");
 }
 }

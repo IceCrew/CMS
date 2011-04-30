@@ -46,22 +46,22 @@ if (is_writable($configfile)) {
 }
 }
 if($_GET['step'] == 3) {
-include '../lib/mysql.php';
-mysql_query("CREATE TABLE `downloads` (
+include_once "../lib/class.mysql.php";
+$mysql->query("CREATE TABLE `downloads` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `filename` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die(mysql_error());
-$sqlsnews = mysql_query("SELECT text FROM news");
-while($sqlnews = mysql_fetch_array($sqlsnews)) {
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die(mysql_error());
+$mysql->query("SELECT text FROM news", array());
+while($sqlnews = mysql_fetch_array($mysql->result)) {
 $newstext = str_replace("href=\"", "href=\"./redirect.php?url=", $sqlnews['text']);
-mysql_query("UPDATE `news` SET `text`='".$newstext."' WHERE `text`='".$sqlnews['text']."'");
+$mysql->query("UPDATE `news` SET `text`='".$newstext."' WHERE `text`='".$sqlnews['text']."'", array());
 }
-$sqlsposts = mysql_query("SELECT text FROM posts");
-while($sqlposts = mysql_fetch_array($sqlsposts)) {
+$mysql->query("SELECT text FROM posts", array());
+while($sqlposts = mysql_fetch_array($mysql->result)) {
 $poststext = str_replace("href=\"", "href=\"./redirect.php?url=", $sqlposts['text']);
-mysql_query("UPDATE `posts` SET `text`='".$poststext."' WHERE `text`='".$sqlposts['text']."'");
+$mysql->query("UPDATE `posts` SET `text`='".$poststext."' WHERE `text`='".$sqlposts['text']."'", array());
 }
 header("Location: upgrade_1.3_1.4.php?success");
 echo "<a href=\"upgrade_1.3_1.4.php?success\">Weiter</a>";

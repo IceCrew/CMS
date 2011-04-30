@@ -55,35 +55,35 @@ if (is_writable($configfile)) {
 }
 if($_GET['step'] == 3) {
 include '../lib/config.php';
-include '../lib/mysql.php';
-mysql_query("CREATE TABLE `accounts` (
+include_once "../lib/class.mysql.php";
+$mysql->query("CREATE TABLE `accounts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `password` text COLLATE latin1_german1_ci NOT NULL,
   `admin` int(1) unsigned zerofill NOT NULL,
   `safe` int(1) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die (mysql_error());
-mysql_query("CREATE TABLE `posts` (
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die (mysql_error());
+$mysql->query("CREATE TABLE `posts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `text` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die (mysql_error());
-mysql_query("CREATE TABLE `news` (
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die (mysql_error());
+$mysql->query("CREATE TABLE `news` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `text` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die (mysql_error());
-mysql_query("CREATE TABLE `downloads` (
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die (mysql_error());
+$mysql->query("CREATE TABLE `downloads` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `filename` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci") or die(mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die(mysql_error());
 header("Location: index.php?step=4");
 }
 if($_GET['step'] == 4) {
@@ -94,14 +94,13 @@ Passwort: <input type="password" name="password" maxlength="25"><br>
 </form> <?
 if(isset($_POST['create'])) {
 include '../lib/config.php';
-include '../lib/mysql.php';
+include_once "../lib/class.mysql.php";
 $user = $_POST['username'];
 $pw = sha1($_POST['password']);
-$sql = ("Select username from accounts WHERE username = '".$user."'");
-$result = mysql_query($sql);
-$rows = mysql_num_rows($result);
-mysql_query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')") or die ("Fehler beim erstellen des Administrators!");
-mysql_query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich wCMS ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')") or die("Fehler beim erstellen der Erstnews!");
+$mysql->query("Select username from accounts WHERE username = '".$user."'", array());
+$rows = $mysql->count;
+$mysql->query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')", array()) or die ("Fehler beim erstellen des Administrators!");
+$mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich wCMS ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array()) or die("Fehler beim erstellen der Erstnews!");
 header("Location: index.php?success");
 }
 }

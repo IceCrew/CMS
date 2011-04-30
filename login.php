@@ -1,7 +1,7 @@
 <?php
 include "lib/config.php";
 include "lib/header.php";
-include "lib/mysql.php";
+include_once "lib/class.mysql.php";
 session_start (); 
 ?> 
 <html>  
@@ -27,21 +27,19 @@ $mode = $_GET['mode'];
 if($mode == 'login') {
 session_start ();   
 
-$sql = "SELECT ".  
+$mysql->query("SELECT ".  
     "id, username, password ".  
   "FROM ".  
     "accounts ".  
   "WHERE ".  
     "(username like '".$_POST["name"]."') AND ".  
-    "(password = '".sha1($_POST["pwd"])."')";  
-$result = mysql_query ($sql);  
+    "(password = '".sha1($_POST["pwd"])."')", array());  
 
-if (mysql_num_rows ($result) > 0)  
+if (mysql_num_rows ($mysql->result) > 0)  
 {   
-$data = mysql_fetch_array ($result);  
-$sql2 = ("Select admin from accounts WHERE username = '".$_POST['name']."' and admin = '1'");
-$result2 = mysql_query($sql2);
-$rows = mysql_num_rows($result2);
+$data = mysql_fetch_array ($mysql->result);  
+$mysql->query("Select admin from accounts WHERE username = '".$_POST['name']."' and admin = '1'", array());
+$rows = mysql_num_rows($mysql->result);
 if($rows == 1) { 
   $_SESSION["adm_user_id"] = $data["id"];  
   $_SESSION["adm_user_username"] = $data["username"];
@@ -87,13 +85,13 @@ if(isset($_POST['register'])) {
 $user = $_POST['username'];
 $pw = sha1($_POST['password']);
 $sql = "Select username from accounts WHERE username = '".$user."'";
-$result = mysql_query($sql);
-$rows = mysql_num_rows($result);
+$mysql->query($sql, array());
+$rows = mysql_num_rows($mysql->result);
 if($rows == 1) {
 echo "Der Benutzername wird bereits verwendet!";
 }
 if($rows == 0) {
-mysql_query("INSERT INTO accounts (username, password, admin) VALUES ('".$user."', '".$pw."', '0')") or die ("Fehler beim erstellen des Benutzers!");
+$mysql->query("INSERT INTO accounts (username, password, admin) VALUES ('".$user."', '".$pw."', '0')", array()) or die ("Fehler beim erstellen des Benutzers!");
 echo "User wurde erstellt!";
 }
 }

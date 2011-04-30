@@ -5,7 +5,7 @@ die;
 }
 else {
 include "lib/config.php"; 
-include "lib/mysql.php";
+include_once "lib/class.mysql.php";
 include "lib/header.php";
 }
 if(empty($_GET)) {
@@ -15,16 +15,17 @@ if(empty($_GET)) {
   <title><? echo $sitename ?></title>  
 </head>  
 <body>
-<? $sqls = mysql_query("select id,name,text,username from news");
-while($sql = mysql_fetch_array($sqls)) {
+<?
+$mysql->query("select id,name,text,username from news", array());
+while($sql = mysql_fetch_array($mysql->result)) {
 $text = $sql['text'];
 echo 'Titel: <a href="index.php?newsID='.$sql["id"].'">'.$sql['name'].'</a><br><br>'.$text.'<br><br>Von '.$sql['username'].' geschrieben<hr>';
 }
 }
 if(isset($_GET['postID'])) {
 $id = $_GET['postID'];
-$datas = mysql_query("select name,text,username from posts where id='".$id."'");
-while($data = mysql_fetch_array($datas)) {
+$mysql->query("select name,text,username from posts where id='".$id."'");
+while($data = mysql_fetch_array($mysql->result)) {
 ?><title><? echo $data['name']." - ".$sitename ?></title><?
 echo "Post: ".$data['name'];
 echo "<br><br>";
@@ -36,16 +37,16 @@ echo "<hr>";
 }
 if(isset($_GET['posts'])) {
 ?><title>Alle Beiträge - <? echo $sitename ?></title><?
-$sqls = mysql_query("select id, name from posts");
-while($sql = mysql_fetch_array($sqls)) {
+$mysql->query("select id, name from posts", array());
+while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?postID=".$sql['id']."\">".$sql['name']."</a><br>";
 }
 echo "<hr>";
 }
 if(isset($_GET['newsID'])) {
 $id = $_GET['newsID'];
-$datas = mysql_query("select name,text,username from news where id='".$id."'");
-while($data = mysql_fetch_array($datas)) {
+$mysql->query("select name,text,username from news where id='".$id."'", array());
+while($data = mysql_fetch_array($mysql->result)) {
 ?><title><? echo $data['name']." - ".$sitename ?></title><?
 echo "News: ".$data['name'];
 echo "<br><br>";
@@ -57,8 +58,8 @@ echo "<hr>";
 }
 if(isset($_GET['news'])) {
 ?><title>Alle Beiträge - <? echo $sitename ?></title><?
-$sqls = mysql_query("select id, name from news");
-while($sql = mysql_fetch_array($sqls)) {
+$mysql->query("select id, name from news", array());
+while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?newsID=".$sql['id']."\">".$sql['name']."</a><br>";
 }
 echo "<hr>";
