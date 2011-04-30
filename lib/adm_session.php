@@ -3,6 +3,6 @@ include "config.php";
 session_start ();  
 if (!isset ($_SESSION[$sitename."_adm_user_id"]))
 {  
-  header ("Location: login.php");  
+echo '<meta http-equiv="refresh" content="0; url=login.php">';
 }
 ?>

@@ -8,7 +8,6 @@ if(empty($_GET)) {
 <a href="upgrade_1.2_1.3.php?step=1">Mit dem Upgrade von <? echo $version." auf ".$cmsversion ?> beginnen</a>
 </form>
 <?
-header("Location: upgrade_1.2_1.3.php?step=1");
 }
 if(isset($_GET['step'])) {
 $step = $_GET['step'];
@@ -41,7 +40,7 @@ if (is_writable($configfile)) {
 
     fclose($handle);
 	echo "<br><a href='upgrade_1.2_1.3.php?step=3'>Weiter</a>";
-	header("Location: upgrade_1.2_1.3.php?step=3");
+	echo '<meta http-equiv="refresh" content="0; url=upgrade_1.2_1.3.php?step=3">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -59,7 +58,7 @@ while($sqlposts = mysql_fetch_array($mysql->result)) {
 $poststext = str_replace("\n", "<br>", $sqlposts['text']);
 $mysql->query("UPDATE `posts` SET `text`='".$poststext."' WHERE `text`='".$sqlposts['text']."'", array());
 }
-header("Location: upgrade_1.2_1.3.php?success");
+echo '<meta http-equiv="refresh" content="0; url=upgrade_1.2_1.3.php?success">';
 echo "<a href=\"upgrade_1.2_1.3.php?success\">Weiter</a>";
 }
 }
@@ -71,7 +70,7 @@ echo "Upgrade erfolgreich";
 </form>
 <?
 if(isset($_POST['complete'])) {
-header ("Location: ../index.php");
+echo '<meta http-equiv="refresh" content="0; url=../index.php">';
 echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
 }
 }

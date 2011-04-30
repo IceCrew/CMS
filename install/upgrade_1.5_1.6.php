@@ -39,7 +39,7 @@ if (is_writable($configfile)) {
 
     fclose($handle);
 	echo "<br><a href='upgrade_1.5_1.6.php?success'>Weiter</a>";
-	header("Location: upgrade_1.5_1.6.php?success");
+	echo '<meta http-equiv="refresh" content="0; url=upgrade_1.5_1.6.php?success">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -54,7 +54,7 @@ echo "Upgrade erfolgreich";
 </form>
 <?
 if(isset($_POST['complete'])) {
-header ("Location: ../index.php");
+echo '<meta http-equiv="refresh" content="0; url=../index.php">';
 echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
 }
 }

@@ -1,11 +1,11 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "1.7";
+$cmsversion = "1.8";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
-header("Location: upgrade.php");
+echo '<meta http-equiv="refresh" content="0; url=upgrade.php">';
 die;
 }
 else {
@@ -15,7 +15,6 @@ rename("../lib/config.php.new", "../lib/config.php");
 <a href="index.php?step=1">Mit der Installation beginnen</a>
 </form>
 <?
-header("Location: index.php?step=1");
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
@@ -47,7 +46,7 @@ if (is_writable($configfile)) {
 
     fclose($handle);
 	echo "<br><a href='index.php?step=3'>Weiter</a>";
-	header("Location: index.php?step=3");
+	echo '<meta http-equiv="refresh" content="0; url=index.php?step=3">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -84,7 +83,7 @@ $mysql->query("CREATE TABLE `downloads` (
   `filename` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die(mysql_error());
-header("Location: index.php?step=4");
+echo '<meta http-equiv="refresh" content="0; url=index.php?step=4">';
 }
 if($_GET['step'] == 4) {
 ?> <form action="index.php?step=4" method="post">
@@ -101,7 +100,7 @@ $mysql->query("Select username from accounts WHERE username = '".$user."'", arra
 $rows = $mysql->count;
 $mysql->query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')", array()) or die ("Fehler beim erstellen des Administrators!");
 $mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich wCMS ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array()) or die("Fehler beim erstellen der Erstnews!");
-header("Location: index.php?success");
+echo '<meta http-equiv="refresh" content="0; url=index.php?success">';
 }
 }
 }
@@ -113,7 +112,7 @@ echo "Installation erfolgreich";
 </form>
 <?
 if(isset($_POST['complete'])) {
-header ("Location: ../index.php");
+echo '<meta http-equiv="refresh" content="0; url=../index.php">';
 echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
 }
 }

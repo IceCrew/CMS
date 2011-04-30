@@ -46,7 +46,7 @@ if($rows == 1) {
   $_SESSION[$sitename."_all_user_id"] = $data["id"];
   $_SESSION[$sitename."_all_user_username"] = $data["username"];
 
-  header ("Location: admin.php");  
+echo '<meta http-equiv="refresh" content="0; url=index.php">';
 }
 elseif($rows == 0) {
   $_SESSION[$sitename."user_id"] = $data["id"];  
@@ -54,12 +54,12 @@ elseif($rows == 0) {
   $_SESSION[$sitename."all_user_id"] = $data["id"];
   $_SESSION[$sitename."all_user_username"] = $data["username"];
   
-  header ("Location: index.php");
+echo '<meta http-equiv="refresh" content="0; url=index.php">';
 }
 } 
 else  
 {  
-  header ("Location: login.php?error");  
+echo '<meta http-equiv="refresh" content="0; url=login.php?error">';
 }
 } 
 if($mode == 'logout') {   
@@ -69,7 +69,7 @@ session_start ();
 session_unset ();  
 session_destroy ();  
 
-header ("Location: index.php");  
+echo '<meta http-equiv="refresh" content="0; url=index.php">';
 ob_end_flush ();  
 }
 if($mode == 'register') {

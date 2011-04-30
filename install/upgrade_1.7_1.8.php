@@ -2,17 +2,18 @@
 <center>
 <?
 include '../lib/config.php';
-$cmsversion = "1.5";
+$cmsversion = "1.8";
+$pversion = $cmsversion - 0.1;
 if(empty($_GET)) {
 ?>
-<a href="upgrade_1.4_1.5.php?step=1">Mit dem Upgrade von <? echo $version." auf ".$cmsversion ?> beginnen</a>
+<a href="upgrade_<? echo $pversion."_".$cmsversion; ?>.php?step=1">Mit dem Upgrade von <? echo $version." auf ".$cmsversion ?> beginnen</a>
 </form>
 <?
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
 ?>
-<form action="upgrade_1.4_1.5.php?step=2" method="post">
+<form action="upgrade_<? echo $pversion."_".$cmsversion; ?>.php?step=2" method="post">
 Seitenname: <input type="text" name="sitename" value="<? echo $sitename ?>" maxlength="25"><br>
 Datenbank-Host: <input type="text" name="dbhost" value="<? echo $dbhost ?>" maxlength="50"><br>
 Datenbank-Name: <input type="text" name="dbname" value="<? echo $dbname ?>" maxlength="25"><br>
@@ -23,7 +24,7 @@ Datenbank-Passwort: <input type="password" name="dbpasswd" value="<? echo $dbpas
 }
 if($_GET['step'] == 2) {
 $configfile = "../lib/config.php";
-$write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.w-cms.tk/' target='_blank'>wCMS \".\$version.\"</a>\";\n?>";
+$write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.c-fire.tk/' target='_blank'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
 if (is_writable($configfile)) {
 
     if (!$handle = fopen($configfile, "w+")) {
@@ -38,8 +39,8 @@ if (is_writable($configfile)) {
     print "Konfiguration erfolgreich!";
 
     fclose($handle);
-	echo "<br><a href='upgrade_1.4_1.5.php?success'>Weiter</a>";
-echo '<meta http-equiv="refresh" content="0; url=upgrade_1.4_1.5.php?success">';
+	echo "<br><a href='upgrade_".$pversion."_".$cmsversion.".php?success'>Weiter</a>";
+	echo '<meta http-equiv="refresh" content="0; url=upgrade_'.$pversion.'_'.$cmsversion.'.php?success">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -49,7 +50,7 @@ echo '<meta http-equiv="refresh" content="0; url=upgrade_1.4_1.5.php?success">';
 if(isset($_GET['success'])) {
 echo "Upgrade erfolgreich";
 ?>
-<form action="upgrade_1.4_1.5.php?success" method="post">
+<form action="upgrade_<? echo $pversion."_".$cmsversion; ?>.php?success" method="post">
 <input type="submit" name="complete" value="Upgrade abschließen">
 </form>
 <?
