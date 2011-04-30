@@ -1,6 +1,6 @@
 <title>Upgrade</title>
 <?php
-$cmsversion = "1.7";
+$cmsversion = "1.8";
 if(!file_exists("../lib/config.php")) {
 echo "Ist noch nicht installiert! <a href=\"index.php\">Klicke hier um es zu installieren</a>";
 die;
