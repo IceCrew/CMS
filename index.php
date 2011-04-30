@@ -79,9 +79,6 @@ echo $help_html;
 }
 echo "<hr>";
 }
-if(isset($_GET['dissen'])) {
-echo 1.7 - 0.1;
-}
 ?>  
 <? echo $footer ?>  
 </body>  
