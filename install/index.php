@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "1.8";
+$cmsversion = "1.9";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -10,6 +10,7 @@ die;
 }
 else {
 rename("../lib/config.php.new", "../lib/config.php");
+mkdir("../downloads", 0777);
 }
 ?>
 <a href="index.php?step=1">Mit der Installation beginnen</a>

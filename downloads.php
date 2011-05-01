@@ -4,8 +4,8 @@ include "lib/header.php";
 include_once "lib/class.mysql.php";
 echo "<title>Downloads - $sitename</title>";
 if(empty($_GET)) {
-$dls = mysql_query("select * from downloads", array());
-while($dl = mysql_fetch_array($dls)) {
+$mysql->query("select * from downloads", array());
+while($dl = mysql_fetch_array($mysql->result)) {
 echo "<a href='?dl=".$dl['id']."'>".$dl['name']."</a><br>";
 }
 }

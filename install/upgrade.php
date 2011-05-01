@@ -1,6 +1,6 @@
 <title>Upgrade</title>
 <?php
-$cmsversion = "1.8";
+$cmsversion = "1.9";
 if(!file_exists("../lib/config.php")) {
 echo "Ist noch nicht installiert! <a href=\"index.php\">Klicke hier um es zu installieren</a>";
 die;
@@ -31,6 +31,9 @@ echo '<meta http-equiv="refresh" content="0; url=upgrade_1.6_1.7.php">';
 }
 elseif($version == 1.7) {
 echo '<meta http-equiv="refresh" content="0; url=upgrade_1.7_1.8.php">';
+}
+elseif($version == 1.8) {
+echo '<meta http-equiv="refresh" content="0; url=upgrade_1.8_1.9.php">';
 }
 }
 ?>

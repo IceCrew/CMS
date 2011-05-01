@@ -2,7 +2,7 @@
 <center>
 <?
 include '../lib/config.php';
-$cmsversion = "1.8";
+$cmsversion = "1.9";
 $pversion = $cmsversion - 0.1;
 if(empty($_GET)) {
 ?>
@@ -13,6 +13,7 @@ if(empty($_GET)) {
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
 $configfile = "../lib/config.php";
+mkdir("../downloads", 0777);
 $write = "<?php\n\$sitename = \"".$sitename."\";\n\$dbhost = \"".$dbhost."\";\n\$dbuser = \"".$dbuser."\";\n\$dbpasswd = \"".$dbpasswd."\";\n\$dbname = \"".$dbname."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.c-fire.tk/' target='_blank'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
 if (is_writable($configfile)) {
 

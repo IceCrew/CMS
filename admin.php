@@ -9,6 +9,7 @@ $getposts = $_GET['posts'];
 $getnews = $_GET['news'];
 $getusers = $_GET['users'];
 $getsettings = $_GET['settings'];
+$getdownloads = $_GET['downloads'];
 if($getposts == 'create') { ?>
 <title>Beitrag erstellen - <? echo $sitename ?></title>
 <form action="" method="post">
@@ -198,11 +199,11 @@ if($getsettings == "cms") {
 ?>
 <title>Einstellungen - <? echo $sitename ?></title>
 <form action="" method="post">
-Seitenname: <input type="text" name="sitename" value="<? echo $sitename ?>" maxlength="25"><br>
-Datenbank-Host: <input type="text" name="dbhost" value="<? echo $dbhost ?>" maxlength="50"><br>
-Datenbank-Name: <input type="text" name="dbname" value="<? echo $dbname ?>" maxlength="25"><br>
-Datenbank-Benutzer: <input type="text" name="dbuser" value="<? echo $dbuser ?>" maxlength="25"><br>
-Datenbank-Passwort: <input type="password" name="dbpasswd" value="<? echo $dbpasswd ?>" maxlength="50"><br>
+Seitenname: <input type="text" name="sitename" readonly="true" value="<? echo $sitename ?>" maxlength="25"><br>
+Datenbank-Host: <input type="password" name="dbhost" readonly="true" value="<? echo $dbhost ?>" maxlength="50"><br>
+Datenbank-Name: <input type="password" name="dbname" readonly="true" value="<? echo $dbname ?>" maxlength="25"><br>
+Datenbank-Benutzer: <input type="password" name="dbuser" readonly="true" value="<? echo $dbuser ?>" maxlength="25"><br>
+Datenbank-Passwort: <input type="password" name="dbpasswd" readonly="true" value="<? echo $dbpasswd ?>" maxlength="50"><br>
 <input type="submit" name="configure" value="Weiter">
 </form>
 <?
@@ -227,6 +228,38 @@ if (is_writable($configfile)) {
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
+}
+}
+}
+if($getdownloads == 'create') {
+?> <title>Download erstellen - <? echo $sitename ?></title>
+<h4>Please do just upload ZIP-Archives,RAR-Archives or Executables. Otherwise the File will be destroyed!</h4>
+<form action="" method="post" enctype="multipart/form-data">
+Name: <input type="text" name="name" size="50"><br>
+Datei: <input type="file" name="datei" size="75"><br>
+Hochladen: <input type="submit" value="Hochladen" name="add">
+</form>
+<?
+if(isset($_POST['add'])) {
+move_uploaded_file($_FILES['datei']['tmp_name'], "downloads/".$_FILES['datei']['name']);
+$mysql->query("INSERT INTO downloads (name, filename) VALUES ('".$_POST['name']."', '".$_FILES['datei']['name']."')", array());
+echo "Datei hochgeladen";
+}
+}
+if($getdownloads == 'delete') {
+?> <title>Download löschen - <? echo $sitename ?></title> <?
+$mysql->query("select id,name,filename from downloads", array());
+while($sql = mysql_fetch_array($mysql->result)) {
+?>
+<form action="" method="post">
+<input type="submit" value="<? echo $sql['name']." löschen"; ?>" name="<? echo $sql['id']; ?>">
+</form>
+<?
+if(isset($_POST[$sql['id']])) {
+$mysql->query("DELETE FROM downloads WHERE id = '".$sql['id']."'", array());
+unlink("downloads/".$sql['filename']);
+
+echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
 }
 }

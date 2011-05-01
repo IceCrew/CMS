@@ -1,4 +1,4 @@
-<a name="top"></a><a href="index.php">Index</a> | <a href="index.php?news">Alle News</a> | <a href="index.php?posts">Alle Posts</a>
+<a name="top"></a><a href="index.php">Index</a> | <a href="index.php?news">Alle News</a> | <a href="index.php?posts">Alle Posts</a> | <a href="downloads.php">Alle Downloads</a>
 <?
 session_start();
 require('config.php');
