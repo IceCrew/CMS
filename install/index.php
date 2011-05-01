@@ -63,27 +63,27 @@ $mysql->query("CREATE TABLE `accounts` (
   `admin` int(1) unsigned zerofill NOT NULL,
   `safe` int(1) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die (mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die (mysql_error());
 $mysql->query("CREATE TABLE `posts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `text` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die (mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die (mysql_error());
 $mysql->query("CREATE TABLE `news` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `text` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die (mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die (mysql_error());
 $mysql->query("CREATE TABLE `downloads` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `filename` text COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci", array()) or die(mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die(mysql_error());
 echo '<meta http-equiv="refresh" content="0; url=index.php?step=4">';
 }
 if($_GET['step'] == 4) {
