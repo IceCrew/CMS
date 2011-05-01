@@ -199,11 +199,11 @@ if($getsettings == "cms") {
 ?>
 <title>Einstellungen - <? echo $sitename ?></title>
 <form action="" method="post">
-Seitenname: <input type="text" name="sitename" readonly="true" value="<? echo $sitename ?>" maxlength="25"><br>
-Datenbank-Host: <input type="password" name="dbhost" readonly="true" value="<? echo $dbhost ?>" maxlength="50"><br>
-Datenbank-Name: <input type="password" name="dbname" readonly="true" value="<? echo $dbname ?>" maxlength="25"><br>
-Datenbank-Benutzer: <input type="password" name="dbuser" readonly="true" value="<? echo $dbuser ?>" maxlength="25"><br>
-Datenbank-Passwort: <input type="password" name="dbpasswd" readonly="true" value="<? echo $dbpasswd ?>" maxlength="50"><br>
+Seitenname: <input type="text" name="sitename" value="<? echo $sitename ?>" maxlength="25"><br>
+Datenbank-Host: <input type="text" name="dbhost" value="<? echo $dbhost ?>" maxlength="50"><br>
+Datenbank-Name: <input type="text" name="dbname" value="<? echo $dbname ?>" maxlength="25"><br>
+Datenbank-Benutzer: <input type="text" name="dbuser" value="<? echo $dbuser ?>" maxlength="25"><br>
+Datenbank-Passwort: <input type="password" name="dbpasswd" value="<? echo $dbpasswd ?>" maxlength="50"><br>
 <input type="submit" name="configure" value="Weiter">
 </form>
 <?
