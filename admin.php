@@ -28,7 +28,7 @@ if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0; url=admin.php?error">';
 }
 else {
-$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'adm_user_username']."')", array());
+$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'_adm_user_username']."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
@@ -136,7 +136,7 @@ if(empty($name)) {
 header ("Location: admin.php?titleerror");
 }
 else {
-$mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'adm_user_username']."')", array());
+$mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'_adm_user_username']."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=admin.php?success">';
 }
@@ -242,7 +242,7 @@ Hochladen: <input type="submit" value="Hochladen" name="add">
 <?
 if(isset($_POST['add'])) {
 move_uploaded_file($_FILES['datei']['tmp_name'], "downloads/".$_FILES['datei']['name']);
-$mysql->query("INSERT INTO downloads (name, filename) VALUES ('".$_POST['name']."', '".$_FILES['datei']['name']."')", array());
+$mysql->query("INSERT INTO downloads (name, filename, downloads) VALUES ('".$_POST['name']."', '".$_FILES['datei']['name']."', '0')", array());
 echo "Datei hochgeladen";
 }
 }

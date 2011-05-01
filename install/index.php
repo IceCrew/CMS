@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "2.0";
+$cmsversion = "2.1";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -82,6 +82,7 @@ $mysql->query("CREATE TABLE `downloads` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `filename` text COLLATE latin1_german1_ci NOT NULL,
+  `downloads` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die(mysql_error());
 echo '<meta http-equiv="refresh" content="0; url=index.php?step=4">';

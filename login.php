@@ -49,10 +49,10 @@ if($rows == 1) {
 echo '<meta http-equiv="refresh" content="0; url=index.php">';
 }
 elseif($rows == 0) {
-  $_SESSION[$sitename."user_id"] = $data["id"];  
-  $_SESSION[$sitename."user_username"] = $data["username"];
-  $_SESSION[$sitename."all_user_id"] = $data["id"];
-  $_SESSION[$sitename."all_user_username"] = $data["username"];
+  $_SESSION[$sitename."_user_id"] = $data["id"];  
+  $_SESSION[$sitename."_user_username"] = $data["username"];
+  $_SESSION[$sitename."_all_user_id"] = $data["id"];
+  $_SESSION[$sitename."_all_user_username"] = $data["username"];
   
 echo '<meta http-equiv="refresh" content="0; url=index.php">';
 }
