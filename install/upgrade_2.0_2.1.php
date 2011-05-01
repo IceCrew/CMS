@@ -6,7 +6,7 @@ $cmsversion = "2.1";
 $pversion = $cmsversion - 0.1;
 if(empty($_GET)) {
 ?>
-<a href="upgrade_<? echo $pversion."_".$cmsversion; ?>.php?step=1">Mit dem Upgrade von <? echo $version." auf ".$cmsversion ?> beginnen</a>
+<a href="upgrade_2.0<? echo "_".$cmsversion; ?>.php?step=1">Mit dem Upgrade von <? echo $version." auf ".$cmsversion ?> beginnen</a>
 </form>
 <?
 }
@@ -28,8 +28,8 @@ if (is_writable($configfile)) {
     print "Konfiguration erfolgreich!";
 
     fclose($handle);
-	echo "<br><a href='upgrade_".$pversion."_".$cmsversion.".php?step=2'>Weiter</a>";
-	echo '<meta http-equiv="refresh" content="0; url=upgrade_'.$pversion.'_'.$cmsversion.'.php?step=2">';
+	echo "<br><a href='upgrade_2.0_".$cmsversion.".php?step=2'>Weiter</a>";
+	echo '<meta http-equiv="refresh" content="0; url=upgrade_2.0_'.$cmsversion.'.php?step=2">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -39,7 +39,7 @@ if($_GET['step'] == 2) {
 include_once "../lib/class.mysql.php";
 $mysql->query("ALTER TABLE `downloads` ADD COLUMN downloads int(100) AFTER `filename`;", array());
 $mysql->query("UPDATE `downloads` SET `downloads`='0';", array());
-echo '<meta http-equiv="refresh" content="0; url=upgrade_'.$pversion.'_'.$cmsversion.'.php?success">';
+echo '<meta http-equiv="refresh" content="0; url=upgrade_2.0_'.$cmsversion.'.php?success">';
 }
 }
 if(isset($_GET['success'])) {
