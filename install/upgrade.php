@@ -35,5 +35,8 @@ echo '<meta http-equiv="refresh" content="0; url=upgrade_1.7_1.8.php">';
 elseif($version == 1.8) {
 echo '<meta http-equiv="refresh" content="0; url=upgrade_1.8_1.9.php">';
 }
+elseif($version == 1.9) {
+echo '<meta http-equiv="refresh" content="0; url=upgrade_1.9_2.0.php">';
+}
 }
 ?>
