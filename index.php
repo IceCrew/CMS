@@ -15,6 +15,7 @@ if(empty($_GET)) {
 echo '<meta http-equiv="refresh" content="0; url=./index.php?page=Index">';
 }
 if($getpage == "Impressum") {
+echo "<title>Impressum - $sitename</title>";
 echo "Name: $impressum_name<br>
 Land: $impressum_land<br>
 Ort: $impressum_postleitzahl $impressum_stadt<br>
