@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "2.1";
+$cmsversion = "2.2";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -19,19 +19,48 @@ mkdir("../downloads", 0777);
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
-?>
-<form action="index.php?step=2" method="post">
+echo '<form action="index.php?step=2" method="post">
+<h3>Server-Konfiguration:</h3>
 Seitenname: <input type="text" name="sitename" maxlength="25"><br>
 Datenbank-Host: <input type="text" name="dbhost" maxlength="50"><br>
 Datenbank-Name: <input type="text" name="dbname" maxlength="25"><br>
 Datenbank-Benutzer: <input type="text" name="dbuser" maxlength="25"><br>
 Datenbank-Passwort: <input type="password" name="dbpasswd" maxlength="50"><br>
+<h3>Impressum-Konfiguration (optional)</h3>
+Name: <input type="text" name="impressum_name" maxlength="50"><br>
+Land: <input type="text" name="impressum_land" maxlength="50"><br>
+Postleitzahl: <input type="text" name="impressum_postleitzahl" maxlength="50"><br>
+Stadt: <input type="text" name="impressum_stadt" maxlength="50"><br>
+Straße: <input type="text" name="impressum_straße" maxlength="50"><br>
+Hausnummer: <input type="text" name="impressum_hausnummer" maxlength="50"><br>
+E-Mail: <input type="text" name="impressum_email" maxlength="50"><br>
+Telefon: <input type="text" name="impressum_telefon" maxlength="50"><br>
 <input type="submit" name="configure" value="Weiter">
-<?
+</form>';
 }
 if($_GET['step'] == 2) {
+$email = str_replace("@", "[at]", $_POST['impressum_email']);
 $configfile = "../lib/config.php";
-$write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
+$write = "<?php
+\$sitename = \"".$_POST['sitename']."\";
+\$dbhost = \"".$_POST['dbhost']."\";
+\$dbuser = \"".$_POST['dbuser']."\";
+\$dbpasswd = \"".$_POST['dbpasswd']."\";
+\$dbname = \"".$_POST['dbname']."\";
+//do not touch following
+//impress
+\$impressum_name = \"".$_POST['impressum_name']."\";
+\$impressum_land = \"".$_POST['impressum_land']."\";
+\$impressum_postleitzahl = \"".$_POST['impressum_postleitzahl']."\";
+\$impressum_stadt = \"".$_POST['impressum_stadt']."\";
+\$impressum_straße = \"".$_POST['impressum_straße']."\";
+\$impressum_hausnummer = \"".$_POST['impressum_hausnummer']."\";
+\$impressum_email = \"".$email."\";
+\$impressum_telefon = \"".$_POST['impressum_telefon']."\";
+//cms
+\$version = \"".$cmsversion."\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";
+?>";
 if (is_writable($configfile)) {
 
     if (!$handle = fopen($configfile, "w+")) {
@@ -63,28 +92,30 @@ $mysql->query("CREATE TABLE `accounts` (
   `admin` int(1) unsigned zerofill NOT NULL,
   `safe` int(1) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die (mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
 $mysql->query("CREATE TABLE `posts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `text` text COLLATE latin1_german1_ci NOT NULL,
+  `views` int(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die (mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
 $mysql->query("CREATE TABLE `news` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `text` text COLLATE latin1_german1_ci NOT NULL,
+  `views` int(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die (mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
 $mysql->query("CREATE TABLE `downloads` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `filename` text COLLATE latin1_german1_ci NOT NULL,
   `downloads` int(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array()) or die(mysql_error());
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
 echo '<meta http-equiv="refresh" content="0; url=index.php?step=4">';
 }
 if($_GET['step'] == 4) {
@@ -99,9 +130,10 @@ include_once "../lib/class.mysql.php";
 $user = $_POST['username'];
 $pw = sha1($_POST['password']);
 $mysql->query("Select username from accounts WHERE username = '".$user."'", array());
-$rows = $mysql->count;
-$mysql->query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')", array()) or die ("Fehler beim erstellen des Administrators!");
-$mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich wCMS ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array()) or die("Fehler beim erstellen der Erstnews!");
+$rows = mysql_num_rows($mysql->result);
+$mysql->query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')", array());
+$mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich cFire ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array());
+echo "Benutzer & News erfolgreich erstellt";
 echo '<meta http-equiv="refresh" content="0; url=index.php?success">';
 }
 }

@@ -5,6 +5,16 @@ $dbuser = "";
 $dbpasswd = "";
 $dbname = "";
 //do not touch following
+/impress
+$impressum_name = "";
+$impressum_land = "";
+$impressum_postleitzahl = "";
+$impressum_stadt = "";
+$impressum_straﬂe = "";
+$impressum_hausnummer = "";
+$impressum_email = "";
+$impressum_telefon = "";
+//cms
 $version = "";
 $footer = "Copyright by ".$sitename." - cFire <a href='http://www.c-fire.tk/' target='_blank'>".$version."</a> - <a href='#top'>Nach oben</a>";
 ?>
