@@ -28,7 +28,7 @@ Telefon: $impressum_telefon<hr>";
 if($getpage == "Index") {
 echo "<title>$sitename</title>";
 $mysql->query("select * from news", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = @@mysql_fetch_array($mysql->result)) {
 $views = $sql['views'] + 1;
 $text = $sql['text'];
 echo 'Titel: <a href="index.php?page=News&ID='.$sql["id"].'">'.$sql["name"].'</a><br><br>'.$text.'<br><br>Von '.$sql["username"].' geschrieben ('.$views.' Aufrufe)<hr>';
@@ -37,7 +37,7 @@ $mysql->query("UPDATE news SET views = $views WHERE id = '".$sql['id']."'", arra
 }
 if($getpage == "Posts" and isset($getid)) {
 $mysql->query("select * from posts where id='".$getid."'", array());
-while($data = mysql_fetch_array($mysql->result)) {
+while($data = @mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "Post: ".$data['name'];
@@ -52,14 +52,14 @@ echo "<hr>";
 if($getpage == "Posts" and empty($getid)) {
 echo "<title>Alle Beiträge - $sitename</title>";
 $mysql->query("select * from posts", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=Posts&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
 echo "<hr>";
 }
 if($getpage == "News" and isset($getid)) {
 $mysql->query("select * from news where id='".$getid."'", array());
-while($data = mysql_fetch_array($mysql->result)) {
+while($data = @mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "News: ".$data['name'];
@@ -74,7 +74,7 @@ echo "<hr>";
 if($getpage == "News" and empty($getid)) {
 ?><title>Alle Beiträge - <? echo $sitename ?></title><?
 $mysql->query("select * from news", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=News&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
 echo "<hr>";
@@ -96,14 +96,14 @@ echo "<hr>";
 if($getpage == "Downloads" and empty($getid)) {
 echo "<title>Downloads - $sitename</title>";
 $mysql->query("select * from downloads", array());
-while($dl = mysql_fetch_array($mysql->result)) {
+while($dl = @mysql_fetch_array($mysql->result)) {
 echo "<a href='?page=Downloads&ID=".$dl['id']."'>".$dl['name']."</a> (".$dl['downloads']." Downloads)<br>";
 }
 echo "<hr>";
 }
 if($getpage == "Downloads" and isset($getid)) {
 $mysql->query("select * from downloads where id = '".$getid."'", array());
-while($dl = @mysql_fetch_array($mysql->result)) {
+while($dl = @@mysql_fetch_array($mysql->result)) {
 $dlc = $dl['downloads'] + 1;
 $mysql->query("UPDATE `downloads` SET `downloads`='$dlc' WHERE `id`='".$dl['id']."'", array());
 @header('Content-type: application/octet-stream');
@@ -146,7 +146,7 @@ $mysql->query("SELECT ".
 
 if (mysql_num_rows($mysql->result) > 0)  
 {
-$data = mysql_fetch_array ($mysql->result);  
+$data = @mysql_fetch_array ($mysql->result);  
 $mysql->query("Select admin from accounts WHERE username = '".$_POST['name']."' and admin = '1'", array());
 $rows = mysql_num_rows($mysql->result);
 if($rows == 1) { 
@@ -254,7 +254,7 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&I
 if($getpage == "Administration" and $getposts == 'delete') {
 echo "<title>Beitrag löschen - $sitename</title>";
 $mysql->query("select id,name,username from posts", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' von '.$sql["username"].' löschen" name="'.$sql["id"].'">
 </form>';
@@ -277,7 +277,7 @@ echo "Dir ist ein Fehler unterlaufen!<br><input type=\"button\" value=\"Zurück\"
 if($getpage == "Administration" and $getusers == 'delete') {
 echo "<title>Benutzer löschen - $sitename</title>";
 $mysql->query("select id,username from accounts WHERE safe = '0'", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' löschen" name="'.$sql["id"].'">
 </form>';
@@ -293,12 +293,12 @@ if($getpage == "Administration" and $getusers == 'list') {
 echo "<title>Benutzerliste - $sitename</title>";
 echo "<b><u>Administratoren:</u></b><br>";
 $mysql->query("select username from accounts where admin = '1'", array());
-while($sqladmin = mysql_fetch_array($mysql->result)) {
+while($sqladmin = @mysql_fetch_array($mysql->result)) {
 echo $sqladmin['username']."<br>";
 }
 echo "<b><u>Benutzer:</u></b><br>";
 $mysql->query("select username from accounts where admin = '0'", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo $sql['username']."<br>";
 }
 
@@ -306,7 +306,7 @@ echo $sql['username']."<br>";
 if($getpage == "Administration" and $getusers == 'manage') {
 echo "<title>Benutzerverwaltung - $sitename</title>";
 $mysql->query("select id,username from accounts WHERE admin = '1' AND safe = '0'", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' zum Benutzer degradieren" name="unset'.$sql["id"].'">
 </form>';
@@ -317,7 +317,7 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&I
 }
 }
 $mysql->query("select id,username from accounts WHERE admin = '0'", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' zum Admin befördern" name="set'.$sql["id"].'">
 </form>';
@@ -358,7 +358,7 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&I
 if($getpage == "Administration" and $getnews == 'delete') {
 echo "<title>News löschen - $sitename</title>";
 $mysql->query("select id,name,username from news", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' von '.$sql["username"].' löschen" name="'.$sql['id'].'">
 </form>';
@@ -452,7 +452,7 @@ echo "Datei hochgeladen";
 if($getpage == "Administration" and $getdownloads == 'delete') {
 echo "<title>Download löschen - $sitename</title>";
 $mysql->query("select * from downloads", array());
-while($sql = mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' ('.$sql["downloads"].' Downloads) löschen" name="'.$sql["id"].'">
 </form>';
