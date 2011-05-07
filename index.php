@@ -31,7 +31,7 @@ if($getpage == "Index") {
 echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
-$views = $sql['views'] + 1;
+$views = $sql['views'];
 echo '<a href="index.php?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<hr>';
 }
 }
@@ -44,7 +44,7 @@ echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b
 echo "<br><br>";
 echo $data['text'];
 $mysql->query("UPDATE posts SET views = $views WHERE id = '".$data['id']."'", array());
-echo "<br><br><i>Kommentare:</i><br>";
+echo "<hr><br><i>Kommentare:</i><br>";
 $mysql->query("select * from post_comments where position = '$getid'", array());
 while($comment = @mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
@@ -96,7 +96,7 @@ echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b
 echo "<br><br>";
 echo $data['text'];
 $mysql->query("UPDATE news SET views = $views WHERE id = '".$data['id']."'", array());
-echo "<br><br><i>Kommentare:</i><br>";
+echo "<hr><i>Kommentare:</i><br>";
 $mysql->query("select * from news_comments where position = '$getid'", array());
 while($comment = @mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
