@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "2.2";
+$cmsversion = "2.3";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -114,6 +114,20 @@ $mysql->query("CREATE TABLE `downloads` (
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `filename` text COLLATE latin1_german1_ci NOT NULL,
   `downloads` int(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
+$mysql->query("CREATE TABLE `post_comments` (
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `user` text COLLATE latin1_german1_ci NOT NULL,
+  `msg` text COLLATE latin1_german1_ci NOT NULL,
+  `position` int(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
+$mysql->query("CREATE TABLE `news_comments` (
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `user` text COLLATE latin1_german1_ci NOT NULL,
+  `msg` text COLLATE latin1_german1_ci NOT NULL,
+  `position` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
 echo '<meta http-equiv="refresh" content="0; url=index.php?step=4">';
