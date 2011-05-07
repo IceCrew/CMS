@@ -44,7 +44,7 @@ echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b
 echo "<br><br>";
 echo $data['text'];
 $mysql->query("UPDATE posts SET views = $views WHERE id = '".$data['id']."'", array());
-echo "<hr><br><i>Kommentare:</i><br>";
+echo "<hr><i>Kommentare:</i><br>";
 $mysql->query("select * from post_comments where position = '$getid'", array());
 while($comment = @mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
