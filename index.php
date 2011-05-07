@@ -1,14 +1,16 @@
-<?php  
+<?php
 { #Anderes Bereich
+session_start();
+include_once "lib/class.mysql.php";
 $getpage = $_GET['page'];
 $getid = $_GET['ID'];
-if(!file_exists("lib/config.php")) {
-echo "<center>Das Script ist nicht installiert! Jetzt installieren? <a href=\"install/index.php\">Ja</a> oder <a href=\"index.php\">Nein</a></center>";
+if(file_exists("install")) {
+echo "<title>Fehler - $sitename</title>";
+echo '<center><h1><font color="#FF0000">Fehler! Du hast das Verzeichnis "install" nicht gelöscht oder das Script nocht nicht installiert!</font></h1></center>';
 die;
 }
 else {
 include "lib/config.php"; 
-include_once "lib/class.mysql.php";
 include "lib/header.php";
 }
 if(empty($_GET)) {
@@ -26,13 +28,11 @@ Telefon: $impressum_telefon<hr>";
 }
 { #Index Bereich
 if($getpage == "Index") {
-echo "<title>$sitename</title>";
+echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news", array());
-while($sql = @@mysql_fetch_array($mysql->result)) {
+while($sql = @mysql_fetch_array($mysql->result)) {
 $views = $sql['views'] + 1;
-$text = $sql['text'];
-echo 'Titel: <a href="index.php?page=News&ID='.$sql["id"].'">'.$sql["name"].'</a><br><br>'.$text.'<br><br>Von '.$sql["username"].' geschrieben ('.$views.' Aufrufe)<hr>';
-$mysql->query("UPDATE news SET views = $views WHERE id = '".$sql['id']."'", array());
+echo '<a href="index.php?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<hr>';
 }
 }
 if($getpage == "Posts" and isset($getid)) {
@@ -40,11 +40,9 @@ $mysql->query("select * from posts where id='".$getid."'", array());
 while($data = @mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
-echo "Post: ".$data['name'];
+echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
 echo "<br><br>";
 echo $data['text'];
-echo "<br><br>";
-echo "Von ".$data['username']." geschrieben ($views Aufrufe)";
 $mysql->query("UPDATE posts SET views = $views WHERE id = '".$data['id']."'", array());
 }
 echo "<hr>";
@@ -62,11 +60,9 @@ $mysql->query("select * from news where id='".$getid."'", array());
 while($data = @mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
-echo "News: ".$data['name'];
+echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
 echo "<br><br>";
 echo $data['text'];
-echo "<br><br>";
-echo "Von ".$data['username']." geschrieben ($views Aufrufe)";
 $mysql->query("UPDATE news SET views = $views WHERE id = '".$data['id']."'", array());
 }
 echo "<hr>";
@@ -126,7 +122,7 @@ if($getpage == "Login" and $getid == "error")
   echo "Die Zugangsdaten waren ungültig.";  
 }
 if($getpage == "Login") {
-@session_start ();
+
 echo "<title>Login - $sitename</title>";
 echo '<form action="?page=Login" method="post">  
 Benutzername: <input type="text" name="name" size="20"> 
@@ -135,7 +131,7 @@ Passwort: <input type="password" name="pwd" size="20">
 </form>'; 
 echo "<hr>";
 if($getpage == "Login" and isset($_POST['postlogin'])) {
-@session_start ();
+
 $mysql->query("SELECT ".  
     "id, username, password ".  
   "FROM ".  
@@ -172,14 +168,13 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Login&ID=error">
 }
 }
 if($getpage == "Login" and $getid == "logout") {   
-ob_start ();  
+ob_start();  
 
-session_start ();  
-session_unset ();  
-session_destroy ();  
 
+session_unset();
+session_destroy();
+ob_end_flush();
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Index">';
-ob_end_flush ();  
 }
 }
 }
@@ -235,13 +230,7 @@ Titel: <input type="text" name="name" size="80" maxlength="50"><br>
 if(isset($_POST['submit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$pre2text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
-$pre3text = str_replace("#a.start", "<a", $pre2text);
-$pre4text = str_replace("#a.address=", " href'./index.php?page=Redirect&ID=", $pre3text);
-$pre5text = str_replace("#a.name=", "' name='", $pre4text);
-$pre6text = str_replace("#a.target=", "' target='_", $pre5text);
-$pre7text = str_replace("#a.text=", "'>", $pre6text);
-$text = str_replace("#a.end", "</a>", $pre7text);
+$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
 if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=error">';
 }
@@ -339,15 +328,9 @@ Titel: <input type="text" name="name" size="80" maxlength="50"><br>
 if(isset($_POST['newssubmit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$pre2text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
-$pre3text = str_replace("#a.start", "<a", $pre2text);
-$pre4text = str_replace("#a.address=", " href'./index.php?page=Redirect&ID=", $pre3text);
-$pre5text = str_replace("#a.name=", "' name='", $pre4text);
-$pre6text = str_replace("#a.target=", "' target='_", $pre5text);
-$pre7text = str_replace("#a.text=", "'>", $pre6text);
-$text = str_replace("#a.end", "</a>", $pre7text);
+$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
 if(empty($name)) {
-header ("Location: index.php?page=Administration&ID=error");
+echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=error">';
 }
 else {
 $mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'_adm_user_username']."')", array());
@@ -428,7 +411,7 @@ if (is_writable($configfile)) {
     print "Konfiguration erfolgreich!";
 
     fclose($handle);
-	header("Location: index.php?page=Administration&ID=success");
+	echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=success">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -476,7 +459,7 @@ if(isset($_POST['forwardsubmit'])) {
 $name = $_POST['name'];
 $text = '<meta http-equiv="refresh" content="0; url=./index.php?page=Redirect&ID='.$_POST["url"].'">';
 if(empty($name)) {
-header ("Location: index.php?page=Administration&ID=error");
+echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=error">';
 }
 else {
 $mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name." (Weiterleitung)', '".$text."', '".$_SESSION[$sitename.'_adm_user_username']."')", array());
@@ -484,10 +467,58 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&I
 }
 }
 }
+if($getpage == "Administration" and $getposts == "edit" and empty($getid)) {
+$mysql->query("select * from posts", array());
+echo "<title>Beitrag editieren - $sitename</title>";
+while($sql = @mysql_fetch_array($mysql->result)) {
+echo "<a href='?page=Administration&posts=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
+}
+}
+if($getpage == "Administration" and $getposts == "edit" and isset($getid)) {
+$mysql->query("select * from posts where id = '$getid'", array());
+while($sql = @mysql_fetch_array($mysql->result)) {
+$text = str_replace("<br>", "", $sql['text']);
+echo "<title>".$sql['name']." editieren (Beitrag) - $sitename</title>";
+echo '<form action="" method="post">
+Titel: <input type="text" name="name" size="80" maxlength="50" value="'.$sql["name"].'"><br>
+<textarea type="text" name="text" style="width:100%; height:72%">'.$text.'</textarea><br>
+<input type="submit" name="peditsubmit" value="editieren">';
+}
+}
+if(isset($_POST['peditsubmit'])) {
+echo "<title>".$_POST['name']." editieren (Beitrag) - $sitename</title>";
+$text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
+$mysql->query("UPDATE `posts` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
+$mysql->query("UPDATE `posts` SET `text` = '$text' WHERE id = '$getid'", array());
+echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=success">';
+}
+if($getpage == "Administration" and $getnews == "edit" and empty($getid)) {
+$mysql->query("select * from news", array());
+echo "<title>News editieren - $sitename</title>";
+while($sql = @mysql_fetch_array($mysql->result)) {
+echo "<a href='?page=Administration&news=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
+}
+}
+if($getpage == "Administration" and $getnews == "edit" and isset($getid)) {
+$mysql->query("select * from news where id = '$getid'", array());
+while($sql = @mysql_fetch_array($mysql->result)) {
+echo "<title>".$sql['name']." editieren (News) - $sitename</title>";
+$text = str_replace("<br>", "", $sql['text']);
+echo '<form action="" method="post">
+Titel: <input type="text" name="name" size="80" maxlength="50" value="'.$sql["name"].'"><br>
+<textarea type="text" name="text" style="width:100%; height:72%">'.$text.'</textarea><br>
+<input type="submit" name="neditsubmit" value="editieren">';
+}
+}
+if(isset($_POST['neditsubmit'])) {
+echo "<title>".$_POST['name']." editieren (News) - $sitename</title>";
+$text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
+$mysql->query("UPDATE `news` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
+$mysql->query("UPDATE `news` SET `text` = '$text' WHERE id = '$getid'", array());
+echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=success">';
+}
 echo "<hr>";
 }
 }
 echo $footer;
-?>  
-</body>  
-</html>
+?>

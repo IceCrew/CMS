@@ -9,9 +9,10 @@ if($rows == 1) {
 echo " | <a href=\"index.php?page=Administration\">Adminpanel</a>";
 }
 if(!isset($_SESSION[$sitename.'_all_user_id'])) {
-echo " | <a href=\"index.php?page=Login\">Einloggen</a> oder <a href=\"index.php?page=Register\">Registrieren</a> | <a href=\"index.php?page=Impressum\">Impressum</a><hr>";
+echo " | <a href=\"index.php?page=Login\">Einloggen</a> oder <a href=\"index.php?page=Register\">Registrieren</a>";
 }
 else {
-echo " | <a href=\"index.php?page=Hilfe\">Hilfe</a> | <a href=\"index.php?page=Login&ID=logout\">Ausloggen</a> | <a href=\"index.php?page=Impressum\">Impressum</a><hr>";
+echo " | <a href=\"index.php?page=Hilfe\">Hilfe</a> | <a href=\"index.php?page=Login&ID=logout\">Ausloggen</a>";
 }
+echo " | <a href=\"index.php?page=Impressum\">Impressum</a><hr>";
 ?>
