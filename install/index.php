@@ -58,6 +58,7 @@ $write = "<?php
 \$impressum_email = \"".$email."\";
 \$impressum_telefon = \"".$_POST['impressum_telefon']."\";
 //cms
+\$gastkommentar = \"0\";
 \$version = \"".$cmsversion."\";
 \$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";
 ?>";

@@ -65,8 +65,15 @@ echo '<form action="" method="post">
 <input type="submit" name="pcsubmit" value="Kommentieren">
 <form>';
 }
+elseif($gastkommentar == "1") {
+echo '<form action="" method="post">
+Name: <input type="text" name="pcgname" size="50" maxlength="15"><br>
+<textarea type="text" name="pcgmsg" style="width:500; height:10%"></textarea>
+<input type="submit" name="pcgsubmit" value="Kommentieren">
+<form>';
+}
 else {
-echo "<i>(Du musst dich anmelden um Kommentare schreiben zu können)</i>";
+echo "<i>(Du musst dich einloggen um Kommentare schreiben zu können)</i>";
 }
 if(isset($_POST['pcsubmit'])) {
 $name = $_POST['name'];
@@ -75,6 +82,19 @@ $text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext)
 $mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_SESSION[$sitename.'_all_user_username']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
+}
+if(isset($_POST['pcgsubmit'])) {
+if(empty($_POST['pcgname'])) {
+echo "Geben sie einen Namen ein!";
+}
+else {
+$name = $_POST['name'];
+$pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcgmsg']);
+$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_POST['pcgname']." (Gast)', '".$text."', '".$getid."')", array());
+
+echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
+}
 }
 }
 echo "<hr>";
@@ -114,11 +134,18 @@ echo "<br>";
 if(isset($_SESSION[$sitename."_all_user_id"])) {
 echo '<form action="" method="post">
 <textarea type="text" name="ncmsg" style="width:500; height:10%"></textarea>
-<input type="submit" name="ncsubmit" value="Kommentieren">
+<input type="submit" name="ncgsubmit" value="Kommentieren">
+<form>';
+}
+elseif($gastkommentar == "1") {
+echo '<form action="" method="post">
+Name: <input type="text" name="ncgname" size="50" maxlength="15"><br>
+<textarea type="text" name="ncgmsg" style="width:500; height:10%"></textarea>
+<input type="submit" name="ncgsubmit" value="Kommentieren">
 <form>';
 }
 else {
-echo "<i>(Du musst dich anmelden um Kommentare schreiben zu können)</i>";
+echo "<i>(Du musst dich einloggen um Kommentare schreiben zu können)</i>";
 }
 if(isset($_POST['ncsubmit'])) {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncmsg']);
@@ -126,6 +153,18 @@ $text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext)
 $mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_SESSION[$sitename.'_all_user_username']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
+}
+if(isset($_POST['ncgsubmit'])) {
+if(empty($_POST['ncgname'])) {
+echo "Geben sie einen Namen ein!";
+}
+else {
+$pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncgmsg']);
+$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_POST['ncgname']." (Gast)', '".$text."', '".$getid."')", array());
+
+echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
+}
 }
 }
 echo "<hr>";
@@ -421,11 +460,12 @@ $email = str_replace("[at]", "@", $impressum_email);
 echo "<title>Einstellungen - $sitename</title>";
 echo '<form action="" method="post">
 <h3>Server-Konfiguration:</h3>
-Seitenname: <input type="text" name="sitename" value='.$sitename.' maxlength="25"><br>
-Datenbank-Host: <input type="text" name="dbhost" value='.$dbhost.' maxlength="50"><br>
-Datenbank-Name: <input type="text" name="dbname" value='.$dbname.' maxlength="25"><br>
-Datenbank-Benutzer: <input type="text" name="dbuser" value='.$dbuser.' maxlength="25"><br>
-Datenbank-Passwort: <input type="password" name="dbpasswd" value='.$dbpasswd.' maxlength="50"><br>
+Seitenname: <input type="text" name="sitename" value="'.$sitename.'" maxlength="25"><br>
+Datenbank-Host: <input type="text" name="dbhost" value="'.$dbhost.'" maxlength="50"><br>
+Datenbank-Name: <input type="text" name="dbname" value="'.$dbname.'" maxlength="25"><br>
+Datenbank-Benutzer: <input type="text" name="dbuser" value="'.$dbuser.'" maxlength="25"><br>
+Datenbank-Passwort: <input type="password" name="dbpasswd" value="'.$dbpasswd.'" maxlength="50"><br>
+Gast-Kommentare: <input type="text" name="gastkommentar" value="'.$gastkommentar.'" maxlength="1"> (0 = Aus, 1 = Ein)
 <h3>Impressum-Konfiguration (optional)</h3>
 Name: <input type="text" name="impressum_name" value="'.$impressum_name.'" maxlength="50"><br>
 Land: <input type="text" name="impressum_land" value="'.$impressum_land.'" maxlength="50"><br>
@@ -457,6 +497,7 @@ $write = "<?php
 \$impressum_email = \"".$email."\";
 \$impressum_telefon = \"".$_POST['impressum_telefon']."\";
 //cms
+\$gastkommentar = \"".$_POST['gastkommentar']."\";
 \$version = \"".$version."\";
 \$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";
 ?>";
