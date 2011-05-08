@@ -457,9 +457,14 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&I
 if($getpage == "Administration" and $getsettings == "cms") {
 $email = str_replace("[at]", "@", $impressum_email);
 echo "<title>Einstellungen - $sitename</title>";
-echo '<form action="" method="post">
-Gast Kommentare: <select name="gastkommentar"><option value="'.$gastkommentar.'">Keine Änderung</option><option value="1">Erlauben</option><option value="0">Verbieten</option></select><br>
-<h3>Server-Konfiguration:</h3>
+echo '<form action="" method="post">';
+if($gastkommentar == 1) {
+echo 'Gast Kommentare: <select name="gastkommentar"><option value="1">Erlauben</option><option value="0">Verbieten</option></select><br>';
+}
+else {
+echo 'Gast Kommentare: <select name="gastkommentar"><option value="0">Verbieten</option><option value="1">Erlauben</option></select><br>';
+}
+echo '<h3>Server-Konfiguration:</h3>
 Seitenname: <input type="text" name="sitename" value="'.$sitename.'" maxlength="25"><br>
 Datenbank-Host: <input type="text" name="dbhost" value="'.$dbhost.'" maxlength="50"><br>
 Datenbank-Name: <input type="text" name="dbname" value="'.$dbname.'" maxlength="25"><br>
