@@ -459,6 +459,7 @@ if($getpage == "Administration" and $getsettings == "cms") {
 $email = str_replace("[at]", "@", $impressum_email);
 echo "<title>Einstellungen - $sitename</title>";
 echo '<form action="" method="post">
+Gast Kommentare: <select name="gastkommentar"><option value="'.$gastkommentar.'">Keine Änderung</option><option value="1">Erlauben</option><option value="0">Verbieten</option></select><br>
 <h3>Server-Konfiguration:</h3>
 Seitenname: <input type="text" name="sitename" value="'.$sitename.'" maxlength="25"><br>
 Datenbank-Host: <input type="text" name="dbhost" value="'.$dbhost.'" maxlength="50"><br>
@@ -474,7 +475,6 @@ Straße: <input type="text" name="impressum_straße" value="'.$impressum_straße.'"
 Hausnummer: <input type="text" name="impressum_hausnummer" value="'.$impressum_hausnummer.'" maxlength="50"><br>
 E-Mail: <input type="text" name="impressum_email" value="'.$email.'" maxlength="50"><br>
 Telefon: <input type="text" name="impressum_telefon" value="'.$impressum_telefon.'" maxlength="50"><br>
-Gast Kommentare: <select name="gastkommentar"><option value="1">Erlauben</option><option value="0">Verbieten</option></select><br>
 <input type="submit" name="configure" value="Weiter">
 </form>';
 if(isset($_POST['configure'])) {
