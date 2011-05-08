@@ -6,7 +6,7 @@ $getpage = $_GET['page'];
 $getid = $_GET['ID'];
 if(file_exists("install")) {
 echo "<title>Fehler - $sitename</title>";
-echo '<center><h1><font color="#FF0000">Fehler! Du hast das Verzeichnis "install" nicht gelöscht oder das Script nocht nicht installiert!</font></h1></center>';
+echo '<center><h1><font color="#FF0000">Fehler! Du hast das Verzeichnis "install" nicht gelöscht oder das Script noch nicht installiert!</font></h1></center>';
 die;
 }
 else {
