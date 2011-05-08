@@ -201,7 +201,7 @@ echo "<hr>";
 }
 if($getpage == "Downloads" and isset($getid)) {
 $mysql->query("select * from downloads where id = '".$getid."'", array());
-while($dl = @@mysql_fetch_array($mysql->result)) {
+while($dl = @mysql_fetch_array($mysql->result)) {
 $dlc = $dl['downloads'] + 1;
 $mysql->query("UPDATE `downloads` SET `downloads`='$dlc' WHERE `id`='".$dl['id']."'", array());
 @header('Content-type: application/octet-stream');
@@ -253,7 +253,7 @@ if($rows == 1) {
   $_SESSION[$sitename."_all_user_id"] = $data["id"];
   $_SESSION[$sitename."_all_user_username"] = $data["username"];
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Index">';
+echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration">';
 }
 elseif($rows == 0) {
   $_SESSION[$sitename."_user_id"] = $data["id"];  
