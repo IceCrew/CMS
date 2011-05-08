@@ -19,6 +19,7 @@ $write = "<?php
 \$dbuser = \"".$dbuser."\";
 \$dbpasswd = \"".$dbpasswd."\";
 \$dbname = \"".$dbname."\";
+\$cp = \"cfire\";
 //do not touch following
 //impress
 \$impressum_name = \"".$impressum_name."\";

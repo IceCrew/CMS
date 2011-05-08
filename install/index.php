@@ -26,6 +26,7 @@ Datenbank-Host: <input type="text" name="dbhost" maxlength="50"><br>
 Datenbank-Name: <input type="text" name="dbname" maxlength="25"><br>
 Datenbank-Benutzer: <input type="text" name="dbuser" maxlength="25"><br>
 Datenbank-Passwort: <input type="password" name="dbpasswd" maxlength="50"><br>
+Cookie-Präfix: <input type="text" name="cp" maxlength="10">
 <h3>Impressum-Konfiguration (optional)</h3>
 Name: <input type="text" name="impressum_name" maxlength="50"><br>
 Land: <input type="text" name="impressum_land" maxlength="50"><br>
@@ -47,6 +48,7 @@ $write = "<?php
 \$dbuser = \"".$_POST['dbuser']."\";
 \$dbpasswd = \"".$_POST['dbpasswd']."\";
 \$dbname = \"".$_POST['dbname']."\";
+\$cp = \"".$_POST['cp']."\";
 //do not touch following
 //impress
 \$impressum_name = \"".$_POST['impressum_name']."\";
