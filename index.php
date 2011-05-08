@@ -1,6 +1,5 @@
 <?php
 { #Anderes Bereich
-session_start();
 $getpage = $_GET['page'];
 $getid = $_GET['ID'];
 if(file_exists("install")) {
@@ -47,7 +46,7 @@ echo "<hr><i>Kommentare:</i><br>";
 $mysql->query("select * from post_comments where position = '$getid'", array());
 while($comment = @mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
-if(isset($_SESSION[$sitename."_adm_user_id"])) {
+if(isset($_COOKIE[$sitename."_admin_id"])) {
 echo '<form action="" method="post"><input type="submit" value="Kommentar löschen" name="pc'.$comment["id"].'"></form>';
 if(isset($_POST["pc".$comment['id']])) {
 $mysql->query("DELETE FROM post_comments WHERE id = '".$comment['id']."'", array());
@@ -58,7 +57,7 @@ else {
 echo "<br>";
 }
 }
-if(isset($_SESSION[$sitename."_all_user_id"])) {
+if(isset($_COOKIE[$sitename."_user_id"])) {
 echo '<form action="" method="post">
 <textarea type="text" name="pcmsg" style="width:500; height:10%"></textarea>
 <input type="submit" name="pcsubmit" value="Kommentieren">
@@ -78,7 +77,7 @@ if(isset($_POST['pcsubmit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcmsg']);
 $text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
-$mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_SESSION[$sitename.'_all_user_username']."', '".$text."', '".$getid."')", array());
+$mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_COOKIE[$sitename.'_user_name']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
 }
@@ -119,7 +118,7 @@ echo "<hr><i>Kommentare:</i><br>";
 $mysql->query("select * from news_comments where position = '$getid'", array());
 while($comment = @mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
-if(isset($_SESSION[$sitename."_adm_user_id"])) {
+if(isset($_COOKIE[$sitename."_admin_id"])) {
 echo '<form action="" method="post"><input type="submit" value="Kommentar löschen" name="nc'.$comment["id"].'"></form>';
 if(isset($_POST["nc".$comment['id']])) {
 $mysql->query("DELETE FROM news_comments WHERE id = '".$comment['id']."'", array());
@@ -130,10 +129,10 @@ else {
 echo "<br>";
 }
 }
-if(isset($_SESSION[$sitename."_all_user_id"])) {
+if(isset($_COOKIE[$sitename."_user_id"])) {
 echo '<form action="" method="post">
 <textarea type="text" name="ncmsg" style="width:500; height:10%"></textarea>
-<input type="submit" name="ncgsubmit" value="Kommentieren">
+<input type="submit" name="ncsubmit" value="Kommentieren">
 <form>';
 }
 elseif($gastkommentar == "1") {
@@ -149,7 +148,7 @@ echo "<i>(Du musst dich einloggen um Kommentare schreiben zu können)</i>";
 if(isset($_POST['ncsubmit'])) {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncmsg']);
 $text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
-$mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_SESSION[$sitename.'_all_user_username']."', '".$text."', '".$getid."')", array());
+$mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_COOKIE[$sitename.'_user_name']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
 }
@@ -169,7 +168,7 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid
 echo "<hr>";
 }
 if($getpage == "News" and empty($getid)) {
-?><title>Alle Beiträge - <? echo $sitename ?></title><?
+?><title>Alle News - <? echo $sitename ?></title><?
 $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=News&ID=".$sql['id']."\"><font color=\"#0000FF\">".$sql['name']."</font></a> (".$sql['views']." Aufrufe)<br>";
@@ -247,19 +246,15 @@ $data = @mysql_fetch_array ($mysql->result);
 $mysql->query("Select admin from accounts WHERE username = '".$_POST['name']."' and admin = '1'", array());
 $rows = mysql_num_rows($mysql->result);
 if($rows == 1) { 
-  $_SESSION[$sitename."_adm_user_id"] = $data["id"];  
-  $_SESSION[$sitename."_adm_user_username"] = $data["username"];
-  $_SESSION[$sitename."_all_user_id"] = $data["id"];
-  $_SESSION[$sitename."_all_user_username"] = $data["username"];
-
+  setcookie($sitename."_admin_id", $data['id'], time()+60*60*24*365);
+  setcookie($sitename."_admin_name", $data['username'], time()+60*60*24*365);
+  setcookie($sitename."_user_id", $data['id'], time()+60*60*24*365);
+  setcookie($sitename."_user_name", $data['username'], time()+60*60*24*365);
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration">';
 }
 elseif($rows == 0) {
-  $_SESSION[$sitename."_user_id"] = $data["id"];  
-  $_SESSION[$sitename."_user_username"] = $data["username"];
-  $_SESSION[$sitename."_all_user_id"] = $data["id"];
-  $_SESSION[$sitename."_all_user_username"] = $data["username"];
-  
+  setcookie($sitename."_user_id", $data['id'], time()+60*60*24*365);
+  setcookie($sitename."_user_name", $data['username'], time()+60*60*24*365);
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Index">';
 }
 else  
@@ -268,13 +263,11 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Login&ID=error">
 }
 }
 }
-if($getpage == "Login" and $getid == "logout") {   
-ob_start();  
-
-
-session_unset();
-session_destroy();
-ob_end_flush();
+if($getpage == "Login" and $getid == "logout") { 
+  setcookie($sitename."_admin_id", "", time()-60*60*24*365);
+  setcookie($sitename."_admin_name", "", time()-60*60*24*365);
+  setcookie($sitename."_user_id", "", time()-60*60*24*365);
+  setcookie($sitename."_user_name", "", time()-60*60*24*365);
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Index">';
 }
 }
@@ -306,7 +299,7 @@ echo "<hr>";
 }
 { #Admin Bereich
 if($getpage == "Administration") {
-include "lib/adm_session.php";
+include "lib/admin.php";
 include "lib/menu.php";
 include_once "lib/class.mysql.php";
 echo "$menu_admin<hr>";
@@ -336,7 +329,7 @@ if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=error">';
 }
 else {
-$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'_adm_user_username']."')", array());
+$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_COOKIE[$sitename.'_admin_name']."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
 }
@@ -434,7 +427,7 @@ if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=error">';
 }
 else {
-$mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_SESSION[$sitename.'_adm_user_username']."')", array());
+$mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_COOKIE[$sitename.'_admin_name']."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
 }
@@ -570,7 +563,7 @@ if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=error">';
 }
 else {
-$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name." (Weiterleitung)', '".$text."', '".$_SESSION[$sitename.'_adm_user_username']."')", array());
+$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name." (Weiterleitung)', '".$text."', '".$_COOKIE[$sitename.'_admin_name']."')", array());
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
 }
 }
