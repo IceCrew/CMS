@@ -465,7 +465,6 @@ Datenbank-Host: <input type="text" name="dbhost" value="'.$dbhost.'" maxlength="
 Datenbank-Name: <input type="text" name="dbname" value="'.$dbname.'" maxlength="25"><br>
 Datenbank-Benutzer: <input type="text" name="dbuser" value="'.$dbuser.'" maxlength="25"><br>
 Datenbank-Passwort: <input type="password" name="dbpasswd" value="'.$dbpasswd.'" maxlength="50"><br>
-Gast-Kommentare: <input type="text" name="gastkommentar" value="'.$gastkommentar.'" maxlength="1"> (0 = Aus, 1 = Ein)
 <h3>Impressum-Konfiguration (optional)</h3>
 Name: <input type="text" name="impressum_name" value="'.$impressum_name.'" maxlength="50"><br>
 Land: <input type="text" name="impressum_land" value="'.$impressum_land.'" maxlength="50"><br>
@@ -475,6 +474,7 @@ Straﬂe: <input type="text" name="impressum_straﬂe" value="'.$impressum_straﬂe.'"
 Hausnummer: <input type="text" name="impressum_hausnummer" value="'.$impressum_hausnummer.'" maxlength="50"><br>
 E-Mail: <input type="text" name="impressum_email" value="'.$email.'" maxlength="50"><br>
 Telefon: <input type="text" name="impressum_telefon" value="'.$impressum_telefon.'" maxlength="50"><br>
+Gast Kommentare: <select name="gastkommentar"><option value="1">Erlauben</option><option value="0">Verbieten</option></select><br>
 <input type="submit" name="configure" value="Weiter">
 </form>';
 if(isset($_POST['configure'])) {
