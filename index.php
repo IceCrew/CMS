@@ -626,10 +626,10 @@ echo "<hr>";
 { #Error Documents
 if($getpage == "Error") {
 if($getid == 403) {
-echo "<h1>403 - Zutritt verboten</h1>";
+echo "<title>Zutritt verboten - $sitename</title><h1>403 - Zutritt verboten</h1>";
 }
 if($getid == 404) {
-echo "<h1>404 - Nicht gefunden</h1>";
+echo "<title>Nicht gefunden - $sitename</title><h1>404 - Nicht gefunden</h1>";
 }
 echo "<hr>";
 }

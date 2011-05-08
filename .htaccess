@@ -1,2 +1,2 @@
-ErrorDocument 403 index.php?page=Error&ID=403
-ErrorDocument 404 index.php?page=Error&ID=404
+ErrorDocument 403 /index.php?page=Error&ID=403
+ErrorDocument 404 /index.php?page=Error&ID=404
