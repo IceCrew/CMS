@@ -264,10 +264,10 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Login&ID=error">
 }
 }
 if($getpage == "Login" and $getid == "logout") { 
-  setcookie($cp."_admin_id", "", time()-60*60*24*365);
-  setcookie($cp."_admin_name", "", time()-60*60*24*365);
-  setcookie($cp."_user_id", "", time()-60*60*24*365);
-  setcookie($cp."_user_name", "", time()-60*60*24*365);
+  @setcookie($cp."_admin_id", "", time()-60*60*24*365);
+  @setcookie($cp."_admin_name", "", time()-60*60*24*365);
+  @setcookie($cp."_user_id", "", time()-60*60*24*365);
+  @setcookie($cp."_user_name", "", time()-60*60*24*365);
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Index">';
 }
 }
