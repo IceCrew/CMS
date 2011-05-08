@@ -60,7 +60,7 @@ $write = "<?php
 //cms
 \$gastkommentar = \"0\";
 \$version = \"".$cmsversion."\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'><font color='#0000FF'>cFire \".\$version.\"</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
 ?>";
 if (is_writable($configfile)) {
 

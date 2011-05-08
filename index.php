@@ -32,7 +32,7 @@ echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
 $views = $sql['views'];
-echo '<a href="index.php?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<hr>';
+echo '<a href="index.php?page=News&ID='.$sql["id"].'"><font color=\"#0000FF\"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></font></a><br><br>'.$sql["text"].'<hr>';
 }
 }
 if($getpage == "Posts" and isset($getid)) {
@@ -103,7 +103,7 @@ if($getpage == "Posts" and empty($getid)) {
 echo "<title>Alle Beiträge - $sitename</title>";
 $mysql->query("select * from posts", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href=\"?page=Posts&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
+echo "<a href=\"?page=Posts&ID=".$sql['id']."\"><font color=\"#0000FF\">".$sql['name']."</font></a> (".$sql['views']." Aufrufe)<br>";
 }
 echo "<hr>";
 }
@@ -173,7 +173,7 @@ if($getpage == "News" and empty($getid)) {
 ?><title>Alle Beiträge - <? echo $sitename ?></title><?
 $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href=\"?page=News&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
+echo "<a href=\"?page=News&ID=".$sql['id']."\"><font color=\"#0000FF\">".$sql['name']."</font></a> (".$sql['views']." Aufrufe)<br>";
 }
 echo "<hr>";
 }
@@ -182,7 +182,7 @@ include "lib/help.php";
 ?>
 <title>Hilfe - <? echo $sitename ?></title>
 <?
-echo '<a href="?page=Hilfe&ID=html#show">HTML-Hilfe</a>';
+echo '<a href="?page=Hilfe&ID=html#show"><font color=\"#0000FF\">HTML-Hilfe</font></a>';
 if($getpage == "Hilfe" and $getid == "html") {
 ?>
 <title>HTML-Hilfe - <? echo $sitename ?></title>
@@ -195,7 +195,7 @@ if($getpage == "Downloads" and empty($getid)) {
 echo "<title>Downloads - $sitename</title>";
 $mysql->query("select * from downloads", array());
 while($dl = @mysql_fetch_array($mysql->result)) {
-echo "<a href='?page=Downloads&ID=".$dl['id']."'>".$dl['name']."</a> (".$dl['downloads']." Downloads)<br>";
+echo "<a href='?page=Downloads&ID=".$dl['id']."'><font color=\"#0000FF\">".$dl['name']."</font></a> (".$dl['downloads']." Downloads)<br>";
 }
 echo "<hr>";
 }
@@ -213,8 +213,8 @@ echo "<hr>";
 if($getpage == "Redirect") {
 echo "<title>$sitename verlassen - $sitename</title>";
 echo "Du bist dabei <b>$sitename</b> zu verlassen, möchtest du wirklich auf <u><b>$getid</b></u> gehen?<br>";
-echo "- <a href='$getid'>Ja</a><br>";
-echo "- <a href='./index.php?page=Index'>Doch nicht</a>";
+echo "- <a href='$getid'><font color=\"#0000FF\">Ja</font></a><br>";
+echo "- <a href='./index.php?page=Index'><font color=\"#0000FF\">Doch nicht</font></a>";
 echo "<hr>";
 }
 }
@@ -359,7 +359,7 @@ echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&I
 }
 if($getpage == "Administration" and $getid == "success") {
 echo "<title>Erfolgreich - $sitename</title>";
-echo 'Aktion erfolgreich ausgeführt!<br><a href="index.php?page=Administration">Weiter</a><meta http-equiv="refresh" content="3; url=index.php?page=Administration">';
+echo 'Aktion erfolgreich ausgeführt!<br><a href="index.php?page=Administration"><font color=\"#0000FF\">Weiter</font></a><meta http-equiv="refresh" content="3; url=index.php?page=Administration">';
 }
 if($getpage == "Administration" and $getid == "error") {
 echo "<title>Fehler - $sitename</title>";
@@ -499,7 +499,7 @@ $write = "<?php
 //cms
 \$gastkommentar = \"".$_POST['gastkommentar']."\";
 \$version = \"".$version."\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'><font color='#0000FF'>cFire \".\$version.\"</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
 ?>";
 if (is_writable($configfile)) {
 
@@ -524,7 +524,7 @@ if (is_writable($configfile)) {
 }
 if($getpage == "Administration" and $getdownloads == 'create') {
 echo "<title>Download erstellen - $sitename</title>";
-echo '<h4>Please do just upload ZIP-Archives,RAR-Archives or Executables. Otherwise the File will be destroyed!</h4>
+echo '<h4>Please do just upload ZIP-Archives,RAR-Archives or Executables. Otherwise the File will be damaged!</h4>
 <form action="" method="post" enctype="multipart/form-data">
 Name: <input type="text" name="name" size="50"><br>
 Datei: <input type="file" name="datei" size="75"><br>
@@ -575,7 +575,7 @@ if($getpage == "Administration" and $getposts == "edit" and empty($getid)) {
 $mysql->query("select * from posts", array());
 echo "<title>Beitrag editieren - $sitename</title>";
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href='?page=Administration&posts=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
+echo "<a href='?page=Administration&posts=edit&ID=".$sql['id']."'><font color=\"#0000FF\">\"".$sql['name']."\" editieren</font></a><br>";
 }
 }
 if($getpage == "Administration" and $getposts == "edit" and isset($getid)) {
@@ -600,7 +600,7 @@ if($getpage == "Administration" and $getnews == "edit" and empty($getid)) {
 $mysql->query("select * from news", array());
 echo "<title>News editieren - $sitename</title>";
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href='?page=Administration&news=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
+echo "<a href='?page=Administration&news=edit&ID=".$sql['id']."'><font color=\"#0000FF\">\"".$sql['name']."\" editieren</font></a><br>";
 }
 }
 if($getpage == "Administration" and $getnews == "edit" and isset($getid)) {
