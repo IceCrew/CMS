@@ -623,16 +623,5 @@ echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&I
 echo "<hr>";
 }
 }
-{ #Error Documents
-if($getpage == "Error") {
-if($getid == 403) {
-echo "<title>Zutritt verboten - $sitename</title><h1>403 - Zutritt verboten</h1>";
-}
-if($getid == 404) {
-echo "<title>Nicht gefunden - $sitename</title><h1>404 - Nicht gefunden</h1>";
-}
-echo "<hr>";
-}
-}
 echo $footer;
 ?>
