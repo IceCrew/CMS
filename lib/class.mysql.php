@@ -37,7 +37,7 @@ class mysql
 	
 	public function destruct()
 	{
-		@mysql_free_result($this->lastResult);
+		@mysql_free_result($this->result);
 		mysql_close();
 	}
 }
