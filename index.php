@@ -39,6 +39,9 @@ while($data = @mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
+if(isset($_COOKIE[$cp."_admin_id"])) {
+echo " | <a href='?page=Administration&posts=edit&ID=$getid'><font color='#0000FF'>Beitrag editieren</font></a>";
+}
 echo "<br><br>";
 echo $data['text'];
 $mysql->query("UPDATE posts SET views = $views WHERE id = '".$data['id']."'", array());
@@ -111,6 +114,9 @@ while($data = @mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
+if(isset($_COOKIE[$cp."_admin_id"])) {
+echo " | <a href='?page=Administration&news=edit&ID=$getid'><font color='#0000FF'>News editieren</font></a>";
+}
 echo "<br><br>";
 echo $data['text'];
 $mysql->query("UPDATE news SET views = $views WHERE id = '".$data['id']."'", array());
@@ -593,7 +599,7 @@ echo "<title>".$_POST['name']." editieren (Beitrag) - $sitename</title>";
 $text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $mysql->query("UPDATE `posts` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
 $mysql->query("UPDATE `posts` SET `text` = '$text' WHERE id = '$getid'", array());
-echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0, url=index.php?page=Posts&ID='.$getid.'">';
 }
 if($getpage == "Administration" and $getnews == "edit" and empty($getid)) {
 $mysql->query("select * from news", array());
@@ -618,7 +624,7 @@ echo "<title>".$_POST['name']." editieren (News) - $sitename</title>";
 $text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $mysql->query("UPDATE `news` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
 $mysql->query("UPDATE `news` SET `text` = '$text' WHERE id = '$getid'", array());
-echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0, url=index.php?page=News&ID='.$getid.'">';
 }
 echo "<hr>";
 }
