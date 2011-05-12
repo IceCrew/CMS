@@ -62,14 +62,14 @@ echo "<br>";
 }
 if(isset($_COOKIE[$cp."_user_id"])) {
 echo '<form action="" method="post">
-<textarea type="text" name="pcmsg" style="width:500; height:10%"></textarea>
+<textarea type="text" name="pcmsg" style="width:500; height:75"></textarea>
 <input type="submit" name="pcsubmit" value="Kommentieren">
 <form>';
 }
 elseif($gastkommentar == "1") {
 echo '<form action="" method="post">
 Name: <input type="text" name="pcgname" size="50" maxlength="15"><br>
-<textarea type="text" name="pcgmsg" style="width:500; height:10%"></textarea>
+<textarea type="text" name="pcgmsg" style="width:500; height:75"></textarea>
 <input type="submit" name="pcgsubmit" value="Kommentieren">
 <form>';
 }
@@ -79,7 +79,7 @@ echo "<i>(Du musst dich einloggen um Kommentare schreiben zu können)</i>";
 if(isset($_POST['pcsubmit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcmsg']);
-$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_COOKIE[$cp.'_user_name']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
@@ -91,7 +91,7 @@ echo "Geben sie einen Namen ein!";
 else {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcgmsg']);
-$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_POST['pcgname']." (Gast)', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
@@ -137,14 +137,14 @@ echo "<br>";
 }
 if(isset($_COOKIE[$cp."_user_id"])) {
 echo '<form action="" method="post">
-<textarea type="text" name="ncmsg" style="width:500; height:10%"></textarea>
+<textarea type="text" name="ncmsg" style="width:500; height:75"></textarea>
 <input type="submit" name="ncsubmit" value="Kommentieren">
 <form>';
 }
 elseif($gastkommentar == "1") {
 echo '<form action="" method="post">
 Name: <input type="text" name="ncgname" size="50" maxlength="15"><br>
-<textarea type="text" name="ncgmsg" style="width:500; height:10%"></textarea>
+<textarea type="text" name="ncgmsg" style="width:500; height:75"></textarea>
 <input type="submit" name="ncgsubmit" value="Kommentieren">
 <form>';
 }
@@ -153,7 +153,7 @@ echo "<i>(Du musst dich einloggen um Kommentare schreiben zu können)</i>";
 }
 if(isset($_POST['ncsubmit'])) {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncmsg']);
-$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_COOKIE[$cp.'_user_name']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
@@ -164,7 +164,7 @@ echo "Geben sie einen Namen ein!";
 }
 else {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncgmsg']);
-$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_POST['ncgname']." (Gast)', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
@@ -323,14 +323,14 @@ if($getpage == "Administration" and $getposts == 'create') {
 echo "<title>Beitrag erstellen - $sitename</title>";
 echo '<form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50"><br>
-<textarea type="text" name="text" style="width:100%; height:72%"></textarea>
+<textarea type="text" name="text" style="width:100%; height:275"></textarea>
 <input type="submit" name="submit" value="erstellen">
 <form>';
 }
 if(isset($_POST['submit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
 if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=error">';
 }
@@ -421,14 +421,14 @@ if($getpage == "Administration" and $getnews == 'create') {
 echo "<title>News erstellen - $sitename</title>";
 echo '<form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50"><br>
-<textarea type="text" name="text" style="width:100%; height:72%"></textarea>
+<textarea type="text" name="text" style="width:100%; height:275"></textarea>
 <input type="submit" name="newssubmit" value="erstellen">
 <form>';
 }
 if(isset($_POST['newssubmit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$text = str_replace("href=\"", "href=\"./index.php?page=Redirect&ID=", $pretext);
+$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
 if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=error">';
 }
@@ -504,7 +504,7 @@ $write = "<?php
 //cms
 \$gastkommentar = \"".$_POST['gastkommentar']."\";
 \$version = \"".$version."\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'><font color='#0000FF'>cFire \".\$version.\"</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'><font color='#0000FF'>cFire \".\$version.\"</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
 ?>";
 if (is_writable($configfile)) {
 
@@ -590,7 +590,7 @@ $text = str_replace("<br>", "", $sql['text']);
 echo "<title>".$sql['name']." editieren (Beitrag) - $sitename</title>";
 echo '<form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50" value="'.$sql["name"].'"><br>
-<textarea type="text" name="text" style="width:100%; height:72%">'.$text.'</textarea><br>
+<textarea type="text" name="text" style="width:100%; height:275">'.$text.'</textarea><br>
 <input type="submit" name="peditsubmit" value="editieren">';
 }
 }
@@ -615,7 +615,7 @@ echo "<title>".$sql['name']." editieren (News) - $sitename</title>";
 $text = str_replace("<br>", "", $sql['text']);
 echo '<form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50" value="'.$sql["name"].'"><br>
-<textarea type="text" name="text" style="width:100%; height:72%">'.$text.'</textarea><br>
+<textarea type="text" name="text" style="width:100%; height:275">'.$text.'</textarea><br>
 <input type="submit" name="neditsubmit" value="editieren">';
 }
 }

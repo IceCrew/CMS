@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "2.4";
+$cmsversion = "2.5";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -62,7 +62,7 @@ $write = "<?php
 //cms
 \$gastkommentar = \"0\";
 \$version = \"".$cmsversion."\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire-cms.cf.funpic.de/' target='_blank\'><font color='#0000FF'>cFire \".\$version.\"</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'><font color='#0000FF'>cFire \".\$version.\"</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
 ?>";
 if (is_writable($configfile)) {
 

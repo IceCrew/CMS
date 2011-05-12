@@ -50,5 +50,8 @@ echo '<meta http-equiv="refresh" content="0; url=upgrade_2.2_2.3.php">';
 elseif($version == 2.3) {
 echo '<meta http-equiv="refresh" content="0; url=upgrade_2.3_2.4.php">';
 }
+elseif($version == 2.4) {
+echo '<meta http-equiv="refresh" content="0; url=upgrade_2.4_2.5.php">';
+}
 }
 ?>
