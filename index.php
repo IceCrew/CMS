@@ -12,7 +12,7 @@ include "lib/config.php";
 include "lib/header.php";
 }
 if(empty($_GET)) {
-echo '<meta http-equiv="refresh" content="0; url=./index.php?page=Index">';
+echo '<meta http-equiv="refresh" content="0; url=./?page=Index">';
 }
 if($getpage == "Impressum") {
 echo "<title>Impressum - $sitename</title>";
@@ -30,7 +30,7 @@ echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
 $views = $sql['views'];
-echo '<a href="index.php?page=News&ID='.$sql["id"].'"><font color=\"#0000FF\"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></font></a><br><br>'.$sql["text"].'<hr>';
+echo '<a href="?page=News&ID='.$sql["id"].'"><font color=\"#0000FF\"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></font></a><br><br>'.$sql["text"].'<hr>';
 }
 }
 if($getpage == "Posts" and isset($getid)) {
@@ -53,7 +53,7 @@ if(isset($_COOKIE[$cp."_admin_id"])) {
 echo '<form action="" method="post"><input type="submit" value="Kommentar löschen" name="pc'.$comment["id"].'"></form>';
 if(isset($_POST["pc".$comment['id']])) {
 $mysql->query("DELETE FROM post_comments WHERE id = '".$comment['id']."'", array());
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
 }
 }
 else {
@@ -79,10 +79,10 @@ echo "<i>(Du musst dich einloggen um Kommentare schreiben zu können)</i>";
 if(isset($_POST['pcsubmit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcmsg']);
-$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_COOKIE[$cp.'_user_name']."', '".$text."', '".$getid."')", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
 }
 if(isset($_POST['pcgsubmit'])) {
 if(empty($_POST['pcgname'])) {
@@ -91,10 +91,10 @@ echo "Geben sie einen Namen ein!";
 else {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcgmsg']);
-$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_POST['pcgname']." (Gast)', '".$text."', '".$getid."')", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Posts&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
 }
 }
 }
@@ -128,7 +128,7 @@ if(isset($_COOKIE[$cp."_admin_id"])) {
 echo '<form action="" method="post"><input type="submit" value="Kommentar löschen" name="nc'.$comment["id"].'"></form>';
 if(isset($_POST["nc".$comment['id']])) {
 $mysql->query("DELETE FROM news_comments WHERE id = '".$comment['id']."'", array());
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
 }
 }
 else {
@@ -153,10 +153,10 @@ echo "<i>(Du musst dich einloggen um Kommentare schreiben zu können)</i>";
 }
 if(isset($_POST['ncsubmit'])) {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncmsg']);
-$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_COOKIE[$cp.'_user_name']."', '".$text."', '".$getid."')", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
 }
 if(isset($_POST['ncgsubmit'])) {
 if(empty($_POST['ncgname'])) {
@@ -164,10 +164,10 @@ echo "Geben sie einen Namen ein!";
 }
 else {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncgmsg']);
-$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_POST['ncgname']." (Gast)', '".$text."', '".$getid."')", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=News&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
 }
 }
 }
@@ -218,7 +218,7 @@ if($getpage == "Redirect") {
 echo "<title>$sitename verlassen - $sitename</title>";
 echo "Du bist dabei <b>$sitename</b> zu verlassen, möchtest du wirklich auf <u><b>$getid</b></u> gehen?<br>";
 echo "- <a href='$getid'><font color=\"#0000FF\">Ja</font></a><br>";
-echo "- <a href='./index.php?page=Index'><font color=\"#0000FF\">Doch nicht</font></a>";
+echo "- <a href='./?page=Index'><font color=\"#0000FF\">Doch nicht</font></a>";
 echo "<hr>";
 }
 }
@@ -256,16 +256,16 @@ if($rows == 1) {
   @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*365);
   @setcookie($cp."_user_id", $data['id'], time()+60*60*24*365);
   @setcookie($cp."_user_name", $data['username'], time()+60*60*24*365);
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration">';
 }
 elseif($rows == 0) {
   @setcookie($cp."_user_id", $data['id'], time()+60*60*24*365);
   @setcookie($cp."_user_name", $data['username'], time()+60*60*24*365);
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Index">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 else  
 {  
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Login&ID=error">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Login&ID=error">';
 }
 }
 }
@@ -274,7 +274,7 @@ if($getpage == "Login" and $getid == "logout") {
   @setcookie($cp."_admin_name", "", time()-60*60*24*365);
   @setcookie($cp."_user_id", "", time()-60*60*24*365);
   @setcookie($cp."_user_name", "", time()-60*60*24*365);
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Index">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 }
 }
@@ -330,14 +330,14 @@ Titel: <input type="text" name="name" size="80" maxlength="50"><br>
 if(isset($_POST['submit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
 if(empty($name)) {
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=error">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=error">';
 }
 else {
 $mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name."', '".$text."', '".$_COOKIE[$cp.'_admin_name']."')", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 if($getpage == "Administration" and $getposts == 'delete') {
@@ -350,14 +350,14 @@ echo '<form action="" method="post">
 if(isset($_POST[$sql['id']])) {
 $mysql->query("DELETE FROM posts WHERE id = '".$sql['id']."'", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 
 }
 if($getpage == "Administration" and $getid == "success") {
 echo "<title>Erfolgreich - $sitename</title>";
-echo 'Aktion erfolgreich ausgeführt!<br><a href="index.php?page=Administration"><font color=\"#0000FF\">Weiter</font></a><meta http-equiv="refresh" content="3; url=index.php?page=Administration">';
+echo 'Aktion erfolgreich ausgeführt!<br><a href="?page=Administration"><font color=\"#0000FF\">Weiter</font></a><meta http-equiv="refresh" content="3; url=?page=Administration">';
 }
 if($getpage == "Administration" and $getid == "error") {
 echo "<title>Fehler - $sitename</title>";
@@ -373,7 +373,7 @@ echo '<form action="" method="post">
 if(isset($_POST[$sql['id']])) {
 $mysql->query("DELETE FROM accounts WHERE id = '".$sql['id']."' and safe = '0'", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 
@@ -402,7 +402,7 @@ echo '<form action="" method="post">
 if(isset($_POST["unset".$sql['id']])) {
 $mysql->query("UPDATE accounts SET admin = '0' WHERE id = '".$sql['id']."'", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 $mysql->query("select id,username from accounts WHERE admin = '0'", array());
@@ -413,7 +413,7 @@ echo '<form action="" method="post">
 if(isset($_POST["set".$sql['id']])) {
 $mysql->query("UPDATE accounts SET admin = '1' WHERE id = '".$sql['id']."'", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 }
@@ -428,14 +428,14 @@ Titel: <input type="text" name="name" size="80" maxlength="50"><br>
 if(isset($_POST['newssubmit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$text = str_replace('href="', 'href="./index.php?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
 if(empty($name)) {
-echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=error">';
+echo '<meta http-equiv="refresh" content="0, url=?page=Administration&ID=error">';
 }
 else {
 $mysql->query("INSERT INTO news (name, text, username) VALUES ('".$name."', '".$text."', '".$_COOKIE[$cp.'_admin_name']."')", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 if($getpage == "Administration" and $getnews == 'delete') {
@@ -448,7 +448,7 @@ echo '<form action="" method="post">
 if(isset($_POST[$sql['id']])) {
 $mysql->query("DELETE FROM news WHERE id = '".$sql['id']."'", array());
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 
@@ -520,7 +520,7 @@ if (is_writable($configfile)) {
     print "Konfiguration erfolgreich!";
 
     fclose($handle);
-	echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=success">';
+	echo '<meta http-equiv="refresh" content="0, url=?page=Administration&ID=success">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -552,7 +552,7 @@ if(isset($_POST[$sql['id']])) {
 $mysql->query("DELETE FROM downloads WHERE id = '".$sql['id']."'", array());
 unlink("downloads/".$sql['filename']);
 
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 }
@@ -566,13 +566,13 @@ URL: <input type="text" name="url" size="150" maxlength="250"><br>
 </form>';
 if(isset($_POST['forwardsubmit'])) {
 $name = $_POST['name'];
-$text = '<meta http-equiv="refresh" content="0; url=./index.php?page=Redirect&ID='.$_POST["url"].'">';
+$text = '<meta http-equiv="refresh" content="0; url=./?page=Redirect&ID='.$_POST["url"].'">';
 if(empty($name)) {
-echo '<meta http-equiv="refresh" content="0, url=index.php?page=Administration&ID=error">';
+echo '<meta http-equiv="refresh" content="0, url=?page=Administration&ID=error">';
 }
 else {
 $mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name." (Weiterleitung)', '".$text."', '".$_COOKIE[$cp.'_admin_name']."')", array());
-echo '<meta http-equiv="refresh" content="0; url=index.php?page=Administration&ID=success">';
+echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
 }
@@ -599,7 +599,7 @@ echo "<title>".$_POST['name']." editieren (Beitrag) - $sitename</title>";
 $text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $mysql->query("UPDATE `posts` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
 $mysql->query("UPDATE `posts` SET `text` = '$text' WHERE id = '$getid'", array());
-echo '<meta http-equiv="refresh" content="0, url=index.php?page=Posts&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0, url=?page=Posts&ID='.$getid.'">';
 }
 if($getpage == "Administration" and $getnews == "edit" and empty($getid)) {
 $mysql->query("select * from news", array());
@@ -624,7 +624,7 @@ echo "<title>".$_POST['name']." editieren (News) - $sitename</title>";
 $text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $mysql->query("UPDATE `news` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
 $mysql->query("UPDATE `news` SET `text` = '$text' WHERE id = '$getid'", array());
-echo '<meta http-equiv="refresh" content="0, url=index.php?page=News&ID='.$getid.'">';
+echo '<meta http-equiv="refresh" content="0, url=?page=News&ID='.$getid.'">';
 }
 echo "<hr>";
 }

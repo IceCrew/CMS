@@ -13,13 +13,13 @@ rename("../lib/config.php.new", "../lib/config.php");
 mkdir("../downloads", 0777);
 }
 ?>
-<a href="index.php?step=1">Mit der Installation beginnen</a>
+<a href="?step=1">Mit der Installation beginnen</a>
 </form>
 <?
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
-echo '<form action="index.php?step=2" method="post">
+echo '<form action="?step=2" method="post">
 <h3>Server-Konfiguration:</h3>
 Seitenname: <input type="text" name="sitename" maxlength="25"><br>
 Datenbank-Host: <input type="text" name="dbhost" maxlength="50"><br>
@@ -78,8 +78,8 @@ if (is_writable($configfile)) {
     print "Konfiguration erfolgreich!";
 
     fclose($handle);
-	echo "<br><a href='index.php?step=3'>Weiter</a>";
-	echo '<meta http-equiv="refresh" content="0; url=index.php?step=3">';
+	echo "<br><a href='?step=3'>Weiter</a>";
+	echo '<meta http-equiv="refresh" content="0; url=?step=3">';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
@@ -133,10 +133,10 @@ $mysql->query("CREATE TABLE `news_comments` (
   `position` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
-echo '<meta http-equiv="refresh" content="0; url=index.php?step=4">';
+echo '<meta http-equiv="refresh" content="0; url=?step=4">';
 }
 if($_GET['step'] == 4) {
-?> <form action="index.php?step=4" method="post">
+?> <form action="?step=4" method="post">
 Benutzername: <input type="text" name="username" maxlength="25"><br>
 Passwort: <input type="password" name="password" maxlength="25"><br>
 <input type="submit" name="create" value="erstellen">
@@ -151,20 +151,20 @@ $rows = mysql_num_rows($mysql->result);
 $mysql->query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')", array());
 $mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich cFire ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array());
 echo "Benutzer & News erfolgreich erstellt";
-echo '<meta http-equiv="refresh" content="0; url=index.php?success">';
+echo '<meta http-equiv="refresh" content="0; url=?success">';
 }
 }
 }
 if(isset($_GET['success'])) {
 echo "Installation erfolgreich";
 ?>
-<form action="index.php?success" method="post">
+<form action="?success" method="post">
 <input type="submit" name="complete" value="Installation abschließen">
 </form>
 <?
 if(isset($_POST['complete'])) {
-echo '<meta http-equiv="refresh" content="0; url=../index.php">';
-echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
+echo '<meta http-equiv="refresh" content="0; url=../">';
+echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../\">HIER</a>";
 }
 }
 ?>

@@ -38,7 +38,7 @@ if (is_writable($configfile)) {
 }
 if(isset($_GET['success'])) {
 echo "Upgrade erfolgreich";
-echo "<br><a href='../index.php'>Abschlieﬂen</a>";
+echo "<br><a href='../'>Abschlieﬂen</a>";
 }
 ?>
 </center>

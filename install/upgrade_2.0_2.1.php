@@ -44,7 +44,7 @@ echo '<meta http-equiv="refresh" content="0; url=upgrade_2.0_'.$cmsversion.'.php
 }
 if(isset($_GET['success'])) {
 echo "Upgrade erfolgreich";
-echo "<br><a href='../index.php'>Abschlieﬂen</a>";
+echo "<br><a href='../'>Abschlieﬂen</a>";
 }
 ?>
 </center>

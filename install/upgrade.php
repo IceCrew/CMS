@@ -2,7 +2,7 @@
 <?php
 $cmsversion = "2.5";
 if(!file_exists("../lib/config.php")) {
-echo "Ist noch nicht installiert! <a href=\"index.php\">Klicke hier um es zu installieren</a>";
+echo "Ist noch nicht installiert! <a href=\"\">Klicke hier um es zu installieren</a>";
 die;
 }
 else {

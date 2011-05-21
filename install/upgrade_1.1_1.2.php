@@ -66,8 +66,8 @@ echo "Upgrade erfolgreich";
 </form>
 <?
 if(isset($_POST['complete'])) {
-echo '<meta http-equiv="refresh" content="0; url=../index.php">';
-echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../index.php\">HIER</a>";
+echo '<meta http-equiv="refresh" content="0; url=../">';
+echo "Wenn die automatische Weiterleitung nicht funktioniert, klicke bitte <a href=\"../\">HIER</a>";
 }
 }
 ?>
