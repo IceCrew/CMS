@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "2.5";
+$cmsversion = "2.6";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -91,6 +91,7 @@ include_once "../lib/class.mysql.php";
 $mysql->query("CREATE TABLE `accounts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
+  `userid` text COLLATE latin1_german1_ci NOT NULL, 
   `password` text COLLATE latin1_german1_ci NOT NULL,
   `admin` int(1) unsigned zerofill NOT NULL,
   `safe` int(1) unsigned zerofill NOT NULL,
@@ -144,11 +145,12 @@ Passwort: <input type="password" name="password" maxlength="25"><br>
 if(isset($_POST['create'])) {
 include '../lib/config.php';
 include_once "../lib/class.mysql.php";
+$validate = mt_rand(1, 9999999999);
 $user = $_POST['username'];
 $pw = sha1($_POST['password']);
 $mysql->query("Select username from accounts WHERE username = '".$user."'", array());
 $rows = mysql_num_rows($mysql->result);
-$mysql->query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')", array());
+$mysql->query("INSERT INTO accounts (username, password, admin, safe, userid) VALUES ('".$user."', '".$pw."', '1', '1', '$validate')", array());
 $mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich cFire ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array());
 echo "Benutzer & News erfolgreich erstellt";
 echo '<meta http-equiv="refresh" content="0; url=?success">';
