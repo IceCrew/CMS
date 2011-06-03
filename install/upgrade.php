@@ -1,6 +1,6 @@
 <title>Upgrade</title>
 <?php
-$cmsversion = "2.7";
+$cmsversion = "2.8";
 if(!file_exists("../includes/config.php")) {
 echo "Ist noch nicht installiert! <a href=\"\">Klicke hier um es zu installieren</a>";
 die;
@@ -58,6 +58,9 @@ echo '<meta http-equiv="refresh" content="0; url=upgrade_2.5_2.6.php">';
 }
 elseif($version == 2.6) {
 echo '<meta http-equiv="refresh" content="0; url=upgrade_2.6_2.7.php">';
+}
+elseif($version == 2.7) {
+echo '<meta http-equiv="refresh" content="0; url=upgrade_2.7_2.8.php">';
 }
 }
 ?>

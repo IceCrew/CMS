@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "2.7";
+$cmsversion = "2.8";
 if(empty($_GET)) {
 if(file_exists("../includes/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
