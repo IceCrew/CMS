@@ -1,7 +1,7 @@
 <title>cFire Upgrade</title>
 <center>
 <?
-include '../lib/config.php';
+include '../includes/config.php';
 $cmsversion = "2.2";
 $pversion = $cmsversion - 0.1;
 if(empty($_GET)) {
@@ -27,7 +27,7 @@ Telefon: <input type="text" name="impressum_telefon" maxlength="50"><br>
 }
 if($_GET['step'] == 2) {
 $email = str_replace("@", "[at]", $_POST['impressum_email']);
-$configfile = "../lib/config.php";
+$configfile = "../includes/config.php";
 $write = "<?php
 \$sitename = \"".$sitename."\";
 \$dbhost = \"".$dbhost."\";
@@ -70,7 +70,7 @@ if (is_writable($configfile)) {
 }
 }
 if($_GET['step'] == 3) {
-include_once "../lib/class.mysql.php";
+include_once "../includes/class.mysql.php";
 $mysql->query("ALTER TABLE `posts` ADD COLUMN views int(100) AFTER `text`;", array());
 $mysql->query("ALTER TABLE `news` ADD COLUMN views int(100) AFTER `text`;", array());
 $mysql->query("UPDATE `posts` SET `views` = 0", array());

@@ -1,7 +1,7 @@
 <title>cFire Upgrade</title>
 <center>
 <?
-include '../lib/config.php';
+include '../includes/config.php';
 $cmsversion = "2.6";
 $pversion = $cmsversion - 0.1;
 if(empty($_GET)) {
@@ -12,7 +12,7 @@ if(empty($_GET)) {
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
-$configfile = "../lib/config.php";
+$configfile = "../includes/config.php";
 $write = "<?php
 \$sitename = \"".$sitename."\";
 \$dbhost = \"".$dbhost."\";
@@ -57,7 +57,7 @@ if (is_writable($configfile)) {
 }
 }
 if($_GET['step'] == 2) {
-include_once "../lib/class.mysql.php";
+include_once "../includes/class.mysql.php";
 $mysql->query("ALTER TABLE `accounts` ADD COLUMN userid text AFTER `username`", array());
 echo '<meta http-equiv="refresh" content="0; url=?success">';
 }

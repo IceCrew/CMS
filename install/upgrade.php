@@ -1,12 +1,12 @@
 <title>Upgrade</title>
 <?php
 $cmsversion = "2.7";
-if(!file_exists("../lib/config.php")) {
+if(!file_exists("../includes/config.php")) {
 echo "Ist noch nicht installiert! <a href=\"\">Klicke hier um es zu installieren</a>";
 die;
 }
 else {
-include '../lib/config.php';
+include '../includes/config.php';
 if($version == $cmsversion) {
 echo "Kein Upgrade möglich.<br>Es wird bereits die aktuelle Version genutzt oder es wurden keine Veränderungen an der Datenbank vorgenommen";
 die;

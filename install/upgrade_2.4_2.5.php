@@ -1,7 +1,7 @@
 <title>cFire Upgrade</title>
 <center>
 <?
-include '../lib/config.php';
+include '../includes/config.php';
 $cmsversion = "2.5";
 $pversion = $cmsversion - 0.1;
 if(empty($_GET)) {
@@ -12,7 +12,7 @@ if(empty($_GET)) {
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
-$configfile = "../lib/config.php";
+$configfile = "../includes/config.php";
 $write = "<?php
 \$sitename = \"".$sitename."\";
 \$dbhost = \"".$dbhost."\";

@@ -1,7 +1,7 @@
 <title>wCMS Upgrade</title>
 <center>
 <?
-include '../lib/config.php';
+include '../includes/config.php';
 $cmsversion = "1.2";
 if(empty($_GET)) {
 ?>
@@ -23,7 +23,7 @@ Datenbank-Passwort: <input type="password" name="dbpasswd" value="<? echo $dbpas
 <?
 }
 if($step == 2) {
-$configfile = "../lib/config.php";
+$configfile = "../includes/config.php";
 $write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - wCMS \".\$version;\n?>";
 if (is_writable($configfile)) {
 
@@ -47,7 +47,7 @@ if (is_writable($configfile)) {
 }
 }
 if($step == 3) {
-include_once '../lib/class.mysql.php';
+include_once '../includes/class.mysql.php';
 $mysql->query("CREATE TABLE `news` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,

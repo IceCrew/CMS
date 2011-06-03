@@ -3,13 +3,13 @@
 <?
 $cmsversion = "2.7";
 if(empty($_GET)) {
-if(file_exists("../lib/config.php")) {
+if(file_exists("../includes/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
 echo '<meta http-equiv="refresh" content="0; url=upgrade.php">';
 die;
 }
 else {
-rename("../lib/config.php.new", "../lib/config.php");
+rename("../includes/config.php.new", "../includes/config.php");
 mkdir("../downloads", 0777);
 }
 ?>
@@ -41,7 +41,7 @@ Telefon: <input type="text" name="impressum_telefon" maxlength="50"><br>
 }
 if($_GET['step'] == 2) {
 $email = str_replace("@", "[at]", $_POST['impressum_email']);
-$configfile = "../lib/config.php";
+$configfile = "../includes/config.php";
 $write = "<?php
 \$sitename = \"".$_POST['sitename']."\";
 \$dbhost = \"".$_POST['dbhost']."\";
@@ -86,8 +86,8 @@ if (is_writable($configfile)) {
 }
 }
 if($_GET['step'] == 3) {
-include '../lib/config.php';
-include_once "../lib/class.mysql.php";
+include '../includes/config.php';
+include_once "../includes/class.mysql.php";
 $mysql->query("CREATE TABLE `accounts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
@@ -142,8 +142,8 @@ Passwort: <input type="password" name="password" maxlength="25"><br>
 <input type="submit" name="create" value="erstellen">
 </form> <?
 if(isset($_POST['create'])) {
-include '../lib/config.php';
-include_once "../lib/class.mysql.php";
+include '../includes/config.php';
+include_once "../includes/class.mysql.php";
 $validate = mt_rand(1, 9999999999);
 $user = $_POST['username'];
 $pw = sha1($_POST['password']);

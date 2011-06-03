@@ -7,9 +7,9 @@ echo '<center><h1><font color="#FF0000">Fehler! Du hast das Verzeichnis "install
 die;
 }
 else {
-include_once "lib/class.mysql.php";
-include "lib/config.php"; 
-include "lib/header.php";
+include_once "includes/class.mysql.php";
+include "includes/config.php"; 
+include "includes/header.php";
 }
 if(empty($_GET)) {
 echo '<meta http-equiv="refresh" content="0; url=./?page=Index">';
@@ -182,7 +182,7 @@ echo "<a href=\"?page=News&ID=".$sql['id']."\"><font color=\"#0000FF\">".$sql['n
 echo "<hr>";
 }
 if($getpage == "Hilfe") {
-include "lib/help.php";
+include "includes/help.php";
 ?>
 <title>Hilfe - <? echo $sitename ?></title>
 <?
@@ -230,7 +230,7 @@ if($getpage == "Login" and $getid == "error")
 if($getpage == "Login") {
 
 echo "<title>Login - $sitename</title>";
-/* echo '<form action="?page=Login" method="post">  
+echo '<form action="?page=Login" method="post">  
 ID: <input type="text" name="id" size="20"> 
 Passwort: <input type="password" name="pwd" size="20">
 <select name="cookietime">
@@ -241,7 +241,7 @@ Passwort: <input type="password" name="pwd" size="20">
 </select>
 <input type="submit" value="Login" name="postlogin">  
 </form>'; 
-echo "<hr>"; */
+echo "<hr>";
 if($getpage == "Login" and isset($_POST['postlogin'])) {
 
 $mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."'", array());  
@@ -313,9 +313,9 @@ echo "<hr>";
 }
 { #Admin Bereich
 if($getpage == "Administration") {
-include "lib/admin.php";
-include "lib/menu.php";
-include_once "lib/class.mysql.php";
+include "includes/admin.php";
+include "includes/menu.php";
+include_once "includes/class.mysql.php";
 echo "$menu_admin<hr>";
 $getposts = $_GET['posts'];
 $getnews = $_GET['news'];
@@ -491,7 +491,7 @@ Telefon: <input type="text" name="impressum_telefon" value="'.$impressum_telefon
 </form>';
 if(isset($_POST['configure'])) {
 $email = str_replace("@", "[at]", $_POST['impressum_email']);
-$configfile = "lib/config.php";
+$configfile = "includes/config.php";
 $write = "<?php
 \$sitename = \"".$_POST['sitename']."\";
 \$dbhost = \"".$_POST['dbhost']."\";

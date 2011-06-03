@@ -1,7 +1,7 @@
 <title>wCMS Upgrade</title>
 <center>
 <?
-include '../lib/config.php';
+include '../includes/config.php';
 $cmsversion = "1.7";
 if(empty($_GET)) {
 ?>
@@ -22,7 +22,7 @@ Datenbank-Passwort: <input type="password" name="dbpasswd" value="<? echo $dbpas
 <?
 }
 if($_GET['step'] == 2) {
-$configfile = "../lib/config.php";
+$configfile = "../includes/config.php";
 $write = "<?php\n\$sitename = \"".$_POST['sitename']."\";\n\$dbhost = \"".$_POST['dbhost']."\";\n\$dbuser = \"".$_POST['dbuser']."\";\n\$dbpasswd = \"".$_POST['dbpasswd']."\";\n\$dbname = \"".$_POST['dbname']."\";\n//do not touch following\n\$version = \"".$cmsversion."\";\n\$footer = \"Copyright by \".\$sitename.\" - <a href='http://www.c-fire.tk/' target='_blank'>cFire \".\$version.\"</a> - <a href='#top'>Nach oben</a>\";\n?>";
 if (is_writable($configfile)) {
 

@@ -1,7 +1,7 @@
 <title>cFire Upgrade</title>
 <center>
 <?
-include '../lib/config.php';
+include '../includes/config.php';
 $cmsversion = "2.3";
 $pversion = $cmsversion - 0.1;
 if(empty($_GET)) {
@@ -13,7 +13,7 @@ if(empty($_GET)) {
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
 $email = str_replace("@", "[at]", $_POST['impressum_email']);
-$configfile = "../lib/config.php";
+$configfile = "../includes/config.php";
 $write = "<?php
 \$sitename = \"".$sitename."\";
 \$dbhost = \"".$dbhost."\";
@@ -57,7 +57,7 @@ if (is_writable($configfile)) {
 }
 }
 if($_GET['step'] == 2) {
-include_once "../lib/class.mysql.php";
+include_once "../includes/class.mysql.php";
 $mysql->query("CREATE TABLE `post_comments` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `user` text COLLATE latin1_german1_ci NOT NULL,
