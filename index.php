@@ -2,15 +2,9 @@
 { #Anderes Bereich
 $getpage = $_GET['page'];
 $getid = $_GET['ID'];
-if(file_exists("install")) {
-echo '<center><h1><font color="#FF0000">Fehler! Du hast das Verzeichnis "install" nicht gelöscht oder das Script noch nicht installiert!</font></h1></center>';
-die;
-}
-else {
 include_once "includes/class.mysql.php";
 include "includes/config.php"; 
 include "includes/header.php";
-}
 if(empty($_GET)) {
 echo '<meta http-equiv="refresh" content="0; url=./?page=Index">';
 }
