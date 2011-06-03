@@ -1,7 +1,7 @@
 <title>cFire Installation</title>
 <center>
 <?
-$cmsversion = "2.6";
+$cmsversion = "2.7";
 if(empty($_GET)) {
 if(file_exists("../lib/config.php")) {
 echo "<a href=\"upgrade.php\">Upgrade hier</a>";
@@ -91,7 +91,6 @@ include_once "../lib/class.mysql.php";
 $mysql->query("CREATE TABLE `accounts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
-  `userid` text COLLATE latin1_german1_ci NOT NULL, 
   `password` text COLLATE latin1_german1_ci NOT NULL,
   `admin` int(1) unsigned zerofill NOT NULL,
   `safe` int(1) unsigned zerofill NOT NULL,

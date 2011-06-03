@@ -232,32 +232,35 @@ if($getpage == "Login") {
 echo "<title>Login - $sitename</title>";
 echo '<form action="?page=Login" method="post">  
 ID: <input type="text" name="id" size="20"> 
-Passwort: <input type="password" name="pwd" size="20"> 
+Passwort: <input type="password" name="pwd" size="20">
+<select name="cookietime"><option value="0">Bis Sitzungsende</option>
+<option value="1">1 Tag</option>
+<option value="7">1 Woche</option>
+<option value="30">1 Monat</option>
+<option value="365">1 Jahr</option>
+</select>
 <input type="submit" value="Login" name="postlogin">  
 </form>'; 
 echo "<hr>";
 if($getpage == "Login" and isset($_POST['postlogin'])) {
 
-$mysql->query("SELECT id, username, userid, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."' OR userid = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."'", array());  
+$mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."'", array());  
 
 if (mysql_num_rows($mysql->result) > 0)  
 {
 $data = @mysql_fetch_array ($mysql->result);  
-$mysql->query("Select admin from accounts WHERE username = '".$_POST['id']."' AND admin = '1' OR userid = '".$_POST['id']."' AND admin = '1'", array());
+$mysql->query("Select admin from accounts WHERE username = '".$_POST['id']."' AND admin = '1'", array());
 $rows = mysql_num_rows($mysql->result);
 if($rows == 1) { 
-  @setcookie($cp."_admin_id", $data['id'], time()+60*60*24*365);
-  @setcookie($cp."_admin_userid", $data['userid'], time()+60*60*24*365);
-  @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*365);
-  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*365);
-  @setcookie($cp."_user_userid", $data['userid'], time()+60*60*24*365);
-  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*365);
+  @setcookie($cp."_admin_id", $data['id'], time()+60*60*24*$_POST['cookietime']);
+  @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*$_POST['cookietime']);
+  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime']);
+  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime']);
 echo '<meta http-equiv="refresh" content="0; url=?page=Administration">';
 }
 elseif($rows == 0) {
-  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*365);
-  @setcookie($cp."_user_userid", $data['userid'], time()+60*60*24*365);
-  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*365);
+  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime']);
+  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime']);
 echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 else  
@@ -277,8 +280,6 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 { #Registrierungs Bereich
 if($getpage == 'Register' and empty($getid)) {
-session_start();
-$validate = mt_rand(1,9999999999);
 echo '<title>Registrierung - '.$sitename.'</title>
 <form action="?page=Register" method="post">
 Benutzername: <input type="text" name="username">
@@ -295,13 +296,8 @@ if($rows == 1) {
 echo "Der Benutzername wird bereits verwendet!";
 }
 if($rows == 0) {
-$mysql->query("INSERT INTO accounts (username, password, userid, admin) VALUES ('".$user."', '".$pw."', '".$validate."', '0')", array());
+$mysql->query("INSERT INTO accounts (username, password, admin) VALUES ('".$user."', '".$pw."', '0')", array());
 echo "User wurde erstellt!";
-$mysql->query("SELECT userid FROM accounts WHERE username='".$user."'", array());
-while($ans = mysql_fetch_array($mysql->result))
-{
-echo "<br>Du kannst dich nun mit deinem Benutzernamen oder deiner Benutzernummer einloggen. <h2>Benutzernummer:</h2>".$ans['userid'];
-}
 }
 }
 echo "<hr>";

@@ -8,7 +8,7 @@ if(!isset($_COOKIE[$cp.'_user_id'])) {
 echo " | <a href=\"?page=Login\"><font color=\"#0000FF\">Einloggen</font></a> oder <a href=\"?page=Register\"><font color=\"#0000FF\">Registrieren</font></a>";
 }
 else {
-echo " | <a href=\"?page=Hilfe\"><font color=\"#0000FF\">Hilfe</font></a> | <a href=\"?page=Login&ID=logout\"><font color=\"#0000FF\">Ausloggen (".$_COOKIE[$cp.'_user_name'].", ".$_COOKIE[$cp.'_user_userid'].")</font></a>";
+echo " | <a href=\"?page=Hilfe\"><font color=\"#0000FF\">Hilfe</font></a> | <a href=\"?page=Login&ID=logout\"><font color=\"#0000FF\">Ausloggen (".$_COOKIE[$cp.'_user_name'].")</font></a>";
 }
 echo " | <a href=\"?page=Impressum\"><font color=\"#0000FF\">Impressum</font></a><hr>";
 ?>
