@@ -230,10 +230,10 @@ if($getpage == "Login" and $getid == "error")
 if($getpage == "Login") {
 
 echo "<title>Login - $sitename</title>";
-echo '<form action="?page=Login" method="post">  
+/* echo '<form action="?page=Login" method="post">  
 ID: <input type="text" name="id" size="20"> 
 Passwort: <input type="password" name="pwd" size="20">
-<select name="cookietime"><option value="0">Bis Sitzungsende</option>
+<select name="cookietime">
 <option value="1">1 Tag</option>
 <option value="7">1 Woche</option>
 <option value="30">1 Monat</option>
@@ -241,7 +241,7 @@ Passwort: <input type="password" name="pwd" size="20">
 </select>
 <input type="submit" value="Login" name="postlogin">  
 </form>'; 
-echo "<hr>";
+echo "<hr>"; */
 if($getpage == "Login" and isset($_POST['postlogin'])) {
 
 $mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."'", array());  
@@ -297,7 +297,15 @@ echo "Der Benutzername wird bereits verwendet!";
 }
 if($rows == 0) {
 $mysql->query("INSERT INTO accounts (username, password, admin) VALUES ('".$user."', '".$pw."', '0')", array());
+$mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$user."' AND password = '".$pw."'", array());
+$data = @mysql_fetch_array($mysql->result);
+$rows2 = mysql_num_rows($mysql->result);
+if($rows2 == 1) { 
 echo "User wurde erstellt!";
+  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*1);
+  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*1);
+echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
+}
 }
 }
 echo "<hr>";
