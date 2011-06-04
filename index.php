@@ -240,11 +240,11 @@ if($getpage == "Login" and isset($_POST['postlogin'])) {
 
 $mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."'", array());  
 
-if (mysql_num_rows($mysql->result) > 0)  
+if (@mysql_num_rows($mysql->result) > 0)  
 {
 $data = @mysql_fetch_array ($mysql->result);  
 $mysql->query("Select admin from accounts WHERE username = '".$_POST['id']."' AND admin = '1'", array());
-$rows = mysql_num_rows($mysql->result);
+$rows = @mysql_num_rows($mysql->result);
 if($rows == 1) { 
   @setcookie($cp."_admin_id", $data['id'], time()+60*60*24*$_POST['cookietime']);
   @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*$_POST['cookietime']);
