@@ -89,7 +89,7 @@ if($_GET['step'] == 3) {
 include '../includes/config.php';
 echo '<a href="?step=2"><img src="../images/buttons/btn_hd_back.png" onmouseover="this.src=\'../images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_back.png\';"></img></a>';
 include_once "../includes/class.mysql.php";
-$mysql->query("CREATE TABLE `accounts` IF NOT EXISTS (
+$mysql->query("CREATE TABLE `accounts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `password` text COLLATE latin1_german1_ci NOT NULL,
@@ -97,7 +97,7 @@ $mysql->query("CREATE TABLE `accounts` IF NOT EXISTS (
   `safe` int(1) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
-$mysql->query("CREATE TABLE `posts` IF NOT EXISTS (
+$mysql->query("CREATE TABLE `posts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
@@ -105,7 +105,7 @@ $mysql->query("CREATE TABLE `posts` IF NOT EXISTS (
   `views` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
-$mysql->query("CREATE TABLE `news` IF NOT EXISTS (
+$mysql->query("CREATE TABLE `news` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `name` text COLLATE latin1_german1_ci NOT NULL,
@@ -113,21 +113,21 @@ $mysql->query("CREATE TABLE `news` IF NOT EXISTS (
   `views` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
-$mysql->query("CREATE TABLE `downloads` IF NOT EXISTS(
+$mysql->query("CREATE TABLE `downloads` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_german1_ci NOT NULL,
   `filename` text COLLATE latin1_german1_ci NOT NULL,
   `downloads` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
-$mysql->query("CREATE TABLE `post_comments` IF NOT EXISTS(
+$mysql->query("CREATE TABLE `post_comments` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `user` text COLLATE latin1_german1_ci NOT NULL,
   `msg` text COLLATE latin1_german1_ci NOT NULL,
   `position` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
-$mysql->query("CREATE TABLE `news_comments` IF NOT EXISTS(
+$mysql->query("CREATE TABLE `news_comments` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `user` text COLLATE latin1_german1_ci NOT NULL,
   `msg` text COLLATE latin1_german1_ci NOT NULL,
