@@ -505,8 +505,7 @@ $write = "<?php
 \$impressum_telefon = \"".$_POST['impressum_telefon']."\";
 //cms
 \$gastkommentar = \"".$_POST['gastkommentar']."\";
-\$version = \"".$version."\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'><font color='#0000FF'>cFire \".\$version.\"</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'><font color='#0000FF'>cFire</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
 ?>";
 if (is_writable($configfile)) {
 
