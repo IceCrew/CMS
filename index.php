@@ -427,7 +427,7 @@ Titel: <input type="text" name="newsname" size="80" maxlength="50"><br>
 <input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="newssubmit" alt="erstellen">
 <form>';
 }
-if(isset($_POST['newssubmit'])) {
+if(isset($_POST['newsname'])) {
 $name = $_POST['newsname'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
