@@ -1,3 +1,12 @@
+<head>
+<style type="text/css">
+a:link { color:black; text-decoration:underline; }
+a:visited { color:black; text-decoration:underline; }
+a:focus { color:black; text-decoration:underline; }
+a:hover { color:black; text-decoration:underline; }
+a:active { color:black; text-decoration:underline; }
+</style>
+</head>
 <?php
 { #Anderes Bereich
 $getpage = $_GET['page'];
@@ -24,7 +33,7 @@ echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
 $views = $sql['views'];
-echo '<a href="?page=News&ID='.$sql["id"].'"><font color=\"#0000FF\"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></font></a><br><br>'.$sql["text"].'<hr>';
+echo '<a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<hr>';
 }
 }
 if($getpage == "Posts" and isset($getid)) {
@@ -34,7 +43,7 @@ $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
 if(isset($_COOKIE[$cp."_admin_id"])) {
-echo " | <a href='?page=Administration&posts=edit&ID=$getid'><font color='#0000FF'>Beitrag editieren</font></a>";
+echo " | <a href='?page=Administration&posts=edit&ID=$getid'>Beitrag editieren</a>";
 }
 echo "<br><br>";
 echo $data['text'];
@@ -98,7 +107,7 @@ if($getpage == "Posts" and empty($getid)) {
 echo "<title>Alle Beiträge - $sitename</title>";
 $mysql->query("select * from posts", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href=\"?page=Posts&ID=".$sql['id']."\"><font color=\"#0000FF\">".$sql['name']."</font></a> (".$sql['views']." Aufrufe)<br>";
+echo "<a href=\"?page=Posts&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
 echo "<hr>";
 }
@@ -109,7 +118,7 @@ $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
 if(isset($_COOKIE[$cp."_admin_id"])) {
-echo " | <a href='?page=Administration&news=edit&ID=$getid'><font color='#0000FF'>News editieren</font></a>";
+echo " | <a href='?page=Administration&news=edit&ID=$getid'>News editieren</a>";
 }
 echo "<br><br>";
 echo $data['text'];
@@ -171,7 +180,7 @@ if($getpage == "News" and empty($getid)) {
 ?><title>Alle News - <? echo $sitename ?></title><?
 $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href=\"?page=News&ID=".$sql['id']."\"><font color=\"#0000FF\">".$sql['name']."</font></a> (".$sql['views']." Aufrufe)<br>";
+echo "<a href=\"?page=News&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
 echo "<hr>";
 }
@@ -180,7 +189,7 @@ include "includes/help.php";
 ?>
 <title>Hilfe - <? echo $sitename ?></title>
 <?
-echo '<a href="?page=Hilfe&ID=html#show"><font color=\"#0000FF\">HTML-Hilfe</font></a>';
+echo '<a href="?page=Hilfe&ID=html#show">HTML-Hilfe</a>';
 if($getpage == "Hilfe" and $getid == "html") {
 ?>
 <title>HTML-Hilfe - <? echo $sitename ?></title>
@@ -193,7 +202,7 @@ if($getpage == "Downloads" and empty($getid)) {
 echo "<title>Downloads - $sitename</title>";
 $mysql->query("select * from downloads", array());
 while($dl = @mysql_fetch_array($mysql->result)) {
-echo "<a href='?page=Downloads&ID=".$dl['id']."'><font color=\"#0000FF\">".$dl['name']."</font></a> (".$dl['downloads']." Downloads)<br>";
+echo "<a href='?page=Downloads&ID=".$dl['id']."'>".$dl['name']."</a> (".$dl['downloads']." Downloads)<br>";
 }
 echo "<hr>";
 }
@@ -211,8 +220,8 @@ echo "<hr>";
 if($getpage == "Redirect") {
 echo "<title>$sitename verlassen - $sitename</title>";
 echo "Du bist dabei <b>$sitename</b> zu verlassen, möchtest du wirklich auf <u><b>$getid</b></u> gehen?<br>";
-echo "- <a href='$getid'><font color=\"#0000FF\">Ja</font></a><br>";
-echo "- <a href='./?page=Index'><font color=\"#0000FF\">Doch nicht</font></a>";
+echo "- <a href='$getid'>Ja</a><br>";
+echo "- <a href='./?page=Index'>Doch nicht</a>";
 echo "<hr>";
 }
 }
@@ -316,7 +325,6 @@ $getnews = $_GET['news'];
 $getusers = $_GET['users'];
 $getsettings = $_GET['settings'];
 $getdownloads = $_GET['downloads'];
-$getforwarding = $_GET['forwarding'];
 if($getpage == "Administration" and empty($getposts) and empty($getusers) and empty($getnews) and empty($getsettings) and empty($getdownloads) and empty($getforwarding) and empty($getid)) {
 echo "<title>Adminpanel - $sitename</title>";
 echo "Bitte wähle einer der oben genannten Optionen";
@@ -326,10 +334,10 @@ echo "<title>Beitrag erstellen - $sitename</title>";
 echo '<form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50"><br>
 <textarea type="text" name="text" style="width:100%; height:275"></textarea>
-<input type="submit" name="submit" value="erstellen">
+<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="submit" alt="erstellen">
 <form>';
 }
-if(isset($_POST['submit'])) {
+if(isset($_POST['name'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
@@ -359,7 +367,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 }
 if($getpage == "Administration" and $getid == "success") {
 echo "<title>Erfolgreich - $sitename</title>";
-echo 'Aktion erfolgreich ausgeführt!<br><a href="?page=Administration"><font color=\"#0000FF\">Weiter</font></a><meta http-equiv="refresh" content="3; url=?page=Administration">';
+echo 'Aktion erfolgreich ausgeführt!<br><a href="?page=Administration">Weiter</a><meta http-equiv="refresh" content="3; url=?page=Administration">';
 }
 if($getpage == "Administration" and $getid == "error") {
 echo "<title>Fehler - $sitename</title>";
@@ -422,13 +430,13 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 if($getpage == "Administration" and $getnews == 'create') {
 echo "<title>News erstellen - $sitename</title>";
 echo '<form action="" method="post">
-Titel: <input type="text" name="name" size="80" maxlength="50"><br>
+Titel: <input type="text" name="newsname" size="80" maxlength="50"><br>
 <textarea type="text" name="text" style="width:100%; height:275"></textarea>
-<input type="submit" name="newssubmit" value="erstellen">
+<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="newssubmit" alt="erstellen">
 <form>';
 }
 if(isset($_POST['newssubmit'])) {
-$name = $_POST['name'];
+$name = $_POST['newsname'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
 $text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
 if(empty($name)) {
@@ -481,9 +489,9 @@ Straße: <input type="text" name="impressum_straße" value="'.$impressum_straße.'"
 Hausnummer: <input type="text" name="impressum_hausnummer" value="'.$impressum_hausnummer.'" maxlength="50"><br>
 E-Mail: <input type="text" name="impressum_email" value="'.$email.'" maxlength="50"><br>
 Telefon: <input type="text" name="impressum_telefon" value="'.$impressum_telefon.'" maxlength="50"><br>
-<input type="submit" name="configure" value="Weiter">
+<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="configure" alt="Weiter">
 </form>';
-if(isset($_POST['configure'])) {
+if(isset($_POST['sitename'])) {
 $email = str_replace("@", "[at]", $_POST['impressum_email']);
 $configfile = "includes/config.php";
 $write = "<?php
@@ -505,7 +513,7 @@ $write = "<?php
 \$impressum_telefon = \"".$_POST['impressum_telefon']."\";
 //cms
 \$gastkommentar = \"".$_POST['gastkommentar']."\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'><font color='#0000FF'>cFire</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'>cFire</a> - <a href='#top'>Nach oben</a>\";
 ?>";
 if (is_writable($configfile)) {
 
@@ -532,13 +540,13 @@ if($getpage == "Administration" and $getdownloads == 'create') {
 echo "<title>Download erstellen - $sitename</title>";
 echo '<h4>Please do just upload ZIP-Archives,RAR-Archives or Executables. Otherwise the File will be damaged!</h4>
 <form action="" method="post" enctype="multipart/form-data">
-Name: <input type="text" name="name" size="50"><br>
+Name: <input type="text" name="dlname" size="50"><br>
 Datei: <input type="file" name="datei" size="75"><br>
-Hochladen: <input type="submit" value="Hochladen" name="add">
+Hochladen: <input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" alt="Hochladen" name="add">
 </form>';
-if(isset($_POST['add'])) {
-move_uploaded_file($_FILES['datei']['tmp_name'], "downloads/".$_FILES['datei']['name']);
-$mysql->query("INSERT INTO downloads (name, filename, downloads) VALUES ('".$_POST['name']."', '".$_FILES['datei']['name']."', '0')", array());
+if(isset($_POST['dlname'])) {
+move_uploaded_file($_FILES['datei']['tmp_name'], "downloads/".$_FILES['datei']['dlname']);
+$mysql->query("INSERT INTO downloads (name, filename, downloads) VALUES ('".$_POST['dlname']."', '".$_FILES['datei']['dlname']."', '0')", array());
 echo "Datei hochgeladen";
 }
 }
@@ -557,31 +565,11 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 }
 }
 }
-if($getpage == "Administration" and $getforwarding == 'create') { 
-echo "<title>Weiterleitung erstellen - $sitename</title>";
-echo '<form action="" method="post">
-<h3>Achtung: Die Weiterleitung wird als Post erstellt!</h3>
-Titel: <input type="text" name="name" size="80" maxlength="50"><br>
-URL: <input type="text" name="url" size="150" maxlength="250"><br>
-<input type="submit" name="forwardsubmit" value="erstellen">
-</form>';
-if(isset($_POST['forwardsubmit'])) {
-$name = $_POST['name'];
-$text = '<meta http-equiv="refresh" content="0; url=./?page=Redirect&ID='.$_POST["url"].'">';
-if(empty($name)) {
-echo '<meta http-equiv="refresh" content="0, url=?page=Administration&ID=error">';
-}
-else {
-$mysql->query("INSERT INTO posts (name, text, username) VALUES ('".$name." (Weiterleitung)', '".$text."', '".$_COOKIE[$cp.'_admin_name']."')", array());
-echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
-}
-}
-}
 if($getpage == "Administration" and $getposts == "edit" and empty($getid)) {
 $mysql->query("select * from posts", array());
 echo "<title>Beitrag editieren - $sitename</title>";
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href='?page=Administration&posts=edit&ID=".$sql['id']."'><font color=\"#0000FF\">\"".$sql['name']."\" editieren</font></a><br>";
+echo "<a href='?page=Administration&posts=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
 }
 }
 if($getpage == "Administration" and $getposts == "edit" and isset($getid)) {
@@ -590,15 +578,15 @@ while($sql = @mysql_fetch_array($mysql->result)) {
 $text = str_replace("<br>", "", $sql['text']);
 echo "<title>".$sql['name']." editieren (Beitrag) - $sitename</title>";
 echo '<form action="" method="post">
-Titel: <input type="text" name="name" size="80" maxlength="50" value="'.$sql["name"].'"><br>
+Titel: <input type="text" name="pname" size="80" maxlength="50" value="'.$sql["name"].'"><br>
 <textarea type="text" name="text" style="width:100%; height:275">'.$text.'</textarea><br>
-<input type="submit" name="peditsubmit" value="editieren">';
+<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="peditsubmit" alt="editieren">';
 }
 }
-if(isset($_POST['peditsubmit'])) {
-echo "<title>".$_POST['name']." editieren (Beitrag) - $sitename</title>";
+if(isset($_POST['pname'])) {
+echo "<title>".$_POST['pname']." editieren (Beitrag) - $sitename</title>";
 $text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$mysql->query("UPDATE `posts` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
+$mysql->query("UPDATE `posts` SET `name` = '".$_POST['pname']."' WHERE id = '$getid'", array());
 $mysql->query("UPDATE `posts` SET `text` = '$text' WHERE id = '$getid'", array());
 echo '<meta http-equiv="refresh" content="0, url=?page=Posts&ID='.$getid.'">';
 }
@@ -606,7 +594,7 @@ if($getpage == "Administration" and $getnews == "edit" and empty($getid)) {
 $mysql->query("select * from news", array());
 echo "<title>News editieren - $sitename</title>";
 while($sql = @mysql_fetch_array($mysql->result)) {
-echo "<a href='?page=Administration&news=edit&ID=".$sql['id']."'><font color=\"#0000FF\">\"".$sql['name']."\" editieren</font></a><br>";
+echo "<a href='?page=Administration&news=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
 }
 }
 if($getpage == "Administration" and $getnews == "edit" and isset($getid)) {
@@ -615,15 +603,15 @@ while($sql = @mysql_fetch_array($mysql->result)) {
 echo "<title>".$sql['name']." editieren (News) - $sitename</title>";
 $text = str_replace("<br>", "", $sql['text']);
 echo '<form action="" method="post">
-Titel: <input type="text" name="name" size="80" maxlength="50" value="'.$sql["name"].'"><br>
+Titel: <input type="text" name="nname" size="80" maxlength="50" value="'.$sql["name"].'"><br>
 <textarea type="text" name="text" style="width:100%; height:275">'.$text.'</textarea><br>
-<input type="submit" name="neditsubmit" value="editieren">';
+<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="neditsubmit" alt="editieren">';
 }
 }
-if(isset($_POST['neditsubmit'])) {
-echo "<title>".$_POST['name']." editieren (News) - $sitename</title>";
+if(isset($_POST['nname'])) {
+echo "<title>".$_POST['nname']." editieren (News) - $sitename</title>";
 $text = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$mysql->query("UPDATE `news` SET `name` = '".$_POST['name']."' WHERE id = '$getid'", array());
+$mysql->query("UPDATE `news` SET `name` = '".$_POST['nname']."' WHERE id = '$getid'", array());
 $mysql->query("UPDATE `news` SET `text` = '$text' WHERE id = '$getid'", array());
 echo '<meta http-equiv="refresh" content="0, url=?page=News&ID='.$getid.'">';
 }

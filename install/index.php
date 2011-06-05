@@ -62,7 +62,7 @@ $write = "<?php
 \$impressum_telefon = \"".$_POST['impressum_telefon']."\";
 //cms
 \$gastkommentar = \"0\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'><font color='#0000FF'>cFire</font></a> - <a href='#top'><font color='#0000FF'>Nach oben</font></a>\";
+\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'>cFire</a> - <a href='#top'>Nach oben</a>\";
 ?>";
 if (is_writable($configfile)) {
 
