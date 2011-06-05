@@ -1,17 +1,9 @@
-<head>
-<style type="text/css">
-a:link { color:black; text-decoration:underline; }
-a:visited { color:black; text-decoration:underline; }
-a:focus { color:black; text-decoration:underline; }
-a:hover { color:black; text-decoration:underline; }
-a:active { color:black; text-decoration:underline; }
-</style>
-</head>
 <?php
 { #Anderes Bereich
 $getpage = $_GET['page'];
 $getid = $_GET['ID'];
 include_once "includes/class.mysql.php";
+include "includes/style.php";
 include "includes/config.php"; 
 include "includes/header.php";
 if(empty($_GET)) {
