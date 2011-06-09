@@ -3,9 +3,9 @@
 $getpage = $_GET['page'];
 $getid = $_GET['ID'];
 include_once "includes/class.mysql.php";
-include "includes/style.php";
 include "includes/config.php"; 
 include "includes/header.php";
+echo '<head><link rel="STYLESHEET" type="text/CSS" href="includes/styles.css"></head>';
 if(empty($_GET)) {
 echo '<meta http-equiv="refresh" content="0; url=./?page=Index">';
 }
