@@ -5,7 +5,7 @@ $getid = $_GET['ID'];
 include_once "includes/class.mysql.php";
 include "includes/config.php"; 
 include "includes/header.php";
-echo '<head><link rel="STYLESHEET" type="text/CSS" href="includes/styles.css"></head>';
+echo '<head><link rel="STYLESHEET" type="text/CSS" href="includes/style.css"></head>';
 if(empty($_GET)) {
 echo '<meta http-equiv="refresh" content="0; url=./?page=Index">';
 }
