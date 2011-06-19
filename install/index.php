@@ -3,7 +3,7 @@
 <body background="../images/site/background.png"></body>
 <img src="../images/site/logo.png" onmouseover="this.src='../images/site/logo_hover.png';" onmouseout="this.src='../images/site/logo.png';"></img><hr>
 <?
-$version = 1;
+$version = 2;
 if(empty($_GET)) {
 if(file_exists("../includes/config.php")) {
 echo 'Content-Fire-CMS ist bereits installiert!<br>
@@ -95,6 +95,7 @@ $mysql->query("CREATE TABLE `accounts` (
   `username` text COLLATE latin1_german1_ci NOT NULL,
   `email` text COLLATE latin1_german1_ci NOT NULL,
   `password` text COLLATE latin1_german1_ci NOT NULL,
+  `remote_addr` text COLLATE latin1_german1_ci NOT NULL,
   `admin` int(1) unsigned zerofill NOT NULL,
   `safe` int(1) unsigned zerofill NOT NULL,
   `active` int(1) unsigned zerofill NOT NULL,

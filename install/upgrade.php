@@ -12,6 +12,7 @@ $data = @mysql_fetch_array($mysql->result);
 echo 'Bitte wähle deine Version aus: '.$data["version"].'
 <form action="" method="post">
 <select name="version">
+<option value="0">Bitte wähle eine Version</option>
 <option value="1">Version 1</option>
 </select>
 <input type="submit" name="select" value="Version bestätigen">
@@ -21,7 +22,9 @@ if(isset($_POST["select"]))
 	$pversion = $_POST["version"];
 	if($pversion == 1)
 	{
-		echo "Es ist noch kein Upgrade für diese Version verfügbar.";
+		$mysql->query("ALTER TABLE accounts ADD remote_addr text AFTER password", array());
+		$mysql->query("UPDATE cms_info SET version = 2", array());
+		echo "Upgrade erfolgreich!";
 	}
 }
 }

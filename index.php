@@ -253,11 +253,13 @@ if($rows == 1) {
   @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
   @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
   @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  $mysql->query("UPDATE accounts SET remote_addr = '".$_SERVER['REMOTE_ADDR']."' WHERE username = '".$data['username']."'", array());
 echo '<meta http-equiv="refresh" content="0; url=?page=Administration">';
 }
 elseif($rows == 0) {
   @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
   @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  $mysql->query("UPDATE accounts SET remote_addr = '".$_SERVER['REMOTE_ADDR']."' WHERE username = '".$data['username']."'", array());
 echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 else  
@@ -407,7 +409,6 @@ $mysql->query("DELETE FROM accounts WHERE id = '".$sql['id']."' and safe = '0'",
 echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
-
 }
 if($getpage == "Administration" and $getusers == 'list') {
 echo "<title>Benutzerliste - $sitename</title>";
