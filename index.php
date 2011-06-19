@@ -284,7 +284,7 @@ Email-Addresse: <input type="text" name="email">
 Passwort: <input type="password" name="password">
 <input type="submit" name="register" value="Registrieren">
 </form>';
-if(isset($_POST['register'])) {
+if(isset($_POST['register']) AND !empty($_POST['email']) AND !empty($_POST['username']) AND !empty($_POST['password'])) {
 $user = $_POST['username'];
 $pw = sha1($_POST['password']);
 $sql = "Select username from accounts WHERE username = '".$user."'";
