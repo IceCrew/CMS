@@ -1,5 +1,7 @@
 <?php
 { #Anderes Bereich
+$domain = $_SERVER['SERVER_NAME'];
+$path = str_replace("index.php", "", $_SERVER['SCRIPT_NAME']);
 $getpage = $_GET['page'];
 $getid = $_GET['ID'];
 include_once "includes/class.mysql.php";
@@ -247,15 +249,15 @@ $data = @mysql_fetch_array ($mysql->result);
 $mysql->query("Select admin from accounts WHERE username = '".$_POST['id']."' AND admin = '1'", array());
 $rows = @mysql_num_rows($mysql->result);
 if($rows == 1) { 
-  @setcookie($cp."_admin_id", $data['id'], time()+60*60*24*$_POST['cookietime']);
-  @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*$_POST['cookietime']);
-  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime']);
-  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime']);
+  @setcookie($cp."_admin_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
 echo '<meta http-equiv="refresh" content="0; url=?page=Administration">';
 }
 elseif($rows == 0) {
-  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime']);
-  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime']);
+  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
 echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 else  
@@ -265,10 +267,10 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Login&ID=error">';
 }
 }
 if($getpage == "Login" and $getid == "logout") { 
-  @setcookie($cp."_admin_id", "", time()-60*60*24*365);
-  @setcookie($cp."_admin_name", "", time()-60*60*24*365);
-  @setcookie($cp."_user_id", "", time()-60*60*24*365);
-  @setcookie($cp."_user_name", "", time()-60*60*24*365);
+  @setcookie($cp."_admin_id", "", time()-60*60*24*365, $path, $domain);
+  @setcookie($cp."_admin_name", "", time()-60*60*24*365, $path, $domain);
+  @setcookie($cp."_user_id", "", time()-60*60*24*365, $path, $domain);
+  @setcookie($cp."_user_name", "", time()-60*60*24*365, $path, $domain);
 echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 }
