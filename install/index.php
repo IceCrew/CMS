@@ -3,6 +3,7 @@
 <body background="../images/site/background.png"></body>
 <img src="../images/site/logo.png" onmouseover="this.src='../images/site/logo_hover.png';" onmouseout="this.src='../images/site/logo.png';"></img><hr>
 <?
+$version = 1;
 if(empty($_GET)) {
 if(file_exists("../includes/config.php")) {
 echo 'Content-Fire-CMS ist bereits installiert!<br>
@@ -136,6 +137,11 @@ $mysql->query("CREATE TABLE `news_comments` (
   `position` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
+$mysql->query("CREATE TABLE `cms_info` (
+  `version` int(100) NOT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
+$mysql->query("INSERT INTO `cms_info` (version) VALUES ('$version');", array());
 echo '<br><a href="?step=4"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';
 }
 if($_GET['step'] == 4) {

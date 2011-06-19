@@ -6,6 +6,23 @@ die;
 }
 else {
 include '../includes/config.php';
-echo "Das neue Updatesystem befindet sich in Arbeit. Bitte nutzen sie derzeit nur die Installation. Die Versionen können aus der Config gelöscht werden!";
+include_once '../includes/class.mysql.php';
+$mysql->query("SELECT version FROM cms_info", array());
+$data = @mysql_fetch_array($mysql->result);
+echo 'Bitte wähle deine Version aus: '.$data["version"].'
+<form action="" method="post">
+<select name="version">
+<option value="1">Version 1</option>
+</select>
+<input type="submit" name="select" value="Version bestätigen">
+</form>';
+if(isset($_POST["select"]))
+{
+	$pversion = $_POST["version"];
+	if($pversion == 1)
+	{
+		echo "Es ist noch kein Upgrade für diese Version verfügbar.";
+	}
+}
 }
 ?>
