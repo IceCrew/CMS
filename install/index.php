@@ -92,9 +92,11 @@ include_once "../includes/class.mysql.php";
 $mysql->query("CREATE TABLE `accounts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
+  `email` text COLLATE latin1_german1_ci NOT NULL,
   `password` text COLLATE latin1_german1_ci NOT NULL,
   `admin` int(1) unsigned zerofill NOT NULL,
   `safe` int(1) unsigned zerofill NOT NULL,
+  `active` int(1) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
 $mysql->query("CREATE TABLE `posts` (
@@ -150,7 +152,7 @@ $user = $_POST['username'];
 $pw = sha1($_POST['password']);
 $mysql->query("Select username from accounts WHERE username = '".$user."'", array());
 $rows = @mysql_num_rows($mysql->result);
-$mysql->query("INSERT INTO accounts (username, password, admin, safe) VALUES ('".$user."', '".$pw."', '1', '1')", array());
+$mysql->query("INSERT INTO accounts (username, password, admin, safe, email, active) VALUES ('".$user."', '".$pw."', '1', '1', '$impressum_email', '1')", array());
 $mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich cFire ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array());
 echo "Benutzer & News erfolgreich erstellt";
 echo '<a href="?success"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';

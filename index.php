@@ -239,7 +239,7 @@ Passwort: <input type="password" name="pwd" size="20">
 echo "<hr>";
 if($getpage == "Login" and isset($_POST['postlogin'])) {
 
-$mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."'", array());  
+$mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."' AND active = '1'", array());  
 
 if (@mysql_num_rows($mysql->result) > 0)  
 {
@@ -278,6 +278,7 @@ if($getpage == 'Register' and empty($getid)) {
 echo '<title>Registrierung - '.$sitename.'</title>
 <form action="?page=Register" method="post">
 Benutzername: <input type="text" name="username">
+Email-Addresse: <input type="text" name="email">
 Passwort: <input type="password" name="password">
 <input type="submit" name="register" value="Registrieren">
 </form>';
@@ -291,19 +292,39 @@ if($rows == 1) {
 echo "Der Benutzername wird bereits verwendet!";
 }
 if($rows == 0) {
-$mysql->query("INSERT INTO accounts (username, password, admin) VALUES ('".$user."', '".$pw."', '0')", array());
+$mysql->query("INSERT INTO accounts (username, password, admin, safe, active, email) VALUES ('".$user."', '".$pw."', '0', '0', '0', '".$_POST['email']."')", array());
 $mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$user."' AND password = '".$pw."'", array());
 $data = @mysql_fetch_array($mysql->result);
 $rows2 = mysql_num_rows($mysql->result);
 if($rows2 == 1) { 
-echo "User wurde erstellt!";
-  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*1);
-  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*1);
-echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
+$mailto = $_POST['email'];
+$mailsubject = "Ihr Account bei $sitename";
+$mailmessage = "Hallo $user!
+Wir freuen uns, dass du dich bei $sitename angemeldet hast.
+
+Um deinen Account zu aktivieren, klicke bitte auf folgenden Link: http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=Activate&ID=".$data['id']."
+Wenn der Link nicht funktioniert, versuche es bitte später nocheinmal. Oder wende dich an $impressum_email.
+
+Dein $sitename-Team.
+--------------------------------------------------
+Dies ist eine automatisch generierte Email. Bitte antworten sie nicht darauf."
+mail($mailto, $mailsubject, $mailmessage);
+echo "Der User wurde erstellt. Es wurde eine Bestätigungsemail zum überprüfen der Gültigkeit der angegebenen Email-Addresse geschickt.";
 }
 }
 }
 echo "<hr>";
+}
+}
+{ #Aktivierungs Bereich
+if($getpage == "Activate")
+{
+	$mysql->query("UPDATE accounts SET active = '1' WHERE id = '$getid'", array());
+	$mysql->query("SELECT username FROM accounts WHERE id = '$getid'", array());
+	while($sql = @mysql_fetch_array($mysql->result))
+	{
+		echo "Du hast deinen Account ".$sql['username']." erfolgreich aktiviert!";
+	}
 }
 }
 { #Admin Bereich
