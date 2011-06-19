@@ -7,7 +7,7 @@ include "includes/config.php";
 include "includes/header.php";
 echo '<head><link rel="STYLESHEET" type="text/CSS" href="includes/style.css"></head>';
 if(empty($_GET)) {
-echo '<meta http-equiv="refresh" content="0; url=./?page=Index">';
+echo '<meta http-equiv="refresh" content="0; url=./index.php?page=Index">';
 }
 if($getpage == "Impressum") {
 echo "<title>Impressum - $sitename</title>";
@@ -305,9 +305,14 @@ Wir freuen uns, dass du dich bei $sitename angemeldet hast.
 Um deinen Account zu aktivieren, klicke bitte auf folgenden Link: http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=Activate&ID=".$data['id']."
 Wenn der Link nicht funktioniert, versuche es bitte später nocheinmal. Oder wende dich an $impressum_email.
 
+Accountdaten:
+
+Benutzername: $user
+Passwort: ".$_POST['password']."
+
 Dein $sitename-Team.
 --------------------------------------------------
-Dies ist eine automatisch generierte Email. Bitte antworten sie nicht darauf."
+Dies ist eine automatisch generierte Email. Bitte antworten sie nicht darauf.";
 mail($mailto, $mailsubject, $mailmessage);
 echo "Der User wurde erstellt. Es wurde eine Bestätigungsemail zum überprüfen der Gültigkeit der angegebenen Email-Addresse geschickt.";
 }
@@ -319,11 +324,12 @@ echo "<hr>";
 { #Aktivierungs Bereich
 if($getpage == "Activate")
 {
+	echo "<title>Aktivierung - $sitename</title>";
 	$mysql->query("UPDATE accounts SET active = '1' WHERE id = '$getid'", array());
 	$mysql->query("SELECT username FROM accounts WHERE id = '$getid'", array());
 	while($sql = @mysql_fetch_array($mysql->result))
 	{
-		echo "Du hast deinen Account ".$sql['username']." erfolgreich aktiviert!";
+		echo "Du hast deinen Account ".$sql['username']." erfolgreich aktiviert!<hr>";
 	}
 }
 }
