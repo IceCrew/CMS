@@ -1,11 +1,11 @@
-<title>cFire Installation</title>
+<?php
+echo '<title>cFire Installation</title>
 <center>
 <body background="images/site/background.png"></body>
-<img src="images/site/logo.png" onmouseover="this.src='images/site/logo_hover.png';" onmouseout="this.src='images/site/logo.png';"></img><hr>
-<?
+<img src="images/site/logo.png" onmouseover="this.src=\'images/site/logo_hover.png\';" onmouseout="this.src=\'images/site/logo.png\';"></img><hr>';
 $version = 2;
 if(empty($_GET)) {
-if(file_exists("includes/config.php")) {
+if(file_exists("includes/config.php") AND file_exists("includes/config.php.new")) {
 echo 'Content-Fire-CMS ist bereits installiert!<br>
 Klicken sie auf weiter, um ein Upgrade zu machen.<br>
 <a href="upgrade.php"><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
@@ -167,8 +167,10 @@ echo '<a href="?success"><img src="images/buttons/btn_hd_next.png" onmouseover="
 }
 }
 if(isset($_GET['success'])) {
-echo 'Installation erfolgreich beendet!<br>
-<a href=""><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
+echo 'Installation erfolgreich beendet!
+<form action="index.php" method="post">
+<input type="submit" name="installdeletefiles" value="Installations Dateien löschen">
+</form>';
 }
 ?>
 </center>

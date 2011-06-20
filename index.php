@@ -4,6 +4,16 @@ $domain = $_SERVER['SERVER_NAME'];
 $path = str_replace("index.php", "", $_SERVER['SCRIPT_NAME']);
 $getpage = $_GET['page'];
 $getid = $_GET['ID'];
+if(file_exists('includes/config.php') AND file_exists('includes/config.php.new')) {
+echo '<meta http-equiv="refresh" content="0; URL=upgrade.php">';
+}
+elseif(!file_exists('includes/config.php') AND file_exists('includes/config.php.new')) {
+echo '<meta http-equiv="refresh" content="0; URL=install.php">';
+}
+if(isset($_POST["installdeletefiles"])) {
+@unlink("install.php");
+@unlink("upgrade.php");
+}
 include_once "includes/class.mysql.php";
 include "includes/config.php"; 
 include "includes/header.php";
