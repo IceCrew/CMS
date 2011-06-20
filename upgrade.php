@@ -1,12 +1,12 @@
 <title>Upgrade</title>
 <?php
-if(!file_exists("../includes/config.php")) {
+if(!file_exists("includes/config.php")) {
 echo "Ist noch nicht installiert! <a href=\"\">Klicke hier um es zu installieren</a>";
 die;
 }
 else {
-include '../includes/config.php';
-include_once '../includes/class.mysql.php';
+include 'includes/config.php';
+include_once 'includes/class.mysql.php';
 $mysql->query("SELECT version FROM cms_info", array());
 $data = @mysql_fetch_array($mysql->result);
 echo 'Bitte wähle deine Version aus: '.$data["version"].'

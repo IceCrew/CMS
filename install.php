@@ -1,26 +1,26 @@
 <title>cFire Installation</title>
 <center>
-<body background="../images/site/background.png"></body>
-<img src="../images/site/logo.png" onmouseover="this.src='../images/site/logo_hover.png';" onmouseout="this.src='../images/site/logo.png';"></img><hr>
+<body background="images/site/background.png"></body>
+<img src="images/site/logo.png" onmouseover="this.src='images/site/logo_hover.png';" onmouseout="this.src='images/site/logo.png';"></img><hr>
 <?
 $version = 2;
 if(empty($_GET)) {
-if(file_exists("../includes/config.php")) {
+if(file_exists("includes/config.php")) {
 echo 'Content-Fire-CMS ist bereits installiert!<br>
 Klicken sie auf weiter, um ein Upgrade zu machen.<br>
-<a href="upgrade.php"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';
+<a href="upgrade.php"><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
 die;
 }
 else {
 echo 'Klicken sie auf weiter, um mit der Installation zu beginnen!<br>
-<a href="?step=1"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';
+<a href="?step=1"><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
 }
 }
 if(isset($_GET['step'])) {
 if($_GET['step'] == 1) {
-rename("../includes/config.php.new", "../includes/config.php");
-mkdir("../downloads", 0777);
-echo '<a href="./"><img src="../images/buttons/btn_hd_back.png" onmouseover="this.src=\'../images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_back.png\';"></img></a><br>
+rename("includes/config.php.new", "includes/config.php");
+mkdir("downloads", 0777);
+echo '<a href="./"><img src="images/buttons/btn_hd_back.png" onmouseover="this.src=\'images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_back.png\';"></img></a><br>
 <form action="?step=2" method="post">
 <h3>Server-Konfiguration:</h3>
 Seitenname: <input type="text" name="sitename" maxlength="25"><br>
@@ -38,12 +38,12 @@ Straße: <input type="text" name="impressum_straße" maxlength="50"><br>
 Hausnummer: <input type="text" name="impressum_hausnummer" maxlength="50"><br>
 E-Mail: <input type="text" name="impressum_email" maxlength="50"><br>
 Telefon: <input type="text" name="impressum_telefon" maxlength="50"><br>
-<input type="image" src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';" name="Weiter" alt="Weiter">
+<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="Weiter" alt="Weiter">
 </form>';
 }
 if($_GET['step'] == 2) {
 $email = str_replace("@", "[at]", $_POST['impressum_email']);
-$configfile = "../includes/config.php";
+$configfile = "includes/config.php";
 $write = "<?php
 \$sitename = \"".$_POST['sitename']."\";
 \$dbhost = \"".$_POST['dbhost']."\";
@@ -79,17 +79,17 @@ if (is_writable($configfile)) {
     print "Konfiguration erfolgreich!";
 
     fclose($handle);
-	echo '<br><a href="?step=1"><img src="../images/buttons/btn_hd_back.png" onmouseover="this.src=\'../images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_back.png\';"></img></a>
-	<br><a href="?step=3"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';
+	echo '<br><a href="?step=1"><img src="images/buttons/btn_hd_back.png" onmouseover="this.src=\'images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_back.png\';"></img></a>
+	<br><a href="?step=3"><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
 
 } else {
     print "Die Datei $configfile ist nicht schreibbar";
 }
 }
 if($_GET['step'] == 3) {
-include '../includes/config.php';
-echo '<a href="?step=2"><img src="../images/buttons/btn_hd_back.png" onmouseover="this.src=\'../images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_back.png\';"></img></a>';
-include_once "../includes/class.mysql.php";
+include 'includes/config.php';
+echo '<a href="?step=2"><img src="images/buttons/btn_hd_back.png" onmouseover="this.src=\'images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_back.png\';"></img></a>';
+include_once "includes/class.mysql.php";
 $mysql->query("CREATE TABLE `accounts` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `username` text COLLATE latin1_german1_ci NOT NULL,
@@ -143,18 +143,18 @@ $mysql->query("CREATE TABLE `cms_info` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
 $mysql->query("INSERT INTO `cms_info` (version) VALUES ('$version');", array());
-echo '<br><a href="?step=4"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';
+echo '<br><a href="?step=4"><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
 }
 if($_GET['step'] == 4) {
-echo '<a href="?step=3"><img src="../images/buttons/btn_hd_back.png" onmouseover="this.src=\'../images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_back.png\';"></img></a>
+echo '<a href="?step=3"><img src="images/buttons/btn_hd_back.png" onmouseover="this.src=\'images/buttons/btn_hd_back_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_back.png\';"></img></a>
 <br><form action="?step=4" method="post">
 Benutzername: <input type="text" name="username" maxlength="25"><br>
 Passwort: <input type="password" name="password" maxlength="25"><br>
-<input type="image" src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';" name="create" alt="create">
+<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="create" alt="create">
 </form>';
 if(isset($_POST['password']) AND isset($_POST['username'])) {
-include '../includes/config.php';
-include_once "../includes/class.mysql.php";
+include 'includes/config.php';
+include_once "includes/class.mysql.php";
 $user = $_POST['username'];
 $pw = sha1($_POST['password']);
 $mysql->query("Select username from accounts WHERE username = '".$user."'", array());
@@ -162,13 +162,13 @@ $rows = @mysql_num_rows($mysql->result);
 $mysql->query("INSERT INTO accounts (username, password, admin, safe, email, active) VALUES ('".$user."', '".$pw."', '1', '1', '$impressum_email', '1')", array());
 $mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich cFire ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array());
 echo "Benutzer & News erfolgreich erstellt";
-echo '<a href="?success"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';
+echo '<a href="?success"><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
 }
 }
 }
 if(isset($_GET['success'])) {
 echo 'Installation erfolgreich beendet!<br>
-<a href="../"><img src="../images/buttons/btn_hd_next.png" onmouseover="this.src=\'../images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'../images/buttons/btn_hd_next.png\';"></img></a>';
+<a href=""><img src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';"></img></a>';
 }
 ?>
 </center>
