@@ -11,12 +11,9 @@ elseif(!file_exists('includes/config.php') AND file_exists('includes/config.php.
 echo '<meta http-equiv="refresh" content="0; URL=install.php">';
 }
 if(isset($_POST["installdeletefiles"])) {
-@unlink("install.php");
-@unlink("upgrade.php");
+unlink("install.php");
+unlink("upgrade.php");
 }
-include_once "includes/class.mysql.php";
-include "includes/config.php"; 
-include "includes/header.php";
 echo '<head><link rel="STYLESHEET" type="text/CSS" href="includes/style.css"></head>';
 if(empty($_GET)) {
 echo '<meta http-equiv="refresh" content="0; url=./index.php?page=Index">';
@@ -31,18 +28,40 @@ E-Mail: $impressum_email<br>
 Telefon: $impressum_telefon";
 }
 }
+{ #Template Bereich
+include_once "includes/class.mysql.php";
+include "includes/config.php"; 
+$mysql->query("SELECT template FROM cms_info", array());
+$templates = mysql_fetch_array($mysql->result);
+$template = "images/templates/".$templates['template'];
+}
+{ #Header Bereich
+echo '<a href="http://'.$domain.$path.'"><img frameborder="0" border="0" src="'.$template.'/site/logo.png"></img></a><br><body background="'.$template.'/site/background.png"></body>';
+echo '<a name="top"></a><a href="?page=Index"><img frameborder="0" border="0" src="'.$template.'/buttons/index.png" onmouseover="this.src=\''.$template.'/buttons/index_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/index.png\';"></img></a> <a href="?page=News"><img frameborder="0" border="0" src="'.$template.'/buttons/news.png" onmouseover="this.src=\''.$template.'/buttons/news_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/news.png\';"></img></a> <a href="?page=Posts"><img frameborder="0" border="0" src="'.$template.'/buttons/posts.png" onmouseover="this.src=\''.$template.'/buttons/posts_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/posts.png\';"></img></a> <a href="?page=Downloads"><img frameborder="0" border="0" src="'.$template.'/buttons/downloads.png" onmouseover="this.src=\''.$template.'/buttons/downloads_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/downloads.png\';"></img></a> ';
+require('includes/config.php');
+if(isset($_COOKIE[$cp.'_admin_id'])) { 
+echo '<a href="?page=Administration"><img frameborder="0" border="0" src="'.$template.'/buttons/adminpanel.png" onmouseover="this.src=\''.$template.'/buttons/adminpanel_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/adminpanel.png\';"></img></a> ';
+}
+if(!isset($_COOKIE[$cp.'_user_id'])) {
+echo '<a href="?page=Login"><img frameborder="0" border="0" src="'.$template.'/buttons/login.png" onmouseover="this.src=\''.$template.'/buttons/login_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/login.png\';"></img></a> <a href="?page=Register"><img frameborder="0" border="0" src="'.$template.'/buttons/register.png" onmouseover="this.src=\''.$template.'/buttons/register_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/register.png\';"></img></a> ';
+}
+else {
+echo '<a href="?page=Hilfe"><img frameborder="0" border="0" src="'.$template.'/buttons/help.png" onmouseover="this.src=\''.$template.'/buttons/help_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/help.png\';"></img></a> <a href="?page=Login&ID=logout"><img frameborder="0" border="0" src="'.$template.'/buttons/logout.png" onmouseover="this.src=\''.$template.'/buttons/logout_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/logout.png\';"></img></a> ';
+}
+echo '<a href="?page=Impressum"><img frameborder="0" border="0" src="'.$template.'/buttons/impress.png" onmouseover="this.src=\''.$template.'/buttons/impress_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/impress.png\';"></img></a><hr>';
+}
 { #Index Bereich
 if($getpage == "Index") {
 echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 $views = $sql['views'];
-echo '<a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<hr>';
+echo '<a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<br>';
 }
 }
 if($getpage == "Posts" and isset($getid)) {
 $mysql->query("select * from posts where id='".$getid."'", array());
-while($data = @mysql_fetch_array($mysql->result)) {
+while($data = mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
@@ -54,7 +73,7 @@ echo $data['text'];
 $mysql->query("UPDATE posts SET views = $views WHERE id = '".$data['id']."'", array());
 echo "<hr><i>Kommentare:</i><br>";
 $mysql->query("select * from post_comments where position = '$getid'", array());
-while($comment = @mysql_fetch_array($mysql->result)) {
+while($comment = mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
 if(isset($_COOKIE[$cp."_admin_id"])) {
 echo '<form action="" method="post"><input type="submit" value="Kommentar löschen" name="pc'.$comment["id"].'"></form>';
@@ -109,14 +128,14 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
 if($getpage == "Posts" and empty($getid)) {
 echo "<title>Alle Beiträge - $sitename</title>";
 $mysql->query("select * from posts", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=Posts&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
 echo "<hr>";
 }
 if($getpage == "News" and isset($getid)) {
 $mysql->query("select * from news where id='".$getid."'", array());
-while($data = @mysql_fetch_array($mysql->result)) {
+while($data = mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
 echo "<b><u>".$data['name']." (von ".$data['username'].", $views Aufrufe)</u></b>";
@@ -128,7 +147,7 @@ echo $data['text'];
 $mysql->query("UPDATE news SET views = $views WHERE id = '".$data['id']."'", array());
 echo "<hr><i>Kommentare:</i><br>";
 $mysql->query("select * from news_comments where position = '$getid'", array());
-while($comment = @mysql_fetch_array($mysql->result)) {
+while($comment = mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
 if(isset($_COOKIE[$cp."_admin_id"])) {
 echo '<form action="" method="post"><input type="submit" value="Kommentar löschen" name="nc'.$comment["id"].'"></form>';
@@ -181,7 +200,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
 if($getpage == "News" and empty($getid)) {
 ?><title>Alle News - <? echo $sitename ?></title><?
 $mysql->query("select * from news", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=News&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
 }
@@ -201,17 +220,17 @@ echo $help_html;
 if($getpage == "Downloads" and empty($getid)) {
 echo "<title>Downloads - $sitename</title>";
 $mysql->query("select * from downloads", array());
-while($dl = @mysql_fetch_array($mysql->result)) {
+while($dl = mysql_fetch_array($mysql->result)) {
 echo "<a href='?page=Downloads&ID=".$dl['id']."'>".$dl['name']."</a> (".$dl['downloads']." Downloads)<br>";
 }
 }
 if($getpage == "Downloads" and isset($getid)) {
 $mysql->query("select * from downloads where id = '".$getid."'", array());
-while($dl = @mysql_fetch_array($mysql->result)) {
+while($dl = mysql_fetch_array($mysql->result)) {
 $dlc = $dl['downloads'] + 1;
 $mysql->query("UPDATE `downloads` SET `downloads`='$dlc' WHERE `id`='".$dl['id']."'", array());
-@header('Content-type: application/octet-stream');
-@header('Content-Disposition: attachment; filename="'.$dl['filename'].'"');
+header('Content-type: application/octet-stream');
+header('Content-Disposition: attachment; filename="'.$dl['filename'].'"');
 readfile('downloads/'.$dl['filename']);
 }
 }
@@ -245,22 +264,22 @@ if($getpage == "Login" and isset($_POST['postlogin'])) {
 
 $mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."' AND active = '1'", array());  
 
-if (@mysql_num_rows($mysql->result) > 0)  
+if (mysql_num_rows($mysql->result) > 0)  
 {
-$data = @mysql_fetch_array ($mysql->result);  
+$data = mysql_fetch_array ($mysql->result);  
 $mysql->query("Select admin from accounts WHERE username = '".$_POST['id']."' AND admin = '1'", array());
-$rows = @mysql_num_rows($mysql->result);
+$rows = mysql_num_rows($mysql->result);
 if($rows == 1) { 
-  @setcookie($cp."_admin_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
-  @setcookie($cp."_admin_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
-  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
-  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  setcookie($cp."_admin_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  setcookie($cp."_admin_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
   $mysql->query("UPDATE accounts SET remote_addr = '".$_SERVER['REMOTE_ADDR']."' WHERE username = '".$data['username']."'", array());
 echo '<meta http-equiv="refresh" content="0; url=?page=Administration">';
 }
 elseif($rows == 0) {
-  @setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
-  @setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  setcookie($cp."_user_id", $data['id'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
+  setcookie($cp."_user_name", $data['username'], time()+60*60*24*$_POST['cookietime'], $path, $domain);
   $mysql->query("UPDATE accounts SET remote_addr = '".$_SERVER['REMOTE_ADDR']."' WHERE username = '".$data['username']."'", array());
 echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
@@ -271,10 +290,10 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Login&ID=error">';
 }
 }
 if($getpage == "Login" and $getid == "logout") { 
-  @setcookie($cp."_admin_id", "", time()-60*60*24*365, $path, $domain);
-  @setcookie($cp."_admin_name", "", time()-60*60*24*365, $path, $domain);
-  @setcookie($cp."_user_id", "", time()-60*60*24*365, $path, $domain);
-  @setcookie($cp."_user_name", "", time()-60*60*24*365, $path, $domain);
+  setcookie($cp."_admin_id", "", time()-60*60*24*365, $path, $domain);
+  setcookie($cp."_admin_name", "", time()-60*60*24*365, $path, $domain);
+  setcookie($cp."_user_id", "", time()-60*60*24*365, $path, $domain);
+  setcookie($cp."_user_name", "", time()-60*60*24*365, $path, $domain);
 echo '<meta http-equiv="refresh" content="0; url=?page=Index">';
 }
 }
@@ -300,7 +319,7 @@ echo "Der Benutzername wird bereits verwendet!";
 if($rows == 0) {
 $mysql->query("INSERT INTO accounts (username, password, admin, safe, active, email) VALUES ('".$user."', '".$pw."', '0', '0', '0', '".$_POST['email']."')", array());
 $mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$user."' AND password = '".$pw."'", array());
-$data = @mysql_fetch_array($mysql->result);
+$data = mysql_fetch_array($mysql->result);
 $rows2 = mysql_num_rows($mysql->result);
 if($rows2 == 1) { 
 $mailto = $_POST['email'];
@@ -332,7 +351,7 @@ if($getpage == "Activate")
 	echo "<title>Aktivierung - $sitename</title>";
 	$mysql->query("UPDATE accounts SET active = '1' WHERE id = '$getid'", array());
 	$mysql->query("SELECT username FROM accounts WHERE id = '$getid'", array());
-	while($sql = @mysql_fetch_array($mysql->result))
+	while($sql = mysql_fetch_array($mysql->result))
 	{
 		echo "Du hast deinen Account ".$sql['username']." erfolgreich aktiviert!";
 	}
@@ -358,7 +377,7 @@ echo "<title>Beitrag erstellen - $sitename</title>";
 echo '<form action="" method="post">
 Titel: <input type="text" name="name" size="80" maxlength="50"><br>
 <textarea type="text" name="text" style="width:100%; height:275"></textarea>
-<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="submit" alt="erstellen">
+<input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" name="submit" alt="erstellen">
 <form>';
 }
 if(isset($_POST['name'])) {
@@ -377,7 +396,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 if($getpage == "Administration" and $getposts == 'delete') {
 echo "<title>Beitrag löschen - $sitename</title>";
 $mysql->query("select id,name,username from posts", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' von '.$sql["username"].' löschen" name="'.$sql["id"].'">
 </form>';
@@ -400,7 +419,7 @@ echo "Dir ist ein Fehler unterlaufen!<br><input type=\"button\" value=\"Zurück\"
 if($getpage == "Administration" and $getusers == 'delete') {
 echo "<title>Benutzer löschen - $sitename</title>";
 $mysql->query("select id,username from accounts WHERE safe = '0'", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' löschen" name="'.$sql["id"].'">
 </form>';
@@ -415,12 +434,12 @@ if($getpage == "Administration" and $getusers == 'list') {
 echo "<title>Benutzerliste - $sitename</title>";
 echo "<b><u>Administratoren:</u></b><br>";
 $mysql->query("select username from accounts where admin = '1'", array());
-while($sqladmin = @mysql_fetch_array($mysql->result)) {
+while($sqladmin = mysql_fetch_array($mysql->result)) {
 echo $sqladmin['username']."<br>";
 }
 echo "<b><u>Benutzer:</u></b><br>";
 $mysql->query("select username from accounts where admin = '0'", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo $sql['username']."<br>";
 }
 
@@ -428,7 +447,7 @@ echo $sql['username']."<br>";
 if($getpage == "Administration" and $getusers == 'manage') {
 echo "<title>Benutzerverwaltung - $sitename</title>";
 $mysql->query("select id,username from accounts WHERE admin = '1' AND safe = '0'", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' zum Benutzer degradieren" name="unset'.$sql["id"].'">
 </form>';
@@ -439,7 +458,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 }
 }
 $mysql->query("select id,username from accounts WHERE admin = '0'", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' zum Admin befördern" name="set'.$sql["id"].'">
 </form>';
@@ -455,7 +474,7 @@ echo "<title>News erstellen - $sitename</title>";
 echo '<form action="" method="post">
 Titel: <input type="text" name="newsname" size="80" maxlength="50"><br>
 <textarea type="text" name="text" style="width:100%; height:275"></textarea>
-<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="newssubmit" alt="erstellen">
+<input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" name="newssubmit" alt="erstellen">
 <form>';
 }
 if(isset($_POST['newsname'])) {
@@ -474,7 +493,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 if($getpage == "Administration" and $getnews == 'delete') {
 echo "<title>News löschen - $sitename</title>";
 $mysql->query("select id,name,username from news", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' von '.$sql["username"].' löschen" name="'.$sql['id'].'">
 </form>';
@@ -487,7 +506,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 
 }
 if($getpage == "Administration" and $getsettings == "cms") {
-$email = str_replace("[at]", "@", $impressum_email);
+$email = str_replace("[at]", "", $impressum_email);
 echo "<title>Einstellungen - $sitename</title>";
 echo '<form action="" method="post">';
 if($gastkommentar == 1) {
@@ -497,25 +516,27 @@ else {
 echo 'Gast Kommentare: <select name="gastkommentar"><option value="0">Verbieten</option><option value="1">Erlauben</option></select><br>';
 }
 echo '<h3>Server-Konfiguration:</h3>
-Seitenname: <input type="text" name="sitename" value="'.$sitename.'" maxlength="25"><br>
-Datenbank-Host: <input type="text" name="dbhost" value="'.$dbhost.'" maxlength="50"><br>
-Datenbank-Name: <input type="text" name="dbname" value="'.$dbname.'" maxlength="25"><br>
-Datenbank-Benutzer: <input type="text" name="dbuser" value="'.$dbuser.'" maxlength="25"><br>
-Datenbank-Passwort: <input type="password" name="dbpasswd" value="'.$dbpasswd.'" maxlength="50"><br>
-Cookie-Präfix: <input type="text" name="cp" value="'.$cp.'" maxlength="10">
+Seitenname:<br><input type="text" name="sitename" value="'.$sitename.'" maxlength="25"><br>
+Datenbank-Host:<br><input type="text" name="dbhost" value="'.$dbhost.'" maxlength="50"><br>
+Datenbank-Name:<br><input type="text" name="dbname" value="'.$dbname.'" maxlength="25"><br>
+Datenbank-Benutzer:<br><input type="text" name="dbuser" value="'.$dbuser.'" maxlength="25"><br>
+Datenbank-Passwort:<br><input type="password" name="dbpasswd" value="'.$dbpasswd.'" maxlength="50"><br>
+Cookie-Präfix:<br><input type="text" name="cp" value="'.$cp.'" maxlength="10">
 <h3>Impressum-Konfiguration (optional)</h3>
-Name: <input type="text" name="impressum_name" value="'.$impressum_name.'" maxlength="50"><br>
-Land: <input type="text" name="impressum_land" value="'.$impressum_land.'" maxlength="50"><br>
-Postleitzahl: <input type="text" name="impressum_postleitzahl" value="'.$impressum_postleitzahl.'" maxlength="50"><br>
-Stadt: <input type="text" name="impressum_stadt" value="'.$impressum_stadt.'" maxlength="50"><br>
-Straße: <input type="text" name="impressum_straße" value="'.$impressum_straße.'" maxlength="50"><br>
-Hausnummer: <input type="text" name="impressum_hausnummer" value="'.$impressum_hausnummer.'" maxlength="50"><br>
-E-Mail: <input type="text" name="impressum_email" value="'.$email.'" maxlength="50"><br>
-Telefon: <input type="text" name="impressum_telefon" value="'.$impressum_telefon.'" maxlength="50"><br>
-<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="configure" alt="Weiter">
+Name:<br><input type="text" name="impressum_name" value="'.$impressum_name.'" maxlength="50"><br>
+Land:<br><input type="text" name="impressum_land" value="'.$impressum_land.'" maxlength="50"><br>
+Postleitzahl:<br><input type="text" name="impressum_postleitzahl" value="'.$impressum_postleitzahl.'" maxlength="50"><br>
+Stadt:<br><input type="text" name="impressum_stadt" value="'.$impressum_stadt.'" maxlength="50"><br>
+Straße:<br><input type="text" name="impressum_straße" value="'.$impressum_straße.'" maxlength="50"><br>
+Hausnummer:<br><input type="text" name="impressum_hausnummer" value="'.$impressum_hausnummer.'" maxlength="50"><br>
+E-Mail:<br><input type="text" name="impressum_email" value="'.$email.'" maxlength="50"><br>
+Telefon:<br><input type="text" name="impressum_telefon" value="'.$impressum_telefon.'" maxlength="50">
+<h3>CMS</h3>
+Template:<br><input type="text" name="template" value="'.$templates["template"].'"><br>
+<input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" name="configure" alt="Weiter">
 </form>';
 if(isset($_POST['sitename'])) {
-$email = str_replace("@", "[at]", $_POST['impressum_email']);
+$email = str_replace("", "[at]", $_POST['impressum_email']);
 $configfile = "includes/config.php";
 $write = "<?php
 \$sitename = \"".$_POST['sitename']."\";
@@ -551,6 +572,7 @@ if (is_writable($configfile)) {
     print "Konfiguration erfolgreich!";
 
     fclose($handle);
+	$mysql->query("UPDATE cms_info SET template = '".$_POST['template']."'", array());
 	echo '<meta http-equiv="refresh" content="0, url=?page=Administration&ID=success">';
 
 } else {
@@ -564,7 +586,7 @@ echo '<h4>Please do just upload ZIP-Archives,RAR-Archives or Executables. Otherw
 <form action="" method="post" enctype="multipart/form-data">
 Name: <input type="text" name="dlname" size="50"><br>
 Datei: <input type="file" name="datei" size="75"><br>
-Hochladen: <input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" alt="Hochladen" name="add">
+Hochladen: <input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" alt="Hochladen" name="add">
 </form>';
 if(isset($_POST['dlname'])) {
 move_uploaded_file($_FILES['datei']['tmp_name'], "downloads/".$_FILES['datei']['dlname']);
@@ -575,7 +597,7 @@ echo "Datei hochgeladen";
 if($getpage == "Administration" and $getdownloads == 'delete') {
 echo "<title>Download löschen - $sitename</title>";
 $mysql->query("select * from downloads", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' ('.$sql["downloads"].' Downloads) löschen" name="'.$sql["id"].'">
 </form>';
@@ -590,19 +612,19 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 if($getpage == "Administration" and $getposts == "edit" and empty($getid)) {
 $mysql->query("select * from posts", array());
 echo "<title>Beitrag editieren - $sitename</title>";
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href='?page=Administration&posts=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
 }
 }
 if($getpage == "Administration" and $getposts == "edit" and isset($getid)) {
 $mysql->query("select * from posts where id = '$getid'", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 $text = str_replace("<br>", "", $sql['text']);
 echo "<title>".$sql['name']." editieren (Beitrag) - $sitename</title>";
 echo '<form action="" method="post">
 Titel: <input type="text" name="pname" size="80" maxlength="50" value="'.$sql["name"].'"><br>
 <textarea type="text" name="text" style="width:100%; height:275">'.$text.'</textarea><br>
-<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="peditsubmit" alt="editieren">';
+<input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" name="peditsubmit" alt="editieren">';
 }
 }
 if(isset($_POST['pname'])) {
@@ -615,19 +637,19 @@ echo '<meta http-equiv="refresh" content="0, url=?page=Posts&ID='.$getid.'">';
 if($getpage == "Administration" and $getnews == "edit" and empty($getid)) {
 $mysql->query("select * from news", array());
 echo "<title>News editieren - $sitename</title>";
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href='?page=Administration&news=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
 }
 }
 if($getpage == "Administration" and $getnews == "edit" and isset($getid)) {
 $mysql->query("select * from news where id = '$getid'", array());
-while($sql = @mysql_fetch_array($mysql->result)) {
+while($sql = mysql_fetch_array($mysql->result)) {
 echo "<title>".$sql['name']." editieren (News) - $sitename</title>";
 $text = str_replace("<br>", "", $sql['text']);
 echo '<form action="" method="post">
 Titel: <input type="text" name="nname" size="80" maxlength="50" value="'.$sql["name"].'"><br>
 <textarea type="text" name="text" style="width:100%; height:275">'.$text.'</textarea><br>
-<input type="image" src="images/buttons/btn_hd_next.png" onmouseover="this.src=\'images/buttons/btn_hd_next_hover.png\';" onmouseout="this.src=\'images/buttons/btn_hd_next.png\';" name="neditsubmit" alt="editieren">';
+<input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" name="neditsubmit" alt="editieren">';
 }
 }
 if(isset($_POST['nname'])) {
