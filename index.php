@@ -28,7 +28,7 @@ Land: $impressum_land<br>
 Ort: $impressum_postleitzahl $impressum_stadt<br>
 Straße: $impressum_straße $impressum_hausnummer<br>
 E-Mail: $impressum_email<br>
-Telefon: $impressum_telefon<hr>";
+Telefon: $impressum_telefon";
 }
 }
 { #Index Bereich
@@ -105,7 +105,6 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
 }
 }
 }
-echo "<hr>";
 }
 if($getpage == "Posts" and empty($getid)) {
 echo "<title>Alle Beiträge - $sitename</title>";
@@ -178,7 +177,6 @@ echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
 }
 }
 }
-echo "<hr>";
 }
 if($getpage == "News" and empty($getid)) {
 ?><title>Alle News - <? echo $sitename ?></title><?
@@ -186,7 +184,6 @@ $mysql->query("select * from news", array());
 while($sql = @mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=News&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
-echo "<hr>";
 }
 if($getpage == "Hilfe") {
 include "includes/help.php";
@@ -200,7 +197,6 @@ if($getpage == "Hilfe" and $getid == "html") {
 <?
 echo $help_html;
 }
-echo "<hr>";
 }
 if($getpage == "Downloads" and empty($getid)) {
 echo "<title>Downloads - $sitename</title>";
@@ -208,7 +204,6 @@ $mysql->query("select * from downloads", array());
 while($dl = @mysql_fetch_array($mysql->result)) {
 echo "<a href='?page=Downloads&ID=".$dl['id']."'>".$dl['name']."</a> (".$dl['downloads']." Downloads)<br>";
 }
-echo "<hr>";
 }
 if($getpage == "Downloads" and isset($getid)) {
 $mysql->query("select * from downloads where id = '".$getid."'", array());
@@ -219,14 +214,12 @@ $mysql->query("UPDATE `downloads` SET `downloads`='$dlc' WHERE `id`='".$dl['id']
 @header('Content-Disposition: attachment; filename="'.$dl['filename'].'"');
 readfile('downloads/'.$dl['filename']);
 }
-echo "<hr>";
 }
 if($getpage == "Redirect") {
 echo "<title>$sitename verlassen - $sitename</title>";
 echo "Du bist dabei <b>$sitename</b> zu verlassen, möchtest du wirklich auf <u><b>$getid</b></u> gehen?<br>";
 echo "- <a href='$getid'>Ja</a><br>";
 echo "- <a href='./?page=Index'>Doch nicht</a>";
-echo "<hr>";
 }
 }
 { #Login Bereich
@@ -248,7 +241,6 @@ Passwort: <input type="password" name="pwd" size="20">
 </select>
 <input type="submit" value="Login" name="postlogin">  
 </form>'; 
-echo "<hr>";
 if($getpage == "Login" and isset($_POST['postlogin'])) {
 
 $mysql->query("SELECT id, username, password FROM accounts WHERE username = '".$_POST['id']."' AND password = '".sha1($_POST['pwd'])."' AND active = '1'", array());  
@@ -332,7 +324,6 @@ echo "Der User wurde erstellt. Es wurde eine Bestätigungsemail zum überprüfen de
 }
 }
 }
-echo "<hr>";
 }
 }
 { #Aktivierungs Bereich
@@ -343,7 +334,7 @@ if($getpage == "Activate")
 	$mysql->query("SELECT username FROM accounts WHERE id = '$getid'", array());
 	while($sql = @mysql_fetch_array($mysql->result))
 	{
-		echo "Du hast deinen Account ".$sql['username']." erfolgreich aktiviert!<hr>";
+		echo "Du hast deinen Account ".$sql['username']." erfolgreich aktiviert!";
 	}
 }
 }
@@ -545,7 +536,6 @@ $write = "<?php
 \$impressum_telefon = \"".$_POST['impressum_telefon']."\";
 //cms
 \$gastkommentar = \"".$_POST['gastkommentar']."\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'>cFire</a> - <a href='#top'>Nach oben</a>\";
 ?>";
 if (is_writable($configfile)) {
 
@@ -647,8 +637,7 @@ $mysql->query("UPDATE `news` SET `name` = '".$_POST['nname']."' WHERE id = '$get
 $mysql->query("UPDATE `news` SET `text` = '$text' WHERE id = '$getid'", array());
 echo '<meta http-equiv="refresh" content="0, url=?page=News&ID='.$getid.'">';
 }
-echo "<hr>";
 }
 }
-echo $footer;
+echo "<hr>Copyright by $sitename ".date('Y');
 ?>

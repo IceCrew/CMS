@@ -1,6 +1,5 @@
 <?php
 echo '<title>cFire Installation</title>
-<center>
 <body background="images/site/background.png"></body>
 <img src="images/site/logo.png" onmouseover="this.src=\'images/site/logo_hover.png\';" onmouseout="this.src=\'images/site/logo.png\';"></img><hr>';
 $version = 2;
@@ -63,7 +62,6 @@ $write = "<?php
 \$impressum_telefon = \"".$_POST['impressum_telefon']."\";
 //cms
 \$gastkommentar = \"0\";
-\$footer = \"Copyright by \".\$sitename.\" - <a href='http://cfire.sytes.net/' target='_blank\'>cFire</a> - <a href='#top'>Nach oben</a>\";
 ?>";
 if (is_writable($configfile)) {
 
@@ -168,6 +166,8 @@ echo '<a href="?success"><img src="images/buttons/btn_hd_next.png" onmouseover="
 }
 if(isset($_GET['success'])) {
 echo 'Installation erfolgreich beendet!
+Um unsere Arbeit zu unterstützen, werben sie bitte für uns. Es ist nicht notwendig, wäre aber schön.
+Helfen sie uns, bekannter zu werden.
 <form action="index.php" method="post">
 <input type="submit" name="installdeletefiles" value="Installations Dateien löschen">
 </form>';
