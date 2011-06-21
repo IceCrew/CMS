@@ -36,7 +36,7 @@ $templates = mysql_fetch_array($mysql->result);
 $template = "images/templates/".$templates['template'];
 }
 { #Header Bereich
-echo '<a href="http://'.$domain.$path.'"><img frameborder="0" border="0" src="'.$template.'/site/logo.png"></img></a><br><body background="'.$template.'/site/background.png"></body>';
+echo '<a href="http://icecrew.sytes.net" target="_blank"><img frameborder="0" border="0" src="'.$template.'/site/logo.png"></img></a><br><body background="'.$template.'/site/background.png"></body>';
 echo '<a name="top"></a><a href="?page=Index"><img frameborder="0" border="0" src="'.$template.'/buttons/index.png" onmouseover="this.src=\''.$template.'/buttons/index_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/index.png\';"></img></a> <a href="?page=News"><img frameborder="0" border="0" src="'.$template.'/buttons/news.png" onmouseover="this.src=\''.$template.'/buttons/news_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/news.png\';"></img></a> <a href="?page=Posts"><img frameborder="0" border="0" src="'.$template.'/buttons/posts.png" onmouseover="this.src=\''.$template.'/buttons/posts_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/posts.png\';"></img></a> <a href="?page=Downloads"><img frameborder="0" border="0" src="'.$template.'/buttons/downloads.png" onmouseover="this.src=\''.$template.'/buttons/downloads_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/downloads.png\';"></img></a> ';
 require('includes/config.php');
 if(isset($_COOKIE[$cp.'_admin_id'])) { 
@@ -56,7 +56,7 @@ echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news", array());
 while($sql = mysql_fetch_array($mysql->result)) {
 $views = $sql['views'];
-echo '<a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<br>';
+echo '<a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'<br><br>';
 }
 }
 if($getpage == "Posts" and isset($getid)) {

@@ -25,12 +25,16 @@ if(isset($_POST["update"]))
 	{
 		$mysql->query("ALTER TABLE accounts ADD remote_addr text AFTER password", array());
 		$mysql->query("UPDATE cms_info SET version = $version", array());
+		$mysql->query("ALTER TABLE cms_info ADD template text", array());
+		$mysql->query("UPDATE cms_info SET template = 'default'", array());
+		unlink("includes/header.php");
 		echo "Upgrade erfolgreich!";
 	}
 	if($pversion == 2)
 	{
 		$mysql->query("ALTER TABLE cms_info ADD template text", array());
 		$mysql->query("UPDATE cms_info SET template = 'default'", array());
+		unlink("includes/header.php");
 		echo "Update erfolgreich!";
 	}
 }
