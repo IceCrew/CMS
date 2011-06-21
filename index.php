@@ -131,7 +131,6 @@ $mysql->query("select * from posts", array());
 while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=Posts&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
 }
-echo "<hr>";
 }
 if($getpage == "News" and isset($getid)) {
 $mysql->query("select * from news where id='".$getid."'", array());
