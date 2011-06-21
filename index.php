@@ -1,5 +1,4 @@
 <?php
-{ #Anderes Bereich
 $domain = $_SERVER['SERVER_NAME'];
 $path = str_replace("index.php", "", $_SERVER['SCRIPT_NAME']);
 $getpage = $_GET['page'];
@@ -9,24 +8,6 @@ echo '<meta http-equiv="refresh" content="0; URL=upgrade.php">';
 }
 elseif(!file_exists('includes/config.php') AND file_exists('includes/config.php.new')) {
 echo '<meta http-equiv="refresh" content="0; URL=install.php">';
-}
-if(isset($_POST["installdeletefiles"])) {
-unlink("install.php");
-unlink("upgrade.php");
-}
-echo '<head><link rel="STYLESHEET" type="text/CSS" href="includes/style.css"></head>';
-if(empty($_GET)) {
-echo '<meta http-equiv="refresh" content="0; url=./index.php?page=Index">';
-}
-if($getpage == "Impressum") {
-echo "<title>Impressum - $sitename</title>";
-echo "Name: $impressum_name<br>
-Land: $impressum_land<br>
-Ort: $impressum_postleitzahl $impressum_stadt<br>
-Straﬂe: $impressum_straﬂe $impressum_hausnummer<br>
-E-Mail: $impressum_email<br>
-Telefon: $impressum_telefon";
-}
 }
 { #Template Bereich
 include_once "includes/class.mysql.php";
@@ -50,6 +31,26 @@ echo '<a href="?page=Hilfe"><img frameborder="0" border="0" src="'.$template.'/b
 }
 echo '<a href="?page=Impressum"><img frameborder="0" border="0" src="'.$template.'/buttons/impress.png" onmouseover="this.src=\''.$template.'/buttons/impress_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/impress.png\';"></img></a><hr>';
 }
+{ #Anderes Bereich
+if(isset($_POST["installdeletefiles"])) {
+unlink("install.php");
+unlink("upgrade.php");
+}
+echo '<head><link rel="STYLESHEET" type="text/CSS" href="includes/style.css"></head>';
+if(empty($_GET)) {
+echo '<meta http-equiv="refresh" content="0; url=./index.php?page=Index">';
+}
+if($getpage == "Impressum") {
+echo "<title>Impressum - $sitename</title>";
+echo "Name: $impressum_name<br>
+Land: $impressum_land<br>
+Ort: $impressum_postleitzahl $impressum_stadt<br>
+Straﬂe: $impressum_straﬂe $impressum_hausnummer<br>
+E-Mail: $impressum_email<br>
+Telefon: $impressum_telefon";
+}
+}
+
 { #Index Bereich
 if($getpage == "Index") {
 echo "<title>Index - $sitename</title>";
