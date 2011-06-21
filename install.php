@@ -141,14 +141,14 @@ $mysql->query("CREATE TABLE `cms_info` (
   `template` text NOT NULL,
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;", array());
-$mysql->query("INSERT INTO `cms_info` (version) VALUES ('$version');", array());
+$mysql->query("INSERT INTO `cms_info` (version, template) VALUES ('$version', 'default');", array());
 echo '<br><a href="?step=4"><img src="images/templates/default/buttons/next.png" onmouseover="this.src=\'images/templates/default/buttons/next_hover.png\';" onmouseout="this.src=\'images/templates/default/buttons/next.png\';"></img></a>';
 }
 if($_GET['step'] == 4) {
 echo '<a href="?step=3"><img src="images/templates/default/buttons/back.png" onmouseover="this.src=\'images/templates/default/buttons/back_hover.png\';" onmouseout="this.src=\'images/templates/default/buttons/back.png\';"></img></a>
 <br><form action="?step=4" method="post">
-Benutzername: <input type="text" name="username" maxlength="25"><br>
-Passwort: <input type="password" name="password" maxlength="25"><br>
+Benutzername:<br><input type="text" name="username" maxlength="25"><br>
+Passwort:<br><input type="password" name="password" maxlength="25"><br>
 <input type="image" src="images/templates/default/buttons/next.png" onmouseover="this.src=\'images/templates/default/buttons/next_hover.png\';" onmouseout="this.src=\'images/templates/default/buttons/next.png\';" name="create" alt="create">
 </form>';
 if(isset($_POST['password']) AND isset($_POST['username'])) {
@@ -161,7 +161,7 @@ $rows = @mysql_num_rows($mysql->result);
 $mysql->query("INSERT INTO accounts (username, password, admin, safe, email, active) VALUES ('".$user."', '".$pw."', '1', '1', '$impressum_email', '1')", array());
 $mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich cFire ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array());
 echo "Benutzer & News erfolgreich erstellt";
-echo '<a href="?success"><img src="images/templates/default/buttons/next.png" onmouseover="this.src=\'images/templates/default/buttons/next_hover.png\';" onmouseout="this.src=\'images/templates/default/buttons/next.png\';"></img></a>';
+echo '<br><a href="?success"><img src="images/templates/default/buttons/next.png" onmouseover="this.src=\'images/templates/default/buttons/next_hover.png\';" onmouseout="this.src=\'images/templates/default/buttons/next.png\';"></img></a>';
 }
 }
 }
