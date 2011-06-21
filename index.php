@@ -50,7 +50,6 @@ E-Mail: $impressum_email<br>
 Telefon: $impressum_telefon";
 }
 }
-
 { #Index Bereich
 if($getpage == "Index") {
 echo "<title>Index - $sitename</title>";
@@ -590,8 +589,8 @@ Datei: <input type="file" name="datei" size="75"><br>
 Hochladen: <input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" alt="Hochladen" name="add">
 </form>';
 if(isset($_POST['dlname'])) {
-move_uploaded_file($_FILES['datei']['tmp_name'], "downloads/".$_FILES['datei']['dlname']);
-$mysql->query("INSERT INTO downloads (name, filename, downloads) VALUES ('".$_POST['dlname']."', '".$_FILES['datei']['dlname']."', '0')", array());
+move_uploaded_file($_FILES['datei']['tmp_name'], "downloads/".$_FILES['datei']['name']);
+$mysql->query("INSERT INTO downloads (name, filename, downloads) VALUES ('".$_POST['dlname']."', '".$_FILES['datei']['name']."', '0')", array());
 echo "Datei hochgeladen";
 }
 }
