@@ -159,7 +159,7 @@ $pw = sha1($_POST['password']);
 $mysql->query("Select username from accounts WHERE username = '".$user."'", array());
 $rows = @mysql_num_rows($mysql->result);
 $mysql->query("INSERT INTO accounts (username, password, admin, safe, email, active) VALUES ('".$user."', '".$pw."', '1', '1', '$impressum_email', '1')", array());
-$mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!\nDu hast erfolgreich cFire ".$version." installiert!\nDu kannst diesen Newseintrag im Adminpanel löschen!\n\nMit freundlichen Grüßen, dein wCMS Team')", array());
+$mysql->query("INSERT INTO news (username, name, text) VALUES ('".$user."', 'Glückwunsch!', 'Glückwunsch!<br>Du hast erfolgreich IceCrew CMS ".$version." installiert!<br>Du kannst diesen Newseintrag im Adminpanel löschen!<br><br>Mit freundlichen Grüßen, deine IceCrew')", array());
 echo "Benutzer & News erfolgreich erstellt";
 echo '<br><a href="?success"><img src="images/templates/default/buttons/next.png" onmouseover="this.src=\'images/templates/default/buttons/next_hover.png\';" onmouseout="this.src=\'images/templates/default/buttons/next.png\';"></img></a>';
 }
