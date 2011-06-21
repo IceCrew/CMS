@@ -34,7 +34,7 @@ if(isset($_POST["update"]))
 	{
 		$mysql->query("ALTER TABLE cms_info ADD template text", array());
 		$mysql->query("UPDATE cms_info SET template = 'default'", array());
-		$mysql->query("UPDATE cms_info SET version = 3", array());
+		$mysql->query("UPDATE cms_info SET version = $version", array());
 		unlink("includes/header.php");
 		echo "Update erfolgreich!";
 	}
