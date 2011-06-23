@@ -506,8 +506,9 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 if($getpage == "Administration" and $getnews == 'delete') {
 echo "<title>News löschen - $sitename</title>";
 $mysql->query("select id,name,username from news", array());
+echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
-echo '<div><form action="" method="post">
+echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' von '.$sql["username"].' löschen" name="'.$sql['id'].'">
 </form>';
 if(isset($_POST[$sql['id']])) {
@@ -627,8 +628,9 @@ echo "</div>";
 if($getpage == "Administration" and $getposts == "edit" and empty($getid)) {
 $mysql->query("select * from posts", array());
 echo "<title>Beitrag editieren - $sitename</title>";
+echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
-echo "<div><a href='?page=Administration&posts=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
+echo "<a href='?page=Administration&posts=edit&ID=".$sql['id']."'>\"".$sql['name']."\" editieren</a><br>";
 }
 echo "</div>";
 }
