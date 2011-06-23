@@ -53,7 +53,7 @@ Telefon: $impressum_telefon</div>";
 { #Index Bereich
 if($getpage == "Index") {
 echo "<title>Index - $sitename</title>";
-$mysql->query("select * from news", array());
+$mysql->query("select * from news order by id desc", array());
 while($sql = mysql_fetch_array($mysql->result)) {
 $views = $sql['views'];
 echo '<div><a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'</div>';
@@ -72,7 +72,7 @@ echo "<br><br>";
 echo $data['text'].'</div>';
 $mysql->query("UPDATE posts SET views = $views WHERE id = '".$data['id']."'", array());
 echo "<br><div><i>Kommentare:</i><br>";
-$mysql->query("select * from post_comments where position = '$getid'", array());
+$mysql->query("select * from post_comments where position = '$getid' order by id desc", array());
 while($comment = mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
 if(isset($_COOKIE[$cp."_admin_id"])) {
@@ -128,7 +128,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
 }
 if($getpage == "Posts" and empty($getid)) {
 echo "<title>Alle Beiträge - $sitename</title>";
-$mysql->query("select * from posts", array());
+$mysql->query("select * from posts order by id desc", array());
 echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=Posts&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
@@ -136,7 +136,7 @@ echo "<a href=\"?page=Posts&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['vi
 echo "</div>";
 }
 if($getpage == "News" and isset($getid)) {
-$mysql->query("select * from news where id='".$getid."'", array());
+$mysql->query("select * from news where id='$getid'", array());
 while($data = mysql_fetch_array($mysql->result)) {
 $views = $data['views'] + 1;
 echo "<title>".$data['name']." - $sitename</title>";
@@ -148,7 +148,7 @@ echo "<br><br>";
 echo $data['text'].'</div>';
 $mysql->query("UPDATE news SET views = $views WHERE id = '".$data['id']."'", array());
 echo "<br><div><i>Kommentare:</i><br>";
-$mysql->query("select * from news_comments where position = '$getid'", array());
+$mysql->query("select * from news_comments where position = '$getid' order by id desc", array());
 while($comment = mysql_fetch_array($mysql->result)) {
 echo "<b>".$comment['user'].":</b> ".$comment['msg'];
 if(isset($_COOKIE[$cp."_admin_id"])) {
@@ -202,7 +202,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
 }
 if($getpage == "News" and empty($getid)) {
 echo "<title>Alle News - $sitename</title>";
-$mysql->query("select * from news", array());
+$mysql->query("select * from news order by id desc", array());
 echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
 echo "<a href=\"?page=News&ID=".$sql['id']."\">".$sql['name']."</a> (".$sql['views']." Aufrufe)<br>";
@@ -221,26 +221,30 @@ echo "</div>";
 }
 if($getpage == "Downloads" and empty($getid)) {
 echo "<title>Downloads - $sitename</title>";
-$mysql->query("select * from downloads", array());
+$mysql->query("select * from downloads order by id desc", array());
+echo "<div>";
 while($dl = mysql_fetch_array($mysql->result)) {
 echo "<a href='?page=Downloads&ID=".$dl['id']."'>".$dl['name']."</a> (".$dl['downloads']." Downloads)<br>";
 }
+echo "</div>";
 }
 if($getpage == "Downloads" and isset($getid)) {
-$mysql->query("select * from downloads where id = '".$getid."'", array());
+$mysql->query("select * from downloads where id = '$getid'", array());
 while($dl = mysql_fetch_array($mysql->result)) {
 $dlc = $dl['downloads'] + 1;
+$dls = filesize($dl['filename']);
 $mysql->query("UPDATE `downloads` SET `downloads`='$dlc' WHERE `id`='".$dl['id']."'", array());
 header('Content-type: application/octet-stream');
 header('Content-Disposition: attachment; filename="'.$dl['filename'].'"');
+header("Content-Length: $dls");
 readfile('downloads/'.$dl['filename']);
 }
 }
 if($getpage == "Redirect") {
 echo "<title>$sitename verlassen - $sitename</title>";
-echo "Du bist dabei <b>$sitename</b> zu verlassen, möchtest du wirklich auf <u><b>$getid</b></u> gehen?<br>";
+echo "<div>Du bist dabei <b>$sitename</b> zu verlassen, möchtest du wirklich auf <u><b>$getid</b></u> gehen?<br>";
 echo "- <a href='$getid'>Ja</a><br>";
-echo "- <a href='./?page=Index'>Doch nicht</a>";
+echo "- <a href='./?page=Index'>Doch nicht</a></div>";
 }
 }
 { #Login Bereich
@@ -420,16 +424,18 @@ echo "<div>Dir ist ein Fehler unterlaufen!<br><input type=\"button\" value=\"Zur
 if($getpage == "Administration" and $getusers == 'delete') {
 echo "<title>Benutzer löschen - $sitename</title>";
 $mysql->query("select id,username from accounts WHERE safe = '0'", array());
+echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
-echo '<div><form action="" method="post">
+echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' löschen" name="'.$sql["id"].'">
-</form></div>';
+</form>';
 if(isset($_POST[$sql['id']])) {
 $mysql->query("DELETE FROM accounts WHERE id = '".$sql['id']."' and safe = '0'", array());
 
 echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success">';
 }
 }
+echo "</div>";
 }
 if($getpage == "Administration" and $getusers == 'list') {
 echo "<title>Benutzerliste - $sitename</title>";
@@ -449,8 +455,9 @@ echo "</div>";
 if($getpage == "Administration" and $getusers == 'manage') {
 echo "<title>Benutzerverwaltung - $sitename</title>";
 $mysql->query("select id,username from accounts WHERE admin = '1' AND safe = '0'", array());
+echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
-echo '<div><form action="" method="post">
+echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' zum Benutzer degradieren" name="unset'.$sql["id"].'">
 </form>';
 if(isset($_POST["unset".$sql['id']])) {
@@ -461,8 +468,9 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 }
 echo "</div>";
 $mysql->query("select id,username from accounts WHERE admin = '0'", array());
+echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
-echo '<div><form action="" method="post">
+echo '<form action="" method="post">
 <input type="submit" value="'.$sql["username"].' zum Admin befördern" name="set'.$sql["id"].'">
 </form>';
 if(isset($_POST["set".$sql['id']])) {
@@ -601,8 +609,9 @@ echo "<div>Datei hochgeladen</div>";
 if($getpage == "Administration" and $getdownloads == 'delete') {
 echo "<title>Download löschen - $sitename</title>";
 $mysql->query("select * from downloads", array());
+echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
-echo '<div><form action="" method="post">
+echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' ('.$sql["downloads"].' Downloads) löschen" name="'.$sql["id"].'">
 </form>';
 if(isset($_POST[$sql['id']])) {
