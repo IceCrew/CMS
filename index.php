@@ -1,3 +1,4 @@
+<body>
 <?php
 $domain = $_SERVER['SERVER_NAME'];
 $path = str_replace("index.php", "", $_SERVER['SCRIPT_NAME']);
@@ -678,3 +679,4 @@ echo '<meta http-equiv="refresh" content="0, url=?page=News&ID='.$getid.'">';
 }
 echo "<ul id=\"Copyright\">Copyright by $sitename ".date('Y')."</ul>";
 ?>
+</body>

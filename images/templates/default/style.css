@@ -8,7 +8,7 @@ ul#Navigation {
   float: left; width: 17.75em;
   position: fixed;
   margin: 0; padding: 0;
-  border: 1px dashed;
+  border: 1px solid;
 }
 ul#Navigation li {
   list-style: none;
@@ -24,7 +24,7 @@ padding: 0 1em;
 div {
   margin-left: 17.75em;
   padding: 0 1em;
-  border: 1px dashed;
+  border: 1px solid;
   min-width: 16em; /* Mindestbreite (der Ueberschrift) verhindert Anzeigefehler in modernen Browsern */
 }
 div# h1 {
