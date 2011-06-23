@@ -2,7 +2,7 @@
 <?php
 echo '<body background="images/templates/default/site/background.png"></body>
 <img src="images/templates/default/site/logo.png"></img><hr>';
-$version = 3;
+$version = 4;
 if(!file_exists("includes/config.php") AND file_exists("includes/config.php.new")) {
 echo '<meta http-equiv="refresh" content="0; URL=install.php">';
 die;
@@ -28,6 +28,7 @@ if(isset($_POST["update"]))
 		$mysql->query("ALTER TABLE cms_info ADD template text", array());
 		$mysql->query("UPDATE cms_info SET template = 'default'", array());
 		unlink("includes/header.php");
+		unlink("includes/style.css");
 		echo "Upgrade erfolgreich!";
 	}
 	if($pversion == 2)
@@ -36,6 +37,13 @@ if(isset($_POST["update"]))
 		$mysql->query("UPDATE cms_info SET template = 'default'", array());
 		$mysql->query("UPDATE cms_info SET version = $version", array());
 		unlink("includes/header.php");
+		unlink("includes/style.css");
+		echo "Update erfolgreich!";
+	}
+	if($pversion == 3)
+	{
+		unlink("includes/style.css");
+		$mysql->query("UPDATE cms_info SET version = $version", array());
 		echo "Update erfolgreich!";
 	}
 }

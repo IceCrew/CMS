@@ -2,7 +2,7 @@
 echo '<title>IceCrew CMS Installation</title>
 <body background="images/templates/default/site/background.png"></body>
 <img src="images/templates/default/site/logo.png"></img><hr>';
-$version = 3;
+$version = 4;
 if(empty($_GET)) {
 if(file_exists("includes/config.php") AND file_exists("includes/config.php.new")) {
 echo 'IceCrew CMS ist bereits installiert!<br>
