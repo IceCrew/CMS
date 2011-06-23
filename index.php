@@ -402,8 +402,9 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 if($getpage == "Administration" and $getposts == 'delete') {
 echo "<title>Beitrag löschen - $sitename</title>";
 $mysql->query("select id,name,username from posts", array());
+echo "<div>";
 while($sql = mysql_fetch_array($mysql->result)) {
-echo '<div><form action="" method="post">
+echo '<form action="" method="post">
 <input type="submit" value="'.$sql["name"].' von '.$sql["username"].' löschen" name="'.$sql["id"].'">
 </form>';
 if(isset($_POST[$sql['id']])) {
