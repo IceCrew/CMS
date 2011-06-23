@@ -106,7 +106,7 @@ echo "<br><div><i>(Du musst dich einloggen um Kommentare schreiben zu können)</i
 if(isset($_POST['pcsubmit'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcmsg']);
-$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_COOKIE[$cp.'_user_name']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
@@ -118,7 +118,7 @@ echo "<br><div>Geben sie einen Namen ein!</div>";
 else {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['pcgmsg']);
-$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO post_comments (user, msg, position) VALUES ('".$_POST['pcgname']." (Gast)', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=?page=Posts&ID='.$getid.'">';
@@ -181,7 +181,7 @@ echo "<br><div><i>(Du musst dich einloggen um Kommentare schreiben zu können)</i
 }
 if(isset($_POST['ncsubmit'])) {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncmsg']);
-$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_COOKIE[$cp.'_user_name']."', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
@@ -192,7 +192,7 @@ echo "<br><div>Geben sie einen Namen ein!</div>";
 }
 else {
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['ncgmsg']);
-$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="index.php?page=Redirect&ID=', $pretext);
 $mysql->query("INSERT INTO news_comments (user, msg, position) VALUES ('".$_POST['ncgname']." (Gast)', '".$text."', '".$getid."')", array());
 
 echo '<meta http-equiv="refresh" content="0; url=?page=News&ID='.$getid.'">';
@@ -388,7 +388,7 @@ Titel: <input type="text" name="name" size="80" maxlength="50"><br>
 if(isset($_POST['name'])) {
 $name = $_POST['name'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="index.php?page=Redirect&ID=', $pretext);
 if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=error">';
 }
@@ -492,7 +492,7 @@ Titel: <input type="text" name="newsname" size="80" maxlength="50"><br>
 if(isset($_POST['newsname'])) {
 $name = $_POST['newsname'];
 $pretext = str_replace("\r\n", "\r\n<br>", $_POST['text']);
-$text = str_replace('href="', 'href="./?page=Redirect&ID=', $pretext);
+$text = str_replace('href="', 'href="index.php?page=Redirect&ID=', $pretext);
 if(empty($name)) {
 echo '<meta http-equiv="refresh" content="0, url=?page=Administration&ID=error">';
 }
