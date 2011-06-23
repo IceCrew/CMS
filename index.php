@@ -56,7 +56,7 @@ echo "<title>Index - $sitename</title>";
 $mysql->query("select * from news order by id desc", array());
 while($sql = mysql_fetch_array($mysql->result)) {
 $views = $sql['views'];
-echo '<div><a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'</div>';
+echo '<div><a href="?page=News&ID='.$sql["id"].'"><b><u>'.$sql["name"].' (von '.$sql['username'].', '.$views.' Aufrufe)</u></b></a><br><br>'.$sql["text"].'</div><br>';
 }
 }
 if($getpage == "Posts" and isset($getid)) {
@@ -367,7 +367,7 @@ if($getpage == "Administration") {
 include "includes/admin.php";
 include "includes/menu.php";
 include_once "includes/class.mysql.php";
-echo "<div>$menu_admin</div>";
+echo "<div>$menu_admin</div><br>";
 $getposts = $_GET['posts'];
 $getnews = $_GET['news'];
 $getusers = $_GET['users'];
