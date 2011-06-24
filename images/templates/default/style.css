@@ -3,12 +3,15 @@ a:visited { color:black; text-decoration:underline; }
 a:focus { color:black; text-decoration:underline; }
 a:hover { color:black; text-decoration:underline; }
 a:active { color:black; text-decoration:underline; }
+body {
+background-image: url(site/background.png);
+}
 ul#Navigation {
   font-size: 0.91em;
   float: left; width: 17.75em;
   position: fixed;
   margin: 0; padding: 0;
-  border: 1px solid;
+  border: 1px dashed;
 }
 ul#Navigation li {
   list-style: none;
@@ -18,13 +21,12 @@ ul#Copyright {
 position: fixed;
 bottom: 0px;
 border: 0px;
-min-width: 5em;
-padding: 0 1em;
+padding: 0 0em;
 }
 div {
   margin-left: 17.75em;
   padding: 0 1em;
-  border: 1px solid;
+  border: 1px dashed;
   min-width: 16em; /* Mindestbreite (der Ueberschrift) verhindert Anzeigefehler in modernen Browsern */
 }
 div# h1 {

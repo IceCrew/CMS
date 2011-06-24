@@ -19,7 +19,7 @@ $template = "images/templates/".$templates['template'];
 echo "<head><link rel=\"STYLESHEET\" type=\"text/CSS\" href=\"$template/style.css\"></head>";
 }
 { #Header Bereich
-echo '<a href="http://icecrew.sytes.net" target="_blank"><img frameborder="0" border="0" src="'.$template.'/site/logo.png"></img></a><br><body background="'.$template.'/site/background.png"></body>';
+echo '<a href="http://icecrew.sytes.net" target="_blank"><img frameborder="0" border="0" src="'.$template.'/site/logo.png"></img></a><br>';
 echo '<a name="top"></a><ul id="Navigation"><li><a href="?page=Index"><img frameborder="0" border="0" src="'.$template.'/buttons/index.png" onmouseover="this.src=\''.$template.'/buttons/index_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/index.png\';"></img></a></li><li><a href="?page=News"><img frameborder="0" border="0" src="'.$template.'/buttons/news.png" onmouseover="this.src=\''.$template.'/buttons/news_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/news.png\';"></img></a></li><li><a href="?page=Posts"><img frameborder="0" border="0" src="'.$template.'/buttons/posts.png" onmouseover="this.src=\''.$template.'/buttons/posts_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/posts.png\';"></img></a></li><li><a href="?page=Downloads"><img frameborder="0" border="0" src="'.$template.'/buttons/downloads.png" onmouseover="this.src=\''.$template.'/buttons/downloads_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/downloads.png\';"></img></a></li>';
 require('includes/config.php');
 if(isset($_COOKIE[$cp.'_admin_id'])) { 
