@@ -50,7 +50,7 @@ echo "<div id='Inhalt'>Name: $impressum_name<br>
 Land: $impressum_land<br>
 Ort: $impressum_postleitzahl $impressum_stadt<br>
 Straﬂe: $impressum_straﬂe $impressum_hausnummer<br>
-E-Mail: $impressum_email<br>
+E-Mail: <a href='mailto:$impressum_email'>$impressum_email</a><br>
 Telefon: $impressum_telefon</div>";
 }
 }
@@ -524,7 +524,7 @@ echo '<meta http-equiv="refresh" content="0; url=?page=Administration&ID=success
 echo "</div>";
 }
 if($getpage == "Administration" and $getsettings == "cms") {
-$email = str_replace("[at]", "", $impressum_email);
+$email = $impressum_email;
 echo "<title>Einstellungen - $sitename</title>";
 echo '<div><form action="" method="post">';
 if($gastkommentar == 1) {
@@ -554,7 +554,7 @@ Template:<br><input type="text" name="template" value="'.$templates["template"].
 <input type="image" src="'.$template.'/buttons/next.png" onmouseover="this.src=\''.$template.'/buttons/next_hover.png\';" onmouseout="this.src=\''.$template.'/buttons/next.png\';" name="configure" alt="Weiter">
 </form></div>';
 if(isset($_POST['sitename'])) {
-$email = str_replace("", "[at]", $_POST['impressum_email']);
+$email = $_POST['impressum_email'];
 $configfile = "includes/config.php";
 $write = "<?php
 \$sitename = \"".$_POST['sitename']."\";

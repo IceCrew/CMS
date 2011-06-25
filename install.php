@@ -41,7 +41,7 @@ Telefon: <input type="text" name="impressum_telefon" maxlength="50"><br>
 </form>';
 }
 if($_GET['step'] == 2) {
-$email = str_replace("@", "[at]", $_POST['impressum_email']);
+$email = $_POST['impressum_email'];
 $configfile = "includes/config.php";
 $write = "<?php
 \$sitename = \"".$_POST['sitename']."\";
