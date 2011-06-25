@@ -16,7 +16,10 @@ include "includes/config.php";
 $mysql->query("SELECT template FROM cms_info", array());
 $templates = mysql_fetch_array($mysql->result);
 $template = "images/templates/".$templates['template'];
-echo "<head><link rel=\"STYLESHEET\" type=\"text/CSS\" href=\"$template/style.css\"></head>";
+echo "<head>
+<link rel='STYLESHEET' type='text/CSS' href='$template/style.css'>
+<link rel='SHORTCUT ICON' href='$template/favicon.ico'>
+</head>";
 }
 { #Header Bereich
 echo '<a href="http://icecrew.sytes.net" target="_blank"><img frameborder="0" border="0" src="'.$template.'/site/logo.png"></img></a><br>';
